@@ -1,0 +1,79 @@
+
+#listContainer{
+    display: flex;
+  
+
+  
+
+}
+body{
+    background: #6a6a58;
+}
+#nameBox{
+    display: flex;
+    width: 100%;
+    border: solid;
+    border-color: black;
+    border-radius: 10px; 
+    color: white;
+    background-color: #2f4f4f;
+    justify-content: center;
+   height: fit-content;
+    box-shadow: 0px 8px 15px #f8f554;
+}
+#picBox{
+    background: rgba(113, 135, 175, 0.4); 
+    display: flex;
+    flex-direction: column;
+    width: 25%;
+    border: solid;
+    border-color: black;
+    border-radius: 10px; 
+    padding: 20px;
+    justify-content: center;
+   height: fit-content;
+    box-shadow: 0px 8px 15px #f8f554;
+}
+#thingList{
+    background: rgba(113, 135, 175, 0.4); 
+    width: 75%;
+    border: solid;
+    height: 22%;
+    border-radius: 10px; 
+    height: fit-content;
+    box-shadow: 0px 8px 15px #f8f554;
+      border: solid black; 
+   
+  }
+  .thingTitle{
+    color: black;
+ 
+   
+    text-shadow: 0px 7px 12px #cbeb19;
+  }
+  .billButton{
+    background-color:#2f4f4f; 
+    box-shadow: 0px 8px 15px #f8f554;
+    border: 1px solid #f8f554; 
+    font-size: large;
+    border-radius: 10px; 
+    border-color: #f8f8f8;
+   border-width: 2px; 
+    color:#f8f554; 
+    outline: none; 
+    height:3em; 
+    width: fit-content; 
+    height:fit-content;
+    padding: .5em;
+   
+    text-decoration: none;
+
+
+  }
+#contact{
+    text-decoration:none;
+    font-size: large;
+}
+.noShow{
+    display: none;
+}

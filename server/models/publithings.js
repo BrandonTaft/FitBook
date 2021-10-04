@@ -3,7 +3,7 @@ const {
   Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Things extends Model {
+  class PubliThings extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   };
-  Things.init({
+  PubliThings.init({
     name: DataTypes.STRING,
     duedate: DataTypes.DATE,
     description: DataTypes.TEXT,
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     link: DataTypes.STRING,
     contact: DataTypes.STRING,
     contactNumber: DataTypes.BIGINT,
-    user_id: {
+    publicUser_Id:{
       type: DataTypes.INTEGER, 
       references: {
       model: 'Users', 
@@ -30,10 +30,9 @@ module.exports = (sequelize, DataTypes) => {
     onUpdate: 'cascade',
     onDelete: 'cascade'
   }
-
   }, {
     sequelize,
-    modelName: 'Things',
+    modelName: 'PubliThings',
   });
-  return Things;
+  return PubliThings;
 };

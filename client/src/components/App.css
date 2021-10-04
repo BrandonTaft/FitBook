@@ -1,0 +1,72 @@
+
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+body{
+  color:#cbeb19;
+  font-size: xx-large;
+}
+
+	.textbox { 
+    background: white; 
+    border: 1px solid rgb(34, 87, 34); 
+    border-radius: 5px; 
+    box-shadow: 0 0 5px 3px rgb(34, 87, 34); 
+    color: rgb(34, 87, 34); 
+    outline: none; 
+    height:23px; 
+    width: 25em; 
+    margin-right: 10px;
+  } 
+
+  .button{
+    background:#2f4f4f; 
+   
+    border: 1px solid #f8f554; 
+    border-radius: 5px; 
+    box-shadow: 0 0 5px 3px rgb(34, 87, 34)y; 
+    color:#f8f554; 
+    outline: none; 
+    height:23px; 
+    width: 60px; 
+    height: 30px;
+    margin: 10px;
+
+  }
+
+  #boxes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    padding: 3%;
+   
+
+  }
+  
+   
+   
+
+  
+
+  #thingList{
+    border: solid;
+    padding: 20px;
+   
+  }
+
+  #title{
+    margin-top: 100px;
+  }
+
+  #description{
+    height: 15em;
+    width: 25em;
+  }
+  

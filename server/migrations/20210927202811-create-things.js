@@ -8,6 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
+
       name: {
         type: Sequelize.STRING
       },
@@ -20,6 +21,15 @@ module.exports = {
       priority: {
         type: Sequelize.STRING
       },
+      link: {
+        type: Sequelize.STRING
+      },
+      contact: {
+        type: Sequelize.STRING
+      },
+      contactNumber: {
+        type: Sequelize.BIGINT
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE
@@ -27,7 +37,17 @@ module.exports = {
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE
-      }
+      },
+      user_id: {
+        type: DataTypes.INTEGER, 
+        references: {
+        model: 'Users', 
+        field: 'id'
+      },
+      onUpdate: 'cascade',
+      onDelete: 'cascade'
+    }
+  
     });
   },
   down: async (queryInterface, Sequelize) => {

@@ -21,7 +21,7 @@ function GetMail() {
 
   const getMail = () => {
     const name = localStorage.getItem('name')
-    fetch(`http://localhost:8080/api/getmail/${name}`)
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/getmail/${name}`)
       .then(response => response.json())
       .then(mail => {
         console.log(mail)

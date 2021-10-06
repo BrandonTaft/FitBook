@@ -1,5 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
+import './App.css';
 import Menu from './Menu'
+import Navbar from './Navbar'
+
+
 function AddMyThing(props){
 
 const [myThing, setmyThing] = useState({})
@@ -16,7 +20,7 @@ const [myThing, setmyThing] = useState({})
     
     
     const postTODB = () => {
-        fetch("http://localhost:8080/api/addmythings", {
+        fetch("https://lit-ravine-06265.herokuapp.com/api/addmythings", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -35,19 +39,21 @@ const [myThing, setmyThing] = useState({})
     return (
       
           
-          <div id="boxes">
+         <div>
+              <Navbar />
               <Menu />
-            <h1>NEW THING</h1>
-            <input className="textbox" type="text" name="name" onChange={handleAddMyThing} placeholder="Name Your Thing" /><br></br>
+              <div id="addBoxes">
+            <h1>ADD YOUR WORKOUT</h1>
+            <input className="textbox" type="text" name="name" onChange={handleAddMyThing} placeholder="Name Your Workout" /><br></br>
             <input className="textbox" type="text" name="duedate" onChange={handleAddMyThing} placeholder="DueDate" /><br></br>
             <input className="textbox" type="text" name="priority" onChange={handleAddMyThing} placeholder="Priority" /><br></br>
             <input className="textbox" type="url" name="link" onChange={handleAddMyThing} placeholder="Link" /><br></br>
             <input className="textbox" type="text" name="contact" onChange={handleAddMyThing} placeholder="Contact Name" /><br></br>
             <input className="textbox" type="tel" name="contactNumber" onChange={handleAddMyThing} placeholder="Contact Number" /><br></br>
             <textarea id='description' className="textbox" type="text" name="description" onChange={handleAddMyThing} placeholder="Description" /><br></br>
-            <button className="button" onClick={postTODB}>Add Thing</button>
+            <button className="button" onClick={postTODB}>Add My Workout</button>
         </div>
-
+        </div>
 )
         }
 

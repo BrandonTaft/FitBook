@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Menu from './Menu'
@@ -11,12 +11,12 @@ function AllThings(props) {
    
     useEffect(() => {
       props.onThingsLoaded()
-    }, [])
+    },[])
 
     
 
     const handleThingDelete = (thing) => {
-        fetch(`http://localhost:8080/api/publicthings/${thing.id}`, {
+        fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${thing.id}`, {
           method: 'DELETE'
         }).then(response => response.json())
         .then(result => { 
@@ -29,12 +29,12 @@ function AllThings(props) {
   
     const thingItems = props.things.map(thing => {
       const name = localStorage.getItem ('name')
-      console.log(thing.priority)
+     
         return (
         <div key={thing.id}id = 'listContainer'>
           <div id="picBox">
             <div>
-          <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={thing.name} size="150" />
+          <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={thing.name} />
           </div>
       <div id='nameBox'> {name}</div>
           
@@ -44,8 +44,8 @@ function AllThings(props) {
             <h4 className='thingTitle'>{thing.name}</h4>
             
             {/* <p>{thing.duedate}</p> */}
-            <a rel={'external'} target="_blank" href={`${thing.link}`}className="billButton">    Pay Bill     </a>
-            <div>{thing.contact}</div>
+            <a rel={'external'} target="_blank" href={`${thing.link}`}className="billButton"> Watch </a>
+            <div id='contactName'>{thing.contact}</div>
           
             <a id='contact'href="tel:{thing.contactNumber}">{thing.contactNumber}</a>
             <p> {thing.description}</p>
@@ -58,8 +58,9 @@ function AllThings(props) {
 
     return (
       <div>
+         <Navbar />
           <Menu />
-          <Navbar />
+         
         {thingItems}
     
        

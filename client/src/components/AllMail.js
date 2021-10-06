@@ -1,10 +1,12 @@
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import './App.css'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Menu from './Menu'
+import Navbar from './Navbar'
+import './allThings.css'
 
 function AllMail(props) {
 
@@ -14,7 +16,7 @@ function AllMail(props) {
   
       
       const handleMailDelete = (mail) => {
-          fetch(`http://localhost:8080/api/deletemail/${mail.id}`, {
+          fetch(`https://lit-ravine-06265.herokuapp.com/api/deletemail/${mail.id}`, {
             method: 'DELETE'
           }).then(response => response.json())
           .then(result => { 
@@ -42,10 +44,11 @@ function AllMail(props) {
 
         return (
       
-        <div >
+          <div>
+          <Navbar />
           <Menu />
-          <div><NavLink to="/addmail" className='inactive' >ADD MAIL</NavLink></div>
-            
+          <div><NavLink to="/addmail" className='inactive' >SEND MAIL</NavLink></div>
+           
             {mailItems}
         </div>
 

@@ -23,18 +23,18 @@ function Navbar() {
         <nav className="navBar">
           <div id= 'buttonBox'>  
             <button onClick={handleToggle}>{navbarOpen ? (
-                <MdClose style={{ color: "#fff", width: "40px", height: "40px" }} />) : (
-                <FiMenu style={{ color: "#7b7b7b", width: "40px", height: "40px" }} />
+                <MdClose style={{ color: "#3fffd2", width: "40px", height: "40px" }} />) : (
+                <FiMenu style={{ color: "#3fffd2", width: "40px", height: "40px" }} />
             )}</button>
             </div>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
-            <NavLink to="/logout" className='inactive'>Log Out</NavLink>
-            <NavLink to="/allthings" className='noShow' >All Things</NavLink>
-            <NavLink to="/addthings" className='inactive' >ADD THINGS</NavLink>
-            <NavLink to="/mythings" className='inactive' >My Things</NavLink>
-            <NavLink to="/addmything" className='noShow' >ADD My Things</NavLink>
-            <NavLink to="/addmail" className='inactive' >ADD MAIL</NavLink>
-            <NavLink to="/allmail" className='inactive' >MY MAIL</NavLink>
+            <NavLink to="/logout" className='inactive'id="a">Log Out</NavLink>
+            <NavLink to="/allthings" className='noShow'id='a' >All Workouts</NavLink>
+            <NavLink to="/addthings" className='inactive'id='a' >Add Workout</NavLink>
+            <NavLink to="/mythings" className='inactive'id='a' >Personal Workouts</NavLink>
+            <NavLink to="/addmything" className='noShow'id='a' >Add Personal Workout</NavLink>
+       
+            <NavLink to="/allmail" className='inactive'id='a' >Mail</NavLink>
 
 
 

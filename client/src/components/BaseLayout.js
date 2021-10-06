@@ -5,7 +5,7 @@ function BaseLayout(props) {
     return (
         <div>
            
-        {/* <Menu /> */}
+        
           {props.children}
            
           

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import Menu from './Menu';
+import Menu from './Menu'
 import Navbar from './Navbar';
 
 
@@ -21,7 +21,7 @@ function AddMail(props) {
    
         
     const postTODB = () => {
-        fetch("http://localhost:8080/api/addmail", {
+        fetch( "https://lit-ravine-06265.herokuapp.com/api/addmail", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,18 +37,19 @@ function AddMail(props) {
 
     return (
         <div id="boxes">
-            <Menu />
+           
             <Navbar />
+            <Menu />
         <h1>NEW MAIL</h1>
         <input className="textbox" type="text" name="priority" onChange={handleAddMail} placeholder="Send Mail To:" /><br></br>
-        <input className="textbox" type="text" name="name" onChange={handleAddMail} placeholder="Name Your Thing" /><br></br>
+        <input className="textbox" type="text" name="name" onChange={handleAddMail} placeholder="Title" /><br></br>
        
         
         <input className="textbox" type="url" name="link" onChange={handleAddMail} placeholder="Link" /><br></br>
         <input className="textbox" type="text" name="contact" onChange={handleAddMail} placeholder="Contact Name" /><br></br>
         <input className="textbox" type="tel" name="contactNumber" onChange={handleAddMail} placeholder="Contact Number" /><br></br>
         <textarea id='description' className="textbox" type="text" name="description" onChange={handleAddMail} placeholder="Description" /><br></br>
-        <button className="button" onClick={postTODB}>Add Thing</button>
+        <button className="button" onClick={postTODB}>Send Mail</button>
     </div>
         )
     

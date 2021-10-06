@@ -8,6 +8,8 @@
 }
 body{
     background: #6a6a58;
+    color: #3fffd2;
+    width: 100vw;
 }
 #nameBox{
     display: flex;
@@ -19,7 +21,11 @@ body{
     background-color: #2f4f4f;
     justify-content: center;
    height: fit-content;
-    box-shadow: 0px 8px 15px #f8f554;
+    box-shadow: 0px 8px 15px #3fffd2;
+    margin-top: 10vh;
+    font-size: .6em;
+    text-align: center;
+
 }
 #picBox{
     background: rgba(113, 135, 175, 0.4); 
@@ -32,40 +38,57 @@ body{
     padding: 20px;
     justify-content: center;
    height: fit-content;
-    box-shadow: 0px 8px 15px #f8f554;
+    box-shadow: 0px 8px 15px #3fffd2;;
 }
 #thingList{
     background: rgba(113, 135, 175, 0.4); 
-    width: 75%;
+    padding-left: 10px;
+    padding-bottom: 10pxs;
+margin-left: 11px;
     border: solid;
     height: 22%;
     border-radius: 10px; 
     height: fit-content;
-    box-shadow: 0px 8px 15px #f8f554;
+    box-shadow: 0px 8px 15px #3fffd2;;
       border: solid black; 
+      width: 60vw;
+      margin-right: auto;
+      
+   
+  }
+  #mailList{
+    background: rgba(113, 135, 175, 0.4); 
+  
+    border: solid;
+    height: 22%;
+    border-radius: 10px; 
+    height: fit-content;
+    box-shadow: 0px 8px 15px #3fffd2;;
+      border: solid black; 
+      margin: 5vw
    
   }
   .thingTitle{
     color: black;
  
    
-    text-shadow: 0px 7px 12px #cbeb19;
+    text-shadow: 0px 7px 12px #3fffd2;
   }
   .billButton{
     background-color:#2f4f4f; 
-    box-shadow: 0px 8px 15px #f8f554;
-    border: 1px solid #f8f554; 
+    box-shadow: 0px 8px 15px #3fffd2;;
+    border: 1px solid #3fffd2;; 
     font-size: large;
     border-radius: 10px; 
     border-color: #f8f8f8;
    border-width: 2px; 
-    color:#f8f554; 
+    color:#3fffd2;; 
     outline: none; 
     height:3em; 
     width: fit-content; 
     height:fit-content;
     padding: .5em;
-   
+   margin-bottom: 10px;
     text-decoration: none;
 
 
@@ -73,7 +96,41 @@ body{
 #contact{
     text-decoration:none;
     font-size: large;
+    padding: none;
+    text-decoration: none;
+    color: #3fffd2;
+    text-transform: uppercase;
+    font-weight: bold;
 }
-.noShow{
+#contactName{
+    margin-top: 15px;
+    
+}
+#noShow{
     display: none;
 }
+
+@media (max-device-width:600px) {
+    #mailList{
+        width: 80vw;
+    margin: 4vw;
+        
+    }
+}
+
+@media (min-device-width:1024px){
+#thingList{
+    background: rgba(113, 135, 175, 0.4); 
+    padding-left: 10px;
+    padding-bottom: 10pxs;
+margin-left: auto;
+    border: solid;
+    height: 22%;
+    border-radius: 10px; 
+    height: fit-content;
+    box-shadow: 0px 8px 15px #3fffd2;;
+      border: solid black; 
+      width: 66vw;
+      
+}
+  }

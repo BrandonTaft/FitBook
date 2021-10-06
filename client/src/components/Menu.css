@@ -2,21 +2,22 @@
     display: flex;
     justify-content: space-evenly;
     background-color: #2f4f4f;
-    color: #f8f554;
+    color: #3fffd2;;
     font-size: xx-large;
- 
+   
     text-align-last: center;
 }
 .inactive{
-    color: #f8f554;
+    color: #3fffd2;;
     text-decoration: none;
     
 }
 
 
 
-@media (max-device-width:600px) {
+@media (max-device-width:1024px) {
     #container{
         display: none;
+
     }
 }

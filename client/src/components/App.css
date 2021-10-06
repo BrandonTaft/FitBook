@@ -9,7 +9,7 @@
   }
 }
 body{
-  color:#cbeb19;
+  color:#3fffd2;
   font-size: xx-large;
 }
 
@@ -22,7 +22,7 @@ body{
     outline: none; 
     height:23px; 
     width: 25em; 
-    margin-right: 10px;
+    margin: 10px;
   } 
 
   .button{
@@ -34,7 +34,7 @@ body{
     color:#f8f554; 
     outline: none; 
     height:23px; 
-    width: 60px; 
+    ; 
     height: 30px;
     margin: 10px;
 
@@ -45,7 +45,17 @@ body{
     flex-direction: column;
     align-items: center;
     height: 50%;
-    padding: 3%;
+    
+   
+
+  }
+  #addBoxes{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    text-align: center;
+    
    
 
   }
@@ -57,7 +67,11 @@ body{
 
   #thingList{
     border: solid;
-    padding: 20px;
+   margin-right: auto;
+   border-color: #3fffd2;
+   margin-bottom: 22px;
+   padding-left: 15px;
+   margin-left: 11px;
    
   }
 
@@ -69,4 +83,10 @@ body{
     height: 15em;
     width: 25em;
   }
+  
+  #container{
+   width: -webkit-fill-available;
+   padding-left: 10px;
+  }
+
   

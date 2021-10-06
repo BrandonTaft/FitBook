@@ -2,12 +2,13 @@
 
 .navBar {
     position: relative;
+  
   }
   
   .navBar button {
     position: fixed;
     
-    top: 20px;
+    top: ;
     z-index: 10;
     cursor: pointer;
     background: transparent;;
@@ -35,7 +36,7 @@
     width: 100%;
   }
   
-  a {
+  #a{
     display: block;
     padding: 10px 40px;
     text-decoration: none;
@@ -50,12 +51,13 @@
 
   #buttonBox{
       height: 30px;
-     
+     width: 100vw;
       background: #2f4f4f;
+      
      
   }
 
-  @media (max-device-width:600px) {
+  @media (max-device-width:1024px) {
     #buttonBox{
         height: 100px;
     }

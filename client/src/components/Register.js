@@ -17,7 +17,7 @@ function Register(props) {
     }
     const handleRegisterButton = () => {
 
-        fetch('http://127.0.0.1:8080/api/register', {
+        fetch('https://lit-ravine-06265.herokuapp.com/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

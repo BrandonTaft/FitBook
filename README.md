@@ -1,6 +1,5 @@
-# Workout-Anytime
 
-<div  align='center' height="50px">:floppy_disk: &nbsp Workout Anytime &nbsp  :floppy_disk:</div>
+<h1 align='center'>:muscle: &nbsp Workout Anytime &nbsp :muscle:  </h1>
 
 <h3 text-decoration:none align='center'> 🛠️ This App Was Built With 🛠️<h3>             <br></br>
 <div align='center'>
@@ -31,9 +30,11 @@
    <a href="https://www.linkedin.com/in/brandonmtaft">
   <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/html5-original.svg" />
   </a>
-  </div>
-  <h1></h1>
-  <h3 align= 'center'>What It Does</h3>
-  <p align='center'>This is an inventory app that utilizes React for the front-end and Nodejs and Sequelize for the Back-end with a PostgresSQL database. It allows the user to register and login with Bcrypt encryption and JWT authentication. Authentication is used on both the back-end and the client side. The user can then add and delete inventory with a range of datatypes. It was made as a practice project and is set up for a video game inventory.  </p>
+  </div>   <br></br>
+ 
+  <h3 align= 'center'>Workout Anytime</h3>
+  <h4 style="color: green" align= 'center'>The Fitness Social Media App</h4>
+   
+  <p align='center'>This is a Fitness App designed to be a community of people that can post and share public or private workouts. This includes videos and whole workout plans. You can add the post to your private page or to the public page for all to see. There is also a direct messaging option in it as well. This app utilizes React and Redux for the front-end and Nodejs and Sequelize for the Back-end with a PostgresSQL database. It allows the user to register and login with Bcrypt encryption and JWT authentication. Authentication is used on both the back-end and the client side.   </p>
   <h3 align="center">Thank You For Stopping By!</h3> 
 <p align='center'>For enquiries or empolyment oppurtunities, please reach out at <a href="btaftcan@gmail.com">Btaftcan@gmail.com</a> or over on <a href="https://www.linkedin.com/in/brandonmtaft">LinkedIn</a>.</p>

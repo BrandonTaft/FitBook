@@ -1,15 +1,12 @@
-
 const express = require('express')
 const models = require('./models')
 const cors = require('cors')
 const app = express()
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-const mail = require('./models/mail')
-
-
+const authenticate = require('./middlewares/authMiddleware')
 const salt = 10
-
+require('dotenv').config()
 app.use(express.json())
 app.use(cors())
 
@@ -17,8 +14,7 @@ app.use(cors())
 
 app.post('/api/register', async (req, res) => {
 
-    const firstName = req.body.firstName
-    const lastName = req.body.lastName
+    
     const name = req.body.name
     const password = req.body.password
     const token = req.body.token
@@ -38,8 +34,6 @@ app.post('/api/register', async (req, res) => {
                 const user = models.Users.build({
                     name: name,
                     password: hash,
-                    first_name: firstName,
-                    last_name: lastName,
                     token: token
                 })
 
@@ -70,8 +64,8 @@ app.post('/api/login', async (req, res) => {
     if (user != null) {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
-                const token = jwt.sign({ name: user.name }, "SECRETKEY")
-                res.json({ success: true, token: token, name:name})
+                const token = jwt.sign({ name: name }, process.env.JWT_SECRET_KEY)
+                res.json({ success: true, token: token, name:name, user_id: user.id})
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -90,7 +84,7 @@ const accounts = [
     { accountType: 'savings', name: 'mary' }
 ]
 
-app.get('/api/profile', (req, res) => {
+app.get('/api/profile', authenticate,(req, res) => {
 
     const authHeader = req.headers['authorization']
     if (authHeader) {
@@ -139,7 +133,7 @@ app.get('/api/profile', (req, res) => {
 
 //***************************GET USER INFO***************************//
 
-app.get('/api/user/:userId', (req, res) => {
+app.get('/api/user/:userId',authenticate,(req, res) => {
 
     const userId = parseInt(req.params.userId)
 
@@ -156,7 +150,7 @@ app.get('/api/user/:userId', (req, res) => {
 
 //***************************DELETE USER***************************//
 
-app.delete('/api/user/:userId', (req, res) => {
+app.delete('/api/user/:userId', authenticate, (req, res) => {
 
     const userId = parseInt(req.params.userId)
 
@@ -173,8 +167,8 @@ app.delete('/api/user/:userId', (req, res) => {
 
 //Retrieve All things From DataBase
 
-app.get('/api/publicthings', (req, res) => {
-    models.PubliThings.findAll({})
+app.get('/api/publicthings', authenticate, async(req, res) => {
+    await models.PubliThings.findAll({})
         .then(things => {
             res.json(things)
         })
@@ -182,7 +176,7 @@ app.get('/api/publicthings', (req, res) => {
 
 //***************************ADD PUBLIC THINGS TO DATABASE***************************//
 
-app.post('/api/addpublicthings', (req, res) => {
+app.post('/api/addpublicthings', authenticate,(req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -211,7 +205,7 @@ app.post('/api/addpublicthings', (req, res) => {
 
 //***************************DELETE THING FROM PUBLIC DATABASE***************************//
 
-app.delete('/api/publicthings/:thingId', (req, res) => {
+app.delete('/api/publicthings/:thingId', authenticate,(req, res) => {
 
     const thingId = parseInt(req.params.thingId)
 
@@ -226,12 +220,19 @@ app.delete('/api/publicthings/:thingId', (req, res) => {
 })
  //**************************PRIVATE HOME PAGE (SHOW ALL PRIVATE THINGS)**************************//
 
+//Retrieve All things From DataBase
+
+app.get('/api/things', authenticate, async(req, res) => {
+    await models.Things.findAll({})
+        .then(things => {
+            res.json(things)
+        })
+})
+
+
 //Retrieve All things From DataBase With Specific user_Id
 
-
-
-
-app.get('/api/mythings/:user_Id', (req, res) => {
+app.get('/api/mythings/:user_Id', authenticate,(req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
         where: {
@@ -245,7 +246,7 @@ app.get('/api/mythings/:user_Id', (req, res) => {
 
 //***************************ADD PRIVATE THINGS TO DATABASE***************************//
 
-app.post('/api/addmythings', (req, res) => {
+app.post('/api/addmythings', authenticate,(req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -276,7 +277,7 @@ app.post('/api/addmythings', (req, res) => {
 
 //***************************DELETE THING FROM DATABASE***************************//
 
-app.delete('/api/mythings/:thingId', (req, res) => {
+app.delete('/api/mythings/:thingId',authenticate, (req, res) => {
 
     const thingId = parseInt(req.params.thingId)
 
@@ -291,7 +292,7 @@ app.delete('/api/mythings/:thingId', (req, res) => {
 })
 
 //***************************GET MAIL***************************//
-app.get('/api/getmail/:name', (req, res) => {
+app.get('/api/getmail/:name', authenticate,(req, res) => {
     const userName = (req.params.name)
     models.Mail.findAll({
         where: {
@@ -304,7 +305,7 @@ app.get('/api/getmail/:name', (req, res) => {
 })
 //***************************ADD TO MAIL DATABASE***************************//
 
-app.post('/api/addmail', (req, res) => {
+app.post('/api/addmail',authenticate, (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -333,7 +334,7 @@ app.post('/api/addmail', (req, res) => {
 
 //***************************DELETE Mail FROM DATABASE***************************//
 
-app.delete('/api/deletemail/:mailId', (req, res) => {
+app.delete('/api/deletemail/:mailId', authenticate,(req, res) => {
 
     const mailId = parseInt(req.params.mailId)
 

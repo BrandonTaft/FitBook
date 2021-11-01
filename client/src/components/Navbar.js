@@ -1,8 +1,8 @@
 import React, { useState } from "react"
-import './Navbar.css'
 import { NavLink } from "react-router-dom";
 import { MdClose } from "react-icons/md"
 import { FiMenu } from "react-icons/fi"
+import "./App.css"
 
 
 
@@ -21,23 +21,21 @@ function Navbar() {
 
     return (
         <nav className="navBar">
-          <div id= 'buttonBox'>  
-            <button onClick={handleToggle}>{navbarOpen ? (
-                <MdClose style={{ color: "#3fffd2", width: "40px", height: "40px" }} />) : (
-                <FiMenu style={{ color: "#3fffd2", width: "40px", height: "40px" }} />
-            )}</button>
+            <div id='buttonBox'>
+                
+                <button onClick={handleToggle}>{navbarOpen ? (
+                    <MdClose style={{ color: "#3fffd2", width: "40px", height: "40px" }} />) : (
+                    <FiMenu style={{ color: "#3fffd2", width: "40px", height: "40px" }} />
+                )}</button>
+
             </div>
+
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
-            <NavLink to="/logout" className='inactive'id="a">Log Out</NavLink>
-            <NavLink to="/allthings" className='noShow'id='a' >All Workouts</NavLink>
-            <NavLink to="/addthings" className='inactive'id='a' >Add Workout</NavLink>
-            <NavLink to="/mythings" className='inactive'id='a' >Personal Workouts</NavLink>
-            <NavLink to="/addmything" className='noShow'id='a' >Add Personal Workout</NavLink>
-       
-            <NavLink to="/allmail" className='inactive'id='a' >Mail</NavLink>
-
-
-
+                <NavLink to="/logout" className='inactive' id="a">Log Out</NavLink>
+                <NavLink to="/publicfeed" className='noShow' id='a' >Public Feed</NavLink>
+                <NavLink to="/post" className='inactive' id="a" >Add Post</NavLink>
+                 <NavLink to="/private" className='inactive' id='a' >Profile</NavLink>
+                <NavLink to="/messages" className='inactive' id='a' >Messages</NavLink>
             </ul>
         </nav>
     )

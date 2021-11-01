@@ -1,6 +1,5 @@
-
 import { Redirect } from "react-router-dom";
-
+import  "./App.css"
 
 function Logout(props) {
     localStorage.clear();

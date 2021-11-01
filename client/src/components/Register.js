@@ -1,6 +1,6 @@
-
 import React, { useState } from 'react'
-import './login.css';
+import  "./App.css"
+
 
 function Register(props) {
 
@@ -42,15 +42,19 @@ function Register(props) {
     }
     
     return (
+
+        <div id="page">
+        <div id="logo-container">
+        <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
+      </div>
         <div id="log_RegBox">
-            <h1 className=" log_RegTitle">Become A Member</h1>
+            <h1 className=" log_RegTitle">Register</h1>
             {message && <p>{message}</p>}
             <input className="log_RegTextbox" type="text" name="name" onChange={handleRegisterChange} placeholder=" Enter Desired User name"  /><br></br>
             <input className="log_RegTextbox" type="password" name="password" onChange={handleRegisterChange} placeholder="Enter Desired Password" /><br></br>
-            <input className="log_RegTextbox" type="text" name="firstName" onChange={handleRegisterChange} placeholder="First Name" /><br></br>
-            <input className="log_RegTextbox" type="text" name="lastName" onChange={handleRegisterChange} placeholder="Last Name" /><br></br>
             <button className="log_RegButton" onClick={handleRegisterButton}>Submit</button>
 
+        </div>
         </div>
     )
 }

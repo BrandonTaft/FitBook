@@ -1,28 +1,18 @@
-
 import { NavLink } from "react-router-dom";
- import './Menu.css'
-
-
+import  "./App.css"
+ 
 
 function Menu() {
 
-     
-
-    return (
+      return (
         <div id='container'>
 
             <NavLink to="/logout" className='inactive'>Log Out</NavLink>
-            <NavLink to="/allthings" id='noShow' >All Workouts</NavLink>
-            <NavLink to="/addthings" className='inactive' >Add Workout</NavLink>
-            <NavLink to="/mythings" className='inactive' >Personal Workouts</NavLink>
-            <NavLink to="/addmything" id='noShow' >Add Personal Workout</NavLink>
-            
-            <NavLink to="/allmail" className='inactive' >Mail</NavLink>
-
-                       
-                
-
-
+            <NavLink to="/publicfeed" id='noShow' >Public Feed</NavLink>
+           
+            <NavLink to="/private" className='inactive' >Private Feed</NavLink>
+           
+            <NavLink to="/messages" className='inactive' >Messages</NavLink>
 
         </div>
     )

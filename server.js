@@ -66,7 +66,7 @@ app.post('/api/login', async (req, res) => {
     if (user != null) {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
-                const token = jwt.sign({ name: name }, process.env.JWT_SECRET_KEY)
+                const token = jwt.sign({ name: name }, "SECRETKEY")
                 res.json({ success: true, token: token, name:name, user_id: user.id})
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
@@ -352,4 +352,6 @@ app.delete('/api/deletemail/:mailId', authenticate,(req, res) => {
 })
 //***************************SET PORT***************************//
 
-app.listen(process.env.PORT || 5000)
+app.listen( process.env.PORT);
+// app.listen(8080, (req, res) => {
+//     console.log('Server Is Running....')

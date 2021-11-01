@@ -54,7 +54,7 @@ function Private(props) {
       <div id="logo-container">
         <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
       </div>
-      <h2><NavLink to="/post" className='postButton'  >Post A Workout</NavLink></h2>
+     
       {thingItems}
     </div>
   )

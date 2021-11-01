@@ -13,7 +13,7 @@ function Post(props) {
 
             ...post,
             priority:(localStorage.getItem('name')),
-                userId: parseInt(localStorage.getItem('user_Id')),
+            userId: parseInt(localStorage.getItem('user_Id')),
             [e.target.name]: e.target.value
 
         })

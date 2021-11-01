@@ -434,6 +434,7 @@ body{
     #thingList{
       max-height: 300px;
       overflow: scroll;
+      min-height: 120px;
     }
    
   }
@@ -478,6 +479,7 @@ body{
   #thingList{
     max-height: 300px;
     overflow: scroll;
+    min-height: 120px;
   }
 }
   @media  (min-device-width : 411px) and (max-device-width : 480px){
@@ -515,6 +517,7 @@ body{
     #thingList{
       max-height: 300px;
       overflow: scroll;
+      min-height: 120px;
     }
   
   }
@@ -522,6 +525,12 @@ body{
     #mailList{
       width: 80vw;
       margin: 4vw;
+    }
+
+    #thingList{
+      max-height: 300px;
+      overflow: scroll;
+      min-height: 120px;
     }
   }
 

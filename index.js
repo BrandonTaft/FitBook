@@ -215,7 +215,7 @@ app.delete('/api/publicthings/:thingId', authenticate,(req, res) => {
         }
 
     }).then(_ => {
-        res.json({ message: "IT GONE" })
+        res.json({ message: "DELETED" })
     })
 })
  //**************************PRIVATE HOME PAGE (SHOW ALL PRIVATE THINGS)**************************//

@@ -10,7 +10,7 @@ function authenticate(req, res, next) {
     if (headers) {
         try {
             const token = headers.split(' ')[1]
-            const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY)
+            const decoded = jwt.verify(token, "SECRETKEY")
 
             if (decoded) {
                 const name = decoded.name

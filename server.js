@@ -152,7 +152,7 @@ app.get('/api/user/:userId',authenticate,(req, res) => {
 
 //***************************DELETE USER***************************//
 
-app.delete('/api/user/:userId', authenticate, (req, res) => {
+app.delete('/api/user/:userId', (req, res) => {
 
     const userId = parseInt(req.params.userId)
 
@@ -178,7 +178,7 @@ app.get('/api/publicthings', authenticate, async(req, res) => {
 
 //***************************ADD PUBLIC THINGS TO DATABASE***************************//
 
-app.post('/api/addpublicthings', authenticate,(req, res) => {
+app.post('/api/addpublicthings', (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -207,7 +207,7 @@ app.post('/api/addpublicthings', authenticate,(req, res) => {
 
 //***************************DELETE THING FROM PUBLIC DATABASE***************************//
 
-app.delete('/api/publicthings/:thingId', authenticate,(req, res) => {
+app.delete('/api/publicthings/:thingId', (req, res) => {
 
     const thingId = parseInt(req.params.thingId)
 
@@ -248,7 +248,7 @@ app.get('/api/mythings/:user_Id', authenticate,(req, res) => {
 
 //***************************ADD PRIVATE THINGS TO DATABASE***************************//
 
-app.post('/api/addmythings', authenticate,(req, res) => {
+app.post('/api/addmythings', (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -279,7 +279,7 @@ app.post('/api/addmythings', authenticate,(req, res) => {
 
 //***************************DELETE THING FROM DATABASE***************************//
 
-app.delete('/api/mythings/:thingId',authenticate, (req, res) => {
+app.delete('/api/mythings/:thingId', (req, res) => {
 
     const thingId = parseInt(req.params.thingId)
 
@@ -307,7 +307,7 @@ app.get('/api/getmail/:name', authenticate,(req, res) => {
 })
 //***************************ADD TO MAIL DATABASE***************************//
 
-app.post('/api/addmail',authenticate, (req, res) => {
+app.post('/api/addmail', (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
@@ -336,7 +336,7 @@ app.post('/api/addmail',authenticate, (req, res) => {
 
 //***************************DELETE Mail FROM DATABASE***************************//
 
-app.delete('/api/deletemail/:mailId', authenticate,(req, res) => {
+app.delete('/api/deletemail/:mailId',(req, res) => {
 
     const mailId = parseInt(req.params.mailId)
 

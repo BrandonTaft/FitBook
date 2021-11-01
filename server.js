@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const models = require('./models')
 const cors = require('cors')
@@ -6,7 +7,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const authenticate = require('./middlewares/authMiddleware')
 const salt = 10
-require('dotenv').config()
+
+
 app.use(express.json())
 app.use(cors())
 

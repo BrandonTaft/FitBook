@@ -350,6 +350,4 @@ app.delete('/api/deletemail/:mailId', authenticate,(req, res) => {
 })
 //***************************SET PORT***************************//
 
-app.listen(8080, (req, res) => {
-    console.log('Server Is Running....')
-})
+app.listen(process.env.PORT || 5000)

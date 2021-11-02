@@ -35,6 +35,6 @@
   <h3 align= 'center'>Workout Anytime</h3>
   <h4 style="color: green" align= 'center'>The Fitness Social Media App</h4>
    
-  <p align='center'>This is a Fitness App designed to be a community of people that can post and share public or private workouts. This includes videos and whole workout plans. You can add the post to your private page or to the public page for all to see. There is also a direct messaging option in it as well. This app utilizes React and Redux for the front-end and Nodejs and Sequelize for the Back-end with a PostgresSQL database. It allows the user to register and login with Bcrypt encryption and JWT authentication. Authentication is used on both the back-end and the client side.   </p>
+  <p align='center'>This is a Fitness App designed to be a community of people that can post and share public or private workouts. This includes videos and whole workout plans. There is a profile page where you can delete  your posts. There is also a direct messaging option in it as well. This app utilizes React and Redux for the front-end and Nodejs, Express and Sequelize for the Back-end with a PostgresSQL database. It allows the user to register and login with Bcrypt encryption and JWT authentication. Authentication is used on both the back-end and the client side.   </p>
   <h3 align="center">Thank You For Stopping By!</h3> 
 <p align='center'>For enquiries or empolyment oppurtunities, please reach out at <a href="btaftcan@gmail.com">Btaftcan@gmail.com</a> or over on <a href="https://www.linkedin.com/in/brandonmtaft">LinkedIn</a>.</p>

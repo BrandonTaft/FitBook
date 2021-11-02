@@ -36,10 +36,11 @@ function SendMessage(props) {
     }     
 
     return (
-
+        <div>
+        <Navbar />
         <div id="boxes">
            
-            <Navbar />
+            
         <h1>Send Message</h1>
         <input className="textbox" type="text" name="priority" onChange={handleSendMessage} placeholder="Send Mail To:" /><br></br>
         <input className="textbox" type="text" name="name" onChange={handleSendMessage} placeholder="Title" /><br></br>
@@ -50,6 +51,7 @@ function SendMessage(props) {
         <input className="textbox" type="tel" name="contactNumber" onChange={handleSendMessage} placeholder="Contact Number" /><br></br>
         <textarea id='description' className="textbox" type="text" name="description" onChange={handleSendMessage} placeholder="Description" /><br></br>
         <button className="billButton" onClick={postTODB}>Send Message</button>
+    </div>
     </div>
         )
     

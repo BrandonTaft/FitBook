@@ -25,7 +25,7 @@ function Messages(props) {
 
     const messageItems = props.mail.map(mail=> {
       if(mail.link != null)
-        return <ul key={mail.id} id = "mailList">
+        return <ul key={mail.id} id = "thingList">
   
             <a rel={'external'} href={`${mail.link}` } className="thingTitle">{mail.name}</a>
             <h3> Sender: {mail.contact}</h3>

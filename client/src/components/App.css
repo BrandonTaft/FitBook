@@ -5,7 +5,7 @@
 }
 body{
   
-  background: #6a6a58;
+  background: white;
   color:black;
   font-size: x-large;
 }
@@ -237,7 +237,7 @@ body{
 }
 
 .postTitle{
-  color: #3fffd2;
+  color: ;
   text-shadow: 0px 7px 12px black;
 }
 /* ******************PRIVATE********************* */
@@ -251,7 +251,7 @@ body{
 .thingTitle{
   font-size:  x-large;
   font-weight: bold;
-  color: #3fffd2;
+  color: #132b42;
   text-shadow: 0px 7px 12px black;
   text-decoration: none;
 }
@@ -274,7 +274,7 @@ body{
   padding: .5em;
   margin-left: 2.5%;
   text-decoration: none;
-  margin-bottom: 2%;
+  margin-bottom: 6%;
   margin-top: 5%;
 }
 
@@ -397,11 +397,12 @@ body{
 
   #full-logo{
     margin-bottom: 5%;
+    width: 200px;
   }
 .postButton{
  
   text-decoration: none;
-  color: #3fffd2;
+  color: #132b42;
   margin-left: 2%;
 }
 
@@ -638,7 +639,7 @@ body{
       }
 
       #full-logo{
-        width: 300px;
+        width: 400px;
         height: 250px;
         margin-bottom: 1%;
     }
@@ -700,7 +701,7 @@ body{
     }
 
     #full-logo{
-      width: 300px;
+      width: 400px;
       height: 250px;
       margin-bottom: 1%;
   }
@@ -745,7 +746,7 @@ body{
     }
 
     #full-logo{
-      width: 300px;
+      width: 400px;
       height: 250px;
       margin-bottom: 1%;
   }

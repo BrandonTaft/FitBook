@@ -47,10 +47,10 @@
 https://user-images.githubusercontent.com/86688411/140175098-f77f0966-082b-4634-b5a6-af26da1cea3f.mp4
 
 <a href="https://mydevsite.surge.sh">
-  <img  src="https://github.com/BrandonTaft/FitBook/blob/master/fitbookhome.png" />
+  <img width="49%" src="https://github.com/BrandonTaft/FitBook/blob/master/fitbookhome.png" />
   </a>
  <a href="https://mydevsite.surge.sh">
-  <img  src="https://github.com/BrandonTaft/FitBook/blob/master/fitbooklog.png" />
+  <img width="49%" src="https://github.com/BrandonTaft/FitBook/blob/master/fitbook1.png" />
   </a>
 
 

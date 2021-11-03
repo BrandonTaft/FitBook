@@ -188,6 +188,7 @@ body{
   font-size: 1em;
   text-align: center;
   font-variant: all-petite-caps;
+  padding-bottom: 5px;
 
 }
 
@@ -581,8 +582,10 @@ body{
 }
 
 #thingList{
-  min-height: 230px;
-}
+  min-height: 250px;
+  max-height: 400px;
+  overflow: scroll;
+  }
 
 .menuNav.showMenu {
   background: #132b42;
@@ -610,6 +613,9 @@ body{
       border: solid black; 
       width: 66vw;
       margin-left: 2%;
+      min-height: 250px;
+      max-height: 400px;
+      overflow: scroll;
       }
 
       #buttonBox{
@@ -646,10 +652,6 @@ body{
     
       #logo-container{
       margin-top: 2%;
-    }
-
-    #thingList{
-      min-height: 330px;
     }
 
     .menuNav.showMenu {
@@ -711,7 +713,9 @@ body{
     }
 
     #thingList{
-      min-height: 330px;
+    min-height: 250px;
+    max-height: 400px;
+    overflow: scroll;
     }
 
     .menuNav.showMenu {
@@ -756,8 +760,10 @@ body{
   }
 
   #thingList{
-    min-height: 330px;
-  }
+    min-height: 350px;
+    max-height: 400px;
+    overflow: scroll;
+    }
 
   .menuNav.showMenu {
     background: #132b42;

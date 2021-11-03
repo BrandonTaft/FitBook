@@ -31,11 +31,11 @@ function Navbar() {
             </div>
 
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
-                <NavLink to="/logout" className='inactive' id="a">Log Out</NavLink>
-                <NavLink to="/publicfeed" className='noShow' id='a' >Public Feed</NavLink>
-                <NavLink to="/post" className='inactive' id="a" >Add Post</NavLink>
+                
+                <NavLink to="/publicfeed" className='noShow' id='a' >Home</NavLink>
                  <NavLink to="/private" className='inactive' id='a' >Profile</NavLink>
                 <NavLink to="/messages" className='inactive' id='a' >Messages</NavLink>
+                <NavLink to="/logout" className='inactive' id="a">Log Out</NavLink>
             </ul>
         </nav>
     )

@@ -40,7 +40,16 @@
   </a>
   </div> 
   <br></br>
-  <a href="https://mydevsite.surge.sh">
-  <img  width="50 height="50 src="https://github.com/BrandonTaft/FitBook/blob/master/fitbook.mp4" />
+ 
+ 
+
+
+https://user-images.githubusercontent.com/86688411/140175098-f77f0966-082b-4634-b5a6-af26da1cea3f.mp4
+
+
+
+
+
+ 
   <h3 align="center">Thank You For Stopping By!</h3> 
 <p align='center'>For enquiries or empolyment oppurtunities, please reach out at <a href="mailto:btaftcan@gmail.com">btaftcan@gmail.com</a> or over on <a href="https://www.linkedin.com/in/brandonmtaft">LinkedIn</a>.</p>

@@ -1,70 +1,64 @@
-# Getting Started with Create React App
+<h1 align='center'>:muscle: &nbsp FitBook &nbsp :muscle:  </h1>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+ 
+  <h3 align= 'center'>The Fitness Social Media App</h3>
+ 
+   
+  <p align='center'>This App is designed to be a community of people that can share their workouts. This includes videos and whole workout plans. Once the user has registered, the password is stored and encrypted with Bcrypt. Upon successful login the user is authenticated and authorized using JWT middleware. The Home page is a public feed that displays all of the posts. There is a profile page where the user can delete any of their posts. There is also direct messaging that utilizes its own seperate database. The messages are sent using the recipients username. This app was built using React and Redux for the front-end and Nodejs, Express and Sequelize for the Back-end with a PostgresSQL database.   </p>
+  
+  <br></br>
+  <h3 text-decoration:none align='center'> 🛠️ This App Was Built With 🛠️<h3>        
+<div align='center'>
+<a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/javascript-original.svg" />
+  </a> 
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/css3-original.svg" />
+  </a>
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/visualstudio-plain.svg"     />
+  </a>
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+ <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/sequelize-original.svg"     />
+  </a>
+   <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/react-original.svg" />
+  </a>
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50  src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/redux-original.svg" />
+  </a><a href="https://www.linkedin.com/in/brandonmtaft">
+   <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50  src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/postgresql-original.svg"    />
+  </a>
+  <a href="https://www.linkedin.com/in/brandonmtaft">
+   <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/nodejs-original.svg" />
+  </a>
+   <a href="https://www.linkedin.com/in/brandonmtaft">
+  <img  width="50 height="50 src="https://github.com/BrandonTaft/BrandonTaft/blob/main/assets/html5-original.svg" />
+  </a>
+  </div> 
+  <br></br>
+ 
+ 
+<h2 align= 'center'>Website</h2>
+<p align='center'>
+<a align='center' href="https://fitbook.surge.sh" >Link to Website</a>
+ <br />
+ Guest Login: guest
+ <br />
+ password: password
 
-In the project directory, you can run:
+https://user-images.githubusercontent.com/86688411/140175098-f77f0966-082b-4634-b5a6-af26da1cea3f.mp4
 
-### `npm start`
+<a href="https://brandontaft.surge.sh">
+  <img width="49%" src="https://github.com/BrandonTaft/FitBook/blob/master/fitbookhome.png" />
+  </a>
+ <a href="https://brandontaft.surge.sh">
+  <img width="49%" src="https://github.com/BrandonTaft/FitBook/blob/master/fitbook1.png" />
+  </a>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+ 
+  <h3 align="center">Thank You For Stopping By!</h3> 
+<p align='center'>For enquiries or empolyment oppurtunities, please reach out at <a href="mailto:btaftcan@gmail.com">btaftcan@gmail.com</a> or over on <a href="https://www.linkedin.com/in/brandonmtaft">LinkedIn</a>.</p>

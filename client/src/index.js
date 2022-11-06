@@ -31,10 +31,6 @@ const store2 = createStore(reducer2, composeEnhancers(
   applyMiddleware(thunk)
 ))
 
-
-
-
-
 ReactDOM.render(
 
     <React.StrictMode>

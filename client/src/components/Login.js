@@ -45,14 +45,11 @@ function Login(props) {
 
 
     return (
-        <div id="page">
-        <div id="logo-container">
-        <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
-      </div>
-        <div id="log_RegBox">
-            <h1 className=" log_RegTitle">Login</h1>
-            <input className="log_RegTextbox" type="text" name="name" onChange={handleLoginChange} placeholder="User name" /><br></br>
-            <input className="log_RegTextbox" type="password" name="password" onChange={handleLoginChange} placeholder="Password" /><br></br>
+        <div>
+        <div className="flex-column">
+            <h1>LOGIN</h1>
+            <input className="textbox" type="text" name="name" onChange={handleLoginChange} placeholder="User name" /><br></br>
+            <input className="textbox" type="password" name="password" onChange={handleLoginChange} placeholder="Password" /><br></br>
             {message && <p className="message" >{message}</p>}
             <button className="log_RegButton" onClick={handleLoginButton}>Login</button><br></br>
            <NavLink to="/register"className='regLink'>Register Here</NavLink>

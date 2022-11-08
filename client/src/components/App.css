@@ -1,29 +1,25 @@
 
-/* ******************LOGIN********************* */
-#page{
-  padding-top: 2%;
-}
+
 body{
-  
-  background: white;
-  color:black;
-  font-size: x-large;
+  background: rgb(3,38,164);
+  background: radial-gradient(circle, rgba(3,38,164,1) 0%, rgba(11,54,162,1) 0%, rgba(3,12,27,1) 100%);
 }
 
-.log_RegTitle{
-  color: #2f4f4f;
-  text-shadow: 0px 8px 15px black;
-  margin-top: auto;
+h1{
+  color: #fff;
 }
 
-#log_RegBox{
+.flex-column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
-   
 
+.textbox { 
+  border-radius: 5px;   
+  width:60vw;
+} 
+   
   .log_RegButton{
     background-color:#2f4f4f; 
     box-shadow: 0px 8px 15px black; 
@@ -38,18 +34,7 @@ body{
 
   }
 
-  .log_RegTextbox { 
-    background: rgb(242, 243, 245); 
-    border: 1px solid rgb(34, 87, 34); 
-    border-radius: 5px; 
-    box-shadow: 0px 8px 15px black; 
-    color: rgb(34, 87, 34); 
-    outline: none; 
-    height: 3em; 
-    width:60vw;
-
-    font-size: medium;
-  } 
+  
 
   
   .message{
@@ -189,7 +174,6 @@ body{
   text-align: center;
   font-variant: all-petite-caps;
   padding-bottom: 5px;
-
 }
 
 
@@ -287,7 +271,6 @@ body{
   border-width: 1px; 
   color:#3fffd2; 
   outline: none; 
-   
   width: 4em; 
   height:fit-content;
   padding-top: .2em;
@@ -297,6 +280,7 @@ body{
   margin-bottom: 6%;
   margin-top: 5%;
 }
+
 #contact{
   text-decoration:none;
   font-size: large;
@@ -309,23 +293,7 @@ body{
 .noShow{
   display: flex;
 }
-
-
-	.textbox { 
-    background: white; 
-    border: 1px solid rgb(34, 87, 34); 
-    border-radius: 5px; 
-    box-shadow: 0 0 5px 3px rgb(34, 87, 34); 
-    color:black; 
-    outline: none; 
-    height:23px; 
-    width: 75%; 
-    margin: 10px;
-    font-size: 70%;
-    font-weight: bold;
-  } 
   
-
   .button{
     background:#2f4f4f; 
     border: 1px solid #f8f554; 
@@ -391,401 +359,8 @@ body{
    padding-left: 10px;
   }
 
-  #logo-container{
-    text-align: center;
-    margin-top: 5%;
-  }
-
-  #full-logo{
-    margin-bottom: 5%;
-    width: 200px;
-  }
 .postButton{
- 
   text-decoration: none;
   color: #132b42;
   margin-left: 2%;
 }
-
-#half-logo{
-  text-align: center;
-}
-
-  /* ******************MEDIA QUERIES********************* */
-
-
-  @media  (max-device-width : 320px){
-    #publicpost{
-      margin-top: 3%;
-    }
-
-    #page{
-      padding-top: 0%;
-    }
-
-    .fill img {
-      min-height: 100%;
-       min-width: 100%; 
-      object-fit: cover;
-    }
-
-    #nameBox{
-      width: -webkit-fill-available;
-    }
-
-    #thingList{
-      max-height: 300px;
-      overflow: scroll;
-      min-height: 120px;
-    }
-   
-  }
-
-  @media  (min-device-width : 322px) and (max-device-width : 410px){ 
-    
-    #page{
-      padding-top: 3%;
-    }
-    
-    #container{
-      display: none;
-    }
-
-    #listContainer{
-      width: 96%;
-      padding: 2%;
-    }
-  
-  #description{
-    height: 7em;
-    width: 75%;
-    font-variant: all-petite-caps;
-    font-size: inherit;
-    font-weight: bold;
-  }
-
-  #words{
-    margin-top: 3%;
-  }
-
-  .fill img {
-    min-height: 100%;
-     min-width: 100%; 
-    object-fit: cover;
-  }
-
-  #nameBox{
-    width: -webkit-fill-available;
-  }
-
-  #thingList{
-    max-height: 300px;
-    overflow: scroll;
-    min-height: 120px;
-  }
-}
-  @media  (min-device-width : 411px) and (max-device-width : 480px){
-    
-    #page{
-      margin-top: 8%;
-      }
-    
-    #description{
-      height: 9em;
-      width: 75%;
-      font-variant: all-petite-caps;
-      font-size: inherit;
-      font-weight: bold;
-    }
-
-    #publicpost{
-      margin-bottom: 8%;
-    }
-
-    #words{
-      margin-top: 8%;
-    }
-
-    #nameBox {
-      width: -webkit-fill-available;
-    }
-
-    .fill img {
-      min-height: 100%;
-       min-width: 100%; 
-      object-fit: cover;
-    }
-
-    #thingList{
-      max-height: 300px;
-      overflow: scroll;
-      min-height: 120px;
-    }
-  
-  }
-  @media  (min-device-width : 481px) and (max-device-width : 767px){
-    #mailList{
-      width: 80vw;
-      margin: 4vw;
-    }
-
-    #thingList{
-      max-height: 300px;
-      overflow: scroll;
-      min-height: 120px;
-    }
-  }
-
-  @media  (min-device-width : 768px) and (max-device-width : 1023px){
-   
-    #page{
-      margin-top: 10%;
-      }
-   
-    #buttonBox{
-      height: 80px;
-  }
-
-  #publicpost{
-    margin-bottom: 8%;
-  }
-
-  .textbox{
-    margin-top: 2%;
-    height: 30px;
-  }
-
-  #words{
-    margin-top: 8%;
-  }
-
-  #description{
-    height: 12em;
-  }
-
-  .button{
-    width: 9em;
-  }
-
-  #publicpost{
-    font-size: 70px;
-  }
-
-  #full-logo{
-    width: 300px;
-    height: 250px;
-    margin-bottom: 1%;
-}
-
-#logo-container{
-  margin-top: 2%;
-}
-
-#thingList{
-  min-height: 250px;
-  max-height: 400px;
-  overflow: scroll;
-  }
-
-.menuNav.showMenu {
-  background: #132b42;
-  width: max-content;
-  height: fit-content;
-}
-
-  }
-
-  @media  (min-device-width : 1024px) and (max-device-width : 1200px){
-  
-    #page{
-      margin-top: 12%;
-      }
-   
-    #thingList{
-      background: rgba(113, 135, 175, 0.4); 
-      padding-left: 10px;
-      padding-bottom: 10pxs;
-      border: solid;
-      height: 22%;
-      border-radius: 10px; 
-      height: fit-content;
-      box-shadow: 0px 8px 15px #3fffd2;;
-      border: solid black; 
-      width: 66vw;
-      margin-left: 2%;
-      min-height: 250px;
-      max-height: 400px;
-      overflow: scroll;
-      }
-
-      #buttonBox{
-        height: 100px;
-      }  
-      #publicpost{
-        font-size: 100px;
-        margin-bottom: 7%;
-      }
-      .textbox{
-        margin-top: 2%;
-        height: 30px;
-      }
-      #words{
-        margin-top: 8%;
-        margin-bottom: 3%;
-        font-size: 50px;
-      }
-    
-      #description{
-        height: 15em;
-      }
-    
-      .button{
-        width: 9em;
-        height: 3em;
-      }
-
-      #full-logo{
-        width: 400px;
-        height: 250px;
-        margin-bottom: 1%;
-    }
-    
-      #logo-container{
-      margin-top: 2%;
-    }
-
-    .menuNav.showMenu {
-      background: #132b42;
-      width: max-content;
-      height: fit-content;
-    }
-    
-  }
-
-  @media  (min-device-width : 1201px) and (max-device-width : 2000px){
-    
-    #page{
-      
-      }
-    
-    #buttonBox{
-      height: 100px;
-    }  
-
-    #publicpost{
-      margin-top: 3%;
-    }
-
-    #description{
-      height: 10em;
-      width: 60%;
-    }
-  
-    .button{
-      width: 9em;
-      height: 3em;
-    }
-
-    .textbox{
-      width: 50%;
-    }
-
-    #publicpost{
-      margin-top: 2%;
-    }
-
-    #words{
-      margin-top: 1%;
-    }
-
-    #listContainer{
-      width: 96%;
-    }
-
-    #full-logo{
-      width: 400px;
-      height: 250px;
-      margin-bottom: 1%;
-  }
-  
-    #logo-container{
-    margin-top: 2%;
-    }
-
-    #thingList{
-    min-height: 250px;
-    max-height: 400px;
-    overflow: scroll;
-    }
-
-    .menuNav.showMenu {
-      background: #132b42;
-      width: max-content;
-      height: fit-content;
-    }
-  }
-
-  @media  (min-device-width : 2001px){
-    
-
-    #buttonBox{
-      height: 140px;
-    } 
-    
-    .textbox{
-      width: 50%;
-    }
-
-    #description{
-      height: 10em;
-      width:60%;
-    }
-
-    #publicpost{
-      margin-top: 2%;
-    }
-
-    #words{
-      margin-top: 1%;
-    }
-
-    #full-logo{
-      width: 400px;
-      height: 250px;
-      margin-bottom: 1%;
-  }
-  
-  #logo-container{
-    margin-top: 2%;
-  }
-
-  #thingList{
-    min-height: 350px;
-    max-height: 400px;
-    overflow: scroll;
-    }
-
-  .menuNav.showMenu {
-    background: #132b42;
-    width: max-content;
-    height: fit-content;
-    
-  }
- 
-  }
-  
-  @media  (min-device-height : 812px) and (max-device-height:816px){
-    #publicpost{
-      margin-bottom: 10%;
-    }
-
-    #words{
-      margin-top: 10%;
-      margin-bottom: 10%;
-    }
-
-    #page{
-    margin-top: 12%;
-    }
-    
-  }

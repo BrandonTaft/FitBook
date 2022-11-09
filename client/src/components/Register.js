@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import  "./App.css"
+import React, { useState } from 'react';
+import { NavLink } from "react-router-dom";
+import "./App.css"
 
 
 function Register(props) {
@@ -38,23 +39,21 @@ function Register(props) {
                 }
             })
 
-   
+
     }
-    
+
     return (
 
-        <div id="page">
-        <div id="logo-container">
-        <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
-      </div>
-        <div id="log_RegBox">
-            <h1 className=" log_RegTitle">Register</h1>
+        <div className="full-page flex-column">
+            <div className="mb-2">
+                <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
+            </div>
+            <h2>REGISTER</h2>
             {message && <p>{message}</p>}
-            <input className="log_RegTextbox" type="text" name="name" onChange={handleRegisterChange} placeholder=" Enter Desired User name"  /><br></br>
-            <input className="log_RegTextbox" type="password" name="password" onChange={handleRegisterChange} placeholder="Enter Desired Password" /><br></br>
-            <button className="log_RegButton" onClick={handleRegisterButton}>Submit</button>
-
-        </div>
+            <input className="textbox" type="text" name="name" onChange={handleRegisterChange} placeholder=" Enter Desired User name" />
+            <input className="textbox mb-2" type="password" name="password" onChange={handleRegisterChange} placeholder="Enter Desired Password" />
+            <button className="btn mb-1" onClick={handleRegisterButton}>SUBMIT</button>
+            <NavLink to="/" className='white'>Back To Login</NavLink>
         </div>
     )
 }

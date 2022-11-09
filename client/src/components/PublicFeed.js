@@ -27,18 +27,15 @@ function PublicFeed(props) {
   const thingItems = props.things.map(thing => {
     
     const randomNumber = Math.floor(Math.random() * 14) + 1;
-    if(thing.link != null){
     return (
       <div key={thing.id} id='listContainer'>
-        <div id="picBox">
-          <div className="fill">
-            <img id="profile-pic" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" />
-          </div>
-          <div id='nameBox'>
+        <div key={thing.id} className="post-body">
+        <div className="avatar-container">
+            <img className="avatar" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" />
+          <div className="btn">
             {thing.priority}
           </div>
         </div>
-        <div key={thing.id} id="thingList">
           <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a>
           <div id='contactName'>
             {thing.contact}
@@ -47,35 +44,12 @@ function PublicFeed(props) {
           <p> {thing.description}</p>
         </div>
       </div>)
-      
-    }else{
-      return(<div key={thing.id} id='listContainer'>
-      <div id="picBox">
-        <div className="fill">
-          <img id="profile-pic" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" />
-        </div>
-        <div id='nameBox'>
-          {thing.priority}
-        </div>
-      </div>
-      <div key={thing.id} id="thingList">
-        <a rel={'external'} target="_blank" href="" className="thingTitle">{thing.name}</a>
-        <div id='contactName'>
-          {thing.contact}
-        </div>
-        <a id='contact' href="tel:{thing.contactNumber}">{thing.contactNumber}</a>
-        <p> {thing.description}</p>
-      </div>
-    </div>)
-    }
   })
 
   return (
-    <div>
+    <div className="full-page">
       <Navbar />
-      <div id="logo-container">
         <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
-      </div>
   <div><NavLink to="/post" className="billButton"  >Add Post</NavLink></div><br></br>
       {thingItems}
     </div>

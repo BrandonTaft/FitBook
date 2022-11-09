@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
-import  "./App.css"
+import "./App.css"
 
 
 function Login(props) {
@@ -18,7 +18,7 @@ function Login(props) {
         })
     }
 
-    const handleLoginButton = () => {
+    const handleLogin = () => {
         fetch('https://lit-ravine-06265.herokuapp.com/api/login', {
             method: 'POST',
             headers: {
@@ -29,7 +29,7 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success == true) {
-                    console.log("result",result.user_id)
+                    console.log("result", result.user_id)
                     const token = result.token
                     localStorage.setItem('jsonwebtoken', token)
                     localStorage.setItem('user_Id', result.user_id)
@@ -45,15 +45,16 @@ function Login(props) {
 
 
     return (
-        <div>
-        <div className="flex-column">
-            <h1>LOGIN</h1>
-            <input className="textbox" type="text" name="name" onChange={handleLoginChange} placeholder="User name" /><br></br>
-            <input className="textbox" type="password" name="password" onChange={handleLoginChange} placeholder="Password" /><br></br>
-            {message && <p className="message" >{message}</p>}
-            <button className="log_RegButton" onClick={handleLoginButton}>Login</button><br></br>
-           <NavLink to="/register"className='regLink'>Register Here</NavLink>
-        </div>
+        <div className="full-page flex-column">
+            <div className="mb-2">
+                <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
+            </div>
+            <h2>LOGIN</h2>
+            <input className="textbox" type="text" name="name" onChange={handleLoginChange} placeholder="User name" />
+            <input className="textbox mb-2" type="password" name="password" onChange={handleLoginChange} placeholder="Password" />
+            {message && <p className="error-message" >{message}</p>}
+            <button className="btn mb-1" onClick={handleLogin}>LOGIN</button>
+            <NavLink to="/register" className='mb-2'> <button className="btn">REGISTER</button></NavLink>
         </div>
     )
 }

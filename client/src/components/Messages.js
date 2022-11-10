@@ -46,11 +46,9 @@ function Messages(props) {
     })
 
         return (
-      
-          <div>
+          <div className='flex-column full-page'>
           <Navbar />
-          <div><NavLink to="/sendmessage" className='postButton' >Send Message</NavLink></div>
-           
+          <NavLink to="/sendmessage" className='postButton' >Send Message</NavLink>
             {messageItems}
         </div>
 

@@ -49,7 +49,7 @@ function Private(props) {
 
   return (
 
-    <div>
+    <div className='flex-column full-page'>
       <Navbar />
       <div id="logo-container">
         <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />

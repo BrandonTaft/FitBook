@@ -207,9 +207,9 @@ app.post('/api/addpublicthings', (req, res) => {
 
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 
-app.put('/api/publicthings/:id', (req, res) => {
+app.put('/api/publicthings/:id/:score', (req, res) => {
     const id = parseInt(req.params.id)
-    // const score = parseInt(req.params.score)
+    const score = parseInt(req.params.score)
     models.Things.update(
         { score: sequelize.literal('score +1') },
         { where: { id: id } }

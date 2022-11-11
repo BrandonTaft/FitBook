@@ -29,7 +29,7 @@ function PublicFeed(props) {
   const handleFeedback = event => {
     let id = event.currentTarget.id
     console.log(id);
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}/0`, {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}/5`, {
       method: 'PUT'
     }).then(response => response.json())
       .then(result => {

@@ -209,10 +209,10 @@ app.post('/api/addpublicthings', (req, res) => {
 
 app.put('/api/publicthings/:thingId', (req, res) => {
 
-    const thingId = parseInt(req.params.thingId)
+    const thingPriority = parseInt(req.params.thingPriority)
     models.Things.update(
         { score: score },
-        { where: { id: thingId } }
+        { where: { priority: thingPriority } }
     
 
     ).then(_ => {

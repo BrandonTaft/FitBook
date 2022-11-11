@@ -211,7 +211,7 @@ app.put('/api/publicthings/:thingId', (req, res) => {
 
     const thingPriority = parseInt(req.params.thingPriority)
     models.Things.update(
-        { score: score },
+        { score: 999 },
         { where: { priority: thingPriority } }
     
 

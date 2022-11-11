@@ -9,15 +9,11 @@ import { FaRegComment } from 'react-icons/fa';
 import "./App.css"
 
 function PublicFeed(props) {
-  const likeRef = useRef()
   useEffect(() => {
     props.onThingsLoaded()
   }, [])
 
-const likedMe = (event) => {
-  console.log(likeRef.current)
-}
-
+  const likeRef = useRef(null)
   const handlePublicDelete = (thing) => {
     fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${thing.id}`, {
       method: 'DELETE'
@@ -30,12 +26,23 @@ const likedMe = (event) => {
   event.currentTarget.classList.toggle('show')
   }
 
+  const handleFeedback = event => {
+    let id = event.currentTarget.id
+    console.log(id);
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}`, {
+      method: 'PUT'
+    }).then(response => response.json())
+      .then(result => {
+        console.log("result", result)
+      })
+  }
+  
+
   const thingItems = props.things.map(thing => {
     const randomNumber = Math.floor(Math.random() * 70) + 1;
-    // const likes = thing.score
-    let likeRef = useRef(thing.score);
+    const likes = thing.score
     return (
-        <div key={thing.id} className="grid-item" ref={likeRef}>
+        <div key={thing.id} className="grid-item">
           <div className="avatar-container">
             <Avatar src={`https://i.pravatar.cc/150?img=${randomNumber}`} />
             <div className="bold white">
@@ -46,7 +53,7 @@ const likedMe = (event) => {
           {/* <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a> */}
           <div>
             <span></span>
-            <FcLike onClick={ likedMe } className='red'/>{}
+            <FcLike onClick={ handleFeedback } id={thing.id}/> {likes}
             <FaRegComment className='white'/>
             </div>
         </div>

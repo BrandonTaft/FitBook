@@ -9,11 +9,13 @@ import { FaRegComment } from 'react-icons/fa';
 import "./App.css"
 
 function PublicFeed(props) {
+  const [likes, setLikes] = useState(false)
+
   useEffect(() => {
     props.onThingsLoaded()
   }, [])
 
-  const likeRef = useRef(null)
+  
   const handlePublicDelete = (thing) => {
     fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${thing.id}`, {
       method: 'DELETE'
@@ -29,12 +31,13 @@ function PublicFeed(props) {
   const handleFeedback = event => {
     let id = event.currentTarget.id
     console.log(id);
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}/5`, {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}`, {
       method: 'PUT'
     }).then(response => response.json())
       .then(result => {
         console.log("result", result)
       })
+      // likes ? setLikes(false) : setLikes(true)
   }
   
 

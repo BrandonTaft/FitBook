@@ -227,6 +227,7 @@ app.delete('/api/publicthings/:thingId', (req, res) => {
 app.get('/api/things', authenticate, async(req, res) => {
     await models.Things.findAll({})
         .then(things => {
+            console.log(things)
             res.json(things)
         })
 })

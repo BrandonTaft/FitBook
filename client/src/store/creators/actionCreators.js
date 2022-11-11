@@ -17,7 +17,7 @@ export const fetchThings= () => {
                 console.log(false)
                 history.push('/')
           }else{
-            console.log(things)
+            console.log("things", things)
             dispatch({type: 'THINGS_LOADED', payload: things})
           }
         })

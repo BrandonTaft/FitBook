@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { MdClose } from "react-icons/md"
-import { FiMenu } from "react-icons/fi"
+import { MdClose, MdPostAdd } from "react-icons/md";
+import { FiMenu } from "react-icons/fi";
 import "./App.css"
 
 
@@ -27,11 +27,13 @@ function Navbar() {
                     <FiMenu style={{ color: "#3fffd2", width: "40px", height: "40px" }} />
                 )}
             </button>
+            <h1>Feed</h1>
+            <NavLink to="/post" className="bold m-2"><MdPostAdd className='white icon' /></NavLink>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
-                <li><NavLink to="/publicfeed" className='noShow' id='a' >Home</NavLink></li>
-                <li><NavLink to="/private" className='inactive' id='a' >Profile</NavLink></li>
-                <li><NavLink to="/messages" className='inactive' id='a' >Messages</NavLink></li>
-                <li><NavLink to="/logout" className='inactive' id="a">Log Out</NavLink></li>
+                <li><NavLink to="/publicfeed" >Home</NavLink></li>
+                <li><NavLink to="/private" >Profile</NavLink></li>
+                <li><NavLink to="/messages" >Messages</NavLink></li>
+                <li><NavLink to="/logout" >Log Out</NavLink></li>
             </ul>
         </nav>
     )

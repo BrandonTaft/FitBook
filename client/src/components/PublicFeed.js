@@ -3,11 +3,16 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
 import { NavLink } from 'react-router-dom';
+import Avatar from 'react-avatar';
+import { FcLike } from 'react-icons/fc';
+import { FaRegComment } from 'react-icons/fa';
+
 import "./App.css"
 
 function PublicFeed(props) {
-  const [hidden, setHidden] = useState()
+  const [like, setLike] = useState()
   useEffect(() => {
+
     props.onThingsLoaded()
   }, [])
 
@@ -30,12 +35,13 @@ function PublicFeed(props) {
 
   const thingItems = props.things.map(thing => {
 
-    const randomNumber = Math.floor(Math.random() * 14) + 1;
+    const randomNumber = Math.floor(Math.random() * 70) + 1;
     return (
         <div key={thing.id} className="grid-item">
           <div className="avatar-container">
-            <img className="avatar" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" />
-            <div className="btn">
+            {/* <img className="avatar" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" /> */}
+            <Avatar src={`https://i.pravatar.cc/150?img=${randomNumber}`} />
+            <div className="bold white">
               {thing.priority}
             </div>
           </div>
@@ -46,6 +52,10 @@ function PublicFeed(props) {
           </div> */}
           {/* <a id='contact' href="tel:{thing.contactNumber}">{thing.contactNumber}</a> */}
           {/* <p> {thing.description}</p> */}
+          <div>
+            <FcLike onClick={ () => setLike(like + 1) } className='red'/>{thing.score}
+            <FaRegComment className='white'/>
+            </div>
         </div>
       )
   })
@@ -53,10 +63,9 @@ function PublicFeed(props) {
   return (
     <>
       <Navbar />
-      <div className="feed-logo">
+      {/* <div className="feed-logo">
       <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" width={200} height={150}/>
-      </div>
-      <NavLink to="/post" className="btn"  >Add Post</NavLink>
+      </div> */}
       <div className="grid-container">
       {thingItems}
     </div>

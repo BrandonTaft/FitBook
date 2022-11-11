@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     link: DataTypes.STRING,
     contact: DataTypes.STRING,
     contactNumber: DataTypes.BIGINT,
+    score: DataTypes.BIGINT,
     user_id: {
       type: DataTypes.INTEGER, 
       references: {

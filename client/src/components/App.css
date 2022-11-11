@@ -6,7 +6,7 @@
   --bs-pink: #d63384;
   --bs-red: #dc3545;
   --bs-orange: #f4623a;
-  --bs-yellow: #ceb728;
+  --bs-yellow: #fffd00;
   --bs-green: #03dac6;
   --bs-teal: #20c997;
   --bs-cyan: #0decf0;
@@ -32,8 +32,28 @@
   --bs-dark: #121212;
 }
 
+.bold {
+  font-weight: 700;
+}
+
 .white {
   color: var(--bs-light);
+}
+
+.yellow {
+  color: var(--bs-yellow);
+}
+
+.red {
+  color: red;
+}
+
+.m-1 {
+  margin: 1em;
+}
+
+.m-2 {
+  margin: 2em;
 }
 
 .mb-2 {
@@ -110,15 +130,16 @@ a {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
+  grid-template-columns: auto auto;
+  padding: 5px;
+  margin-top: 4em;
 }
 .grid-item {
   position: relative;
   background-color: #121212;
   color: rgba(255, 255, 255, 0.8);
   border-radius: 9px;
-  padding: 20px;
+  padding: 0px;
   margin: 5px;
   max-height: 200px;
   text-align: center;
@@ -129,7 +150,7 @@ a {
   flex-direction: column;
   align-items: center;
   height: fit-content;
-  padding: 20px;
+  padding: 20px 20px 0px 20px;
   /* box-shadow: 0px 8px 15px black; */
 }
 
@@ -139,11 +160,9 @@ a {
 }
 
 .post-body {
-  background-color:#fff;
   border: none;
   box-shadow: 0px 8px 15px black inset; 
-  border-radius: 10px; 
-  color:#07246a;
+  color: var(--bs-light);
   text-align: center;
   font-size: 1em;
   text-align: center;
@@ -162,22 +181,27 @@ a {
 
 .show {
   display: block;
-  position: absolute;
-  background-color:#fff;
-  border: none;
-  box-shadow: 0px 8px 15px black inset; 
-  border-radius: 10px; 
-  color:#07246a;
+  position: fixed;
+  background-color: rgba(0,0,0,0.9);
+  font-family: 'Segoe UI';
+  font-size: 1.5em;
+  color:#fff;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   overflow: auto;
-  height: 200px;
-  margin: auto;
+  height: 100%;
+  z-index: 99;
 }
 
-
+.icon {
+  font-size: 3em;
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 99;
+}
 
 #contact{
   text-decoration:none;
@@ -193,32 +217,22 @@ a {
   color: #fff;
   text-shadow: 0px 7px 12px black;
 }
-  
-  /* ******************MENU********************* */
 
-  #title{
-    margin-top: 100px;
+@media( min-width: 600px ) {
+  .grid-container {
+    grid-template-columns: auto auto auto;
   }
-
-  #container{
-    display: flex;
-    justify-content: space-evenly;
-    background-color: #2f4f4f;
-    color: #3fffd2;;
-    font-size: xx-large;
-   
-    text-align-last: center;
 }
-.inactive{
-  color: var(--bs-light);
-    text-decoration: none;
-    
-}
-
+  
 /* ******************NAVBAR********************* */
 
 .navBar {
-  position: relative;
+  position: fixed;
+  top: 0;
+  text-align: center;
+  background-color: #121212;
+  z-index: 99;
+  width: 100%;
 }
 
 .navBar button {

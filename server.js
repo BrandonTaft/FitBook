@@ -205,6 +205,22 @@ app.post('/api/addpublicthings', (req, res) => {
         })
 })
 
+//***************************UPDATE THING FROM PUBLIC DATABASE***************************//
+
+app.put('/api/publicthings/:thingId', (req, res) => {
+
+    const thingId = parseInt(req.params.thingId)
+    models.Things.update(
+        { score: score },
+        { where: { id: thingId } }
+    
+
+    ).then(_ => {
+        res.json({ message: "UPDATED" })
+    })
+})
+
+
 //***************************DELETE THING FROM PUBLIC DATABASE***************************//
 
 app.delete('/api/publicthings/:thingId', (req, res) => {

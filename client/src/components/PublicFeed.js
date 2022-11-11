@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
@@ -6,17 +6,17 @@ import { NavLink } from 'react-router-dom';
 import Avatar from 'react-avatar';
 import { FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
-
 import "./App.css"
 
 function PublicFeed(props) {
-  const [like, setLike] = useState()
+  const likeRef = useRef()
   useEffect(() => {
-
     props.onThingsLoaded()
   }, [])
 
-
+const likedMe = (event) => {
+  console.log(likeRef.current)
+}
 
   const handlePublicDelete = (thing) => {
     fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${thing.id}`, {
@@ -25,21 +25,18 @@ function PublicFeed(props) {
       .then(result => {
         props.onThingsLoaded()
       })
-    console.log(props)
   }
-
   const toggleBody = event => {
   event.currentTarget.classList.toggle('show')
   }
 
-
   const thingItems = props.things.map(thing => {
-
     const randomNumber = Math.floor(Math.random() * 70) + 1;
+    // const likes = thing.score
+    let likeRef = useRef(thing.score);
     return (
-        <div key={thing.id} className="grid-item">
+        <div key={thing.id} className="grid-item" ref={likeRef}>
           <div className="avatar-container">
-            {/* <img className="avatar" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" /> */}
             <Avatar src={`https://i.pravatar.cc/150?img=${randomNumber}`} />
             <div className="bold white">
               {thing.priority}
@@ -47,13 +44,9 @@ function PublicFeed(props) {
           </div>
           <div className='post-body' onClick={toggleBody}>{thing.name}<p> {thing.description}</p></div>
           {/* <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a> */}
-          {/* <div id='contactName'>
-            {thing.contact}
-          </div> */}
-          {/* <a id='contact' href="tel:{thing.contactNumber}">{thing.contactNumber}</a> */}
-          {/* <p> {thing.description}</p> */}
           <div>
-            <FcLike onClick={ () => setLike(like + 1) } className='red'/>{thing.score}
+            <span></span>
+            <FcLike onClick={ likedMe } className='red'/>{}
             <FaRegComment className='white'/>
             </div>
         </div>

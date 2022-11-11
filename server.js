@@ -207,12 +207,12 @@ app.post('/api/addpublicthings', (req, res) => {
 
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 
-app.put('/api/publicthings/:score', (req, res) => {
-
+app.put('/api/publicthings/:id/:score', (req, res) => {
+    const id = parseInt(req.params.id)
     const score = parseInt(req.params.score)
     models.Things.update(
         { score: score },
-        { where: { priority: 'KIKI' } }
+        { where: { id: id } }
     
 
     ).then(_ => {

@@ -211,7 +211,7 @@ app.put('/api/publicthings/:id/:score', (req, res) => {
     const id = parseInt(req.params.id)
     const score = parseInt(req.params.score)
     models.Things.update(
-        { score: +1 },
+        { score: (score +1) },
         { where: { id: id } }
     ).then(_ => {
         res.json({ message: "UPDATED" })

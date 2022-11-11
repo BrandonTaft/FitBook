@@ -207,7 +207,7 @@ app.post('/api/addpublicthings', (req, res) => {
 
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 
-app.put('/api/publicthings/:thingId', (req, res) => {
+app.put('/api/publicthings/:thingPriority', (req, res) => {
 
     const thingPriority = parseInt(req.params.thingPriority)
     models.Things.update(

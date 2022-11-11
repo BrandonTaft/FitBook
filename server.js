@@ -216,7 +216,7 @@ app.put('/api/publicthings/:thingPriority', (req, res) => {
     
 
     ).then(_ => {
-        res.json({ message: "UPDATED" })
+        res.json({ message: thingPriority })
     })
 })
 

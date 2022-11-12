@@ -234,7 +234,7 @@ app.post('/api/addcomment', (req, res) => {
 //Retrieve All Comments From DataBase
 
 app.get('/api/comments', (req, res) => {
-     models.Commentss.findAll({})
+     models.Comments.findAll({})
         .then(comments => {
             res.json(comments)
         })

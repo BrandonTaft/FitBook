@@ -49,25 +49,23 @@ const postComment = () => {
         })
 }
 
-// const getAllGames = () => {
-//   const token = localStorage.getItem('jsonwebtoken')
+const getComments = () => {
+  fetch('https://lit-ravine-06265.herokuapp.com/api/comments', {
+    method: 'GET',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    }
+  })
 
-//   fetch('http://localhost:8081/api/videogames', {
-//     method: 'GET',
-//     headers: {
-//       'Authorization': `Bearer ${token}`
-//     }
-//   })
-
-//     .then(response => response.json())
-//     .then(games => {
-//       if (games.success === false) {
-//         history.push('/')
-//       } else {
-//         setGames(games)
-//       }
-//     })
-// }
+    .then(response => response.json())
+    .then(games => {
+      if (games.success === false) {
+        history.push('/')
+      } else {
+        setGames(games)
+      }
+    })
+}
 
   const handleFeedback = event => {
     let id = event.currentTarget.id

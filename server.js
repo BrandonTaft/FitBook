@@ -205,6 +205,28 @@ app.post('/api/addpublicthings', (req, res) => {
         })
 })
 
+//***************************ADD COMMENTS TO DATABASE***************************//
+
+app.post('/api/addcomment', (req, res) => {
+    const comment = req.body.comment
+    const postId = req.body.postId
+    const userId = req.body.userId
+    const spare = req.body.spare
+
+    const comments = models.Comments.build({
+        comment: comment,
+        postId: postId,
+        userId: userId,
+        spare: spare
+    })
+
+    thing.save()
+        .then(savedComment => {
+            res.json({ success: true, commentId: savedComment.id, postId: savedComment.postId, userId: savedComment.userId })
+        })
+})
+
+
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 
 app.put('/api/publicthings/:id', (req, res) => {

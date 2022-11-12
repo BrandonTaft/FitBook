@@ -208,6 +208,7 @@ app.post('/api/addpublicthings', (req, res) => {
 //***************************ADD COMMENTS TO DATABASE***************************//
 
 app.post('/api/addcomment', (req, res) => {
+    console.log(req.body.comment)
     const comment = req.body.comment
     // const postId = req.body.postId
     // const userId = req.body.userId

@@ -221,7 +221,7 @@ app.post('/api/addcomment', (req, res) => {
         // spare: spare
     })
 
-    thing.save()
+    comments.save()
         .then(savedComment => {
             // res.json({ success: true, commentId: savedComment.id, postId: savedComment.postId, userId: savedComment.userId })
             res.json({ success: true })

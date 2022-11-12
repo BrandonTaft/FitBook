@@ -229,6 +229,18 @@ app.post('/api/addcomment', (req, res) => {
 })
 
 
+//***************************SHOW ALL COMMENTS***************************//
+
+//Retrieve All things From DataBase
+
+app.get('/api/comments', (req, res) => {
+     models.Commentss.findAll({})
+        .then(comments => {
+            res.json(comments)
+        })
+})
+
+
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 
 app.put('/api/publicthings/:id', (req, res) => {

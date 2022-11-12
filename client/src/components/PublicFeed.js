@@ -29,12 +29,10 @@ function PublicFeed(props) {
   const openComments = event => {
     event.currentTarget.nextSibling.classList.toggle('show-comments')
   }
-  var post
+  
   const handleAddComment = (e) => {
     commentRef.current = {[e.target.name]: e.target.value}
 }
-
-
 
 const postComment = () => {
     fetch("https://lit-ravine-06265.herokuapp.com/api/addcomment", {
@@ -42,7 +40,7 @@ const postComment = () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: commentRef.current
+        body: JSON.stringify(commentRef.current)
        
     }).then(response => response.json())
         .then(result => {
@@ -50,6 +48,26 @@ const postComment = () => {
             }
         })
 }
+
+// const getAllGames = () => {
+//   const token = localStorage.getItem('jsonwebtoken')
+
+//   fetch('http://localhost:8081/api/videogames', {
+//     method: 'GET',
+//     headers: {
+//       'Authorization': `Bearer ${token}`
+//     }
+//   })
+
+//     .then(response => response.json())
+//     .then(games => {
+//       if (games.success === false) {
+//         history.push('/')
+//       } else {
+//         setGames(games)
+//       }
+//     })
+// }
 
   const handleFeedback = event => {
     let id = event.currentTarget.id

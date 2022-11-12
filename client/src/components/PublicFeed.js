@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
@@ -8,7 +8,7 @@ import { FaRegComment } from 'react-icons/fa';
 import "./App.css"
 
 function PublicFeed(props) {
-  const [comments, setComments] = useState("")
+  const commentRef = useRef(null)
   useEffect(() => {
     props.onThingsLoaded()
   }, [])
@@ -26,13 +26,30 @@ function PublicFeed(props) {
     event.currentTarget.classList.toggle('show')
   }
 
-  const handleComments = event => {
+  const openComments = event => {
     event.currentTarget.nextSibling.classList.toggle('show-comments')
   }
+  var post
+  const handleAddComment = (e) => {
+    commentRef.current = {[e.target.name]: e.target.value}
+}
 
-  const handleAddComment = (event) => {
-    setComments(event.target.value)
-  }
+
+
+const postComment = () => {
+    fetch("https://lit-ravine-06265.herokuapp.com/api/addcomment", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: commentRef.current
+       
+    }).then(response => response.json())
+        .then(result => {
+            if (result.success) {
+            }
+        })
+}
 
   const handleFeedback = event => {
     let id = event.currentTarget.id
@@ -60,11 +77,13 @@ function PublicFeed(props) {
         <div className='feedback'>
           <FcLike onClick={handleFeedback} id={thing.id} />
           <span id={thing.score}>{likes}</span>
-          <FaRegComment onClick={handleComments} className='white' />
+
+          <FaRegComment onClick={openComments} className='white' />
           <div className='hide'>
-          <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-          {comments}
+            <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+            <button onClick={postComment} className="">Submit</button>
           </div>
+
         </div>
       </div>
     )

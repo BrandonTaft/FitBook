@@ -210,12 +210,6 @@ app.post('/api/addpublicthings', (req, res) => {
 app.put('/api/publicthings/:id', (req, res) => {
     const id = parseInt(req.params.id)
     models.Things.increment('score', { by: 1, where: { id: id }});
-    // models.Things.update(
-    //     { score: (score +1) },
-    //     { where: { id: id } }
-    // ).then(_ => {
-    //     res.json({ message: "UPDATED" })
-    // })
 })
 
 

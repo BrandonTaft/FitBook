@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
     priority: DataTypes.STRING,
     link: DataTypes.STRING,
     contact: DataTypes.STRING,
-    contactNumber: DataTypes.BIGINT,
+    coments: DataTypes.TEXT,
     score: DataTypes.BIGINT,
     publicUser_Id:{
       type: DataTypes.INTEGER, 

@@ -45,9 +45,8 @@ function PublicFeed(props) {
       })
   }
 
-  const getComments = (thing) => {
-    console.log(thing.id)
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing.id}`, {
+  const getComments = () => {
+    fetch("https://lit-ravine-06265.herokuapp.com/api/comments", {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -78,9 +77,8 @@ function PublicFeed(props) {
   }
 
   const myComments = comments.map(comment => {
-    console.log(comment.id)
     return (
-      <div key={comment.id} >
+      <div key={comment.id} id={comment.postId} >
         <div>{comment.comment}</div>
         <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
       </div>

@@ -226,12 +226,8 @@ app.post('/api/addcomment:thingId', (req, res) => {
 
 //Retrieve All Comments From DataBase
 
-app.get('/api/comments/:commentId', (req, res) => {
-    const commentId = parseInt(req.params.commentId)
+app.get('/api/comments', (req, res) => {
      models.Comments.findAll({
-        where: {
-            postId: commentId
-        }
      })
         .then(comments => {
             res.json(comments)

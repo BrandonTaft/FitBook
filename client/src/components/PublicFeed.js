@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
@@ -8,20 +8,14 @@ import { FaRegComment } from 'react-icons/fa';
 import "./App.css"
 
 function PublicFeed(props) {
-  const commentRef = useRef(null)
+  // const commentRef = useRef(null)
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState([])
   useEffect(() => {
+    getComments()
     props.onThingsLoaded()
-  }, [])
+  }, [newComment])
 
-
-  const handlePublicDelete = (thing) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${thing.id}`, {
-      method: 'DELETE'
-    }).then(response => response.json())
-      .then(result => {
-        props.onThingsLoaded()
-      })
-  }
   const toggleBody = event => {
     event.currentTarget.classList.toggle('show')
   }
@@ -31,20 +25,21 @@ function PublicFeed(props) {
   }
   
   const handleAddComment = (e) => {
-    commentRef.current = {[e.target.name]: e.target.value}
+    setNewComment({[e.target.name]: e.target.value})
 }
 
 const postComment = () => {
     fetch("https://lit-ravine-06265.herokuapp.com/api/addcomment", {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(commentRef.current)
+         headers: {
+                'Content-Type': 'application/json'
+            },
+        body: JSON.stringify(newComment)
        
     }).then(response => response.json())
         .then(result => {
             if (result.success) {
+             getComments()
             }
         })
 }
@@ -53,17 +48,21 @@ const getComments = () => {
   fetch('https://lit-ravine-06265.herokuapp.com/api/comments', {
     method: 'GET',
     headers: {
-      'Authorization': `Bearer ${token}`
-    }
+      'Content-Type': 'application/json'
+  }
   })
-
     .then(response => response.json())
-    .then(games => {
-      if (games.success === false) {
-        history.push('/')
-      } else {
-        setGames(games)
-      }
+    .then(comment => {
+      setComments(comment)
+    })
+}
+
+const handleCommentDelete = (comment) => {
+  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.id}`, {
+    method: 'DELETE'
+  }).then(response => response.json())
+    .then(result => {
+      getComments()
     })
 }
 
@@ -76,6 +75,15 @@ const getComments = () => {
     }).then(response => response.json())
   }
 
+  const myComments = comments.map(comment => {
+    return(
+      <>
+      <div>{comment.comment}</div>
+      <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
+    </>
+    )
+  })
+
 
   const thingItems = props.things.map(thing => {
     const randomNumber = Math.floor(Math.random() * 70) + 1;
@@ -83,7 +91,7 @@ const getComments = () => {
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
-          <Avatar src={`https://i.pravatar.cc/150?img=${randomNumber}`} />
+          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} />
           <div className="bold white">
             {thing.priority}
           </div>
@@ -97,7 +105,8 @@ const getComments = () => {
           <FaRegComment onClick={openComments} className='white' />
           <div className='hide'>
             <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button onClick={postComment} className="">Submit</button>
+            <button type='submit' onClick={postComment} className="">Submit</button>
+            {myComments}
           </div>
 
         </div>

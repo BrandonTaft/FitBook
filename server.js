@@ -240,6 +240,22 @@ app.get('/api/comments', (req, res) => {
         })
 })
 
+//***************************DELETE COMMENTS***************************//
+
+app.delete('/api/comments/:commentId', (req, res) => {
+
+    const commentId = parseInt(req.params.commentId)
+
+    models.Comments.destroy({
+        where: {
+            id: commentId
+        }
+
+    }).then(_ => {
+        res.json({ deleted: true })
+    })
+})
+
 
 //***************************UPDATE THING FROM PUBLIC DATABASE***************************//
 

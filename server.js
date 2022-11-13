@@ -241,21 +241,18 @@ app.get('/api/comments/:commentId', (req, res) => {
 //***************************DELETE COMMENTS***************************//
 
 app.delete('/api/comments/:commentId', (req, res) => {
-
     const commentId = parseInt(req.params.commentId)
-
     models.Comments.destroy({
         where: {
             id: commentId
         }
-
     }).then(_ => {
         res.json({ deleted: true })
     })
 })
 
 
-//***************************UPDATE THING FROM PUBLIC DATABASE***************************//
+//***********************UPDATE THING FROM PUBLIC DATABASE**********************//
 
 app.put('/api/publicthings/:id', (req, res) => {
     const id = parseInt(req.params.id)
@@ -263,7 +260,7 @@ app.put('/api/publicthings/:id', (req, res) => {
 })
 
 
-//***************************DELETE THING FROM PUBLIC DATABASE***************************//
+//**********************DELETE THING FROM PUBLIC DATABASE***********************//
 
 app.delete('/api/publicthings/:thingId', (req, res) => {
 

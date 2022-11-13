@@ -20,51 +20,53 @@ function PublicFeed(props) {
   }
 
   const openComments = (event, thing) => {
+
     event.currentTarget.nextSibling.classList.toggle('show-comments');
     getComments(thing)
   }
-  
+
   const handleAddComment = (e) => {
-    setNewComment({[e.target.name]: e.target.value})
-}
-
-const postComment = (thing) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/addcomment${thing.id}`, {
-        method: 'POST',
-         headers: {
-                'Content-Type': 'application/json'
-            },
-        body: JSON.stringify(newComment)
-       
-    }).then(response => response.json())
-        .then(result => {
-            if (result.success) {
-             getComments()
-            }
-        })
-}
-
-const getComments = (thing) => {
-  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing.id}`, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
+    setNewComment({ [e.target.name]: e.target.value })
   }
-  })
-    .then(response => response.json())
-    .then(comment => {
-      setComments(comment)
-    })
-}
 
-const handleCommentDelete = (comment) => {
-  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.id}`, {
-    method: 'DELETE'
-  }).then(response => response.json())
-    .then(result => {
-      getComments()
+  const postComment = (thing) => {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/addcomment${thing.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newComment)
+
+    }).then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          getComments(thing)
+        }
+      })
+  }
+
+  const getComments = (thing) => {
+    console.log(thing.id)
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing.id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
     })
-}
+      .then(response => response.json())
+      .then(comment => {
+        setComments(comment)
+      })
+  }
+
+  const handleCommentDelete = (comment) => {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.id}`, {
+      method: 'DELETE'
+    }).then(response => response.json())
+      .then(result => {
+        getComments()
+      })
+  }
 
   const handleFeedback = event => {
     let id = event.currentTarget.id
@@ -76,11 +78,12 @@ const handleCommentDelete = (comment) => {
   }
 
   const myComments = comments.map(comment => {
-    return(
-      <>
-      <div>{comment.comment}</div>
-      <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
-    </>
+    console.log(comment.id)
+    return (
+      <div key={comment.id} >
+        <div>{comment.comment}</div>
+        <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
+      </div>
     )
   })
 

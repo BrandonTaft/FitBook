@@ -12,7 +12,6 @@ function PublicFeed(props) {
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
   useEffect(() => {
-    getComments()
     props.onThingsLoaded()
   }, [newComment])
 
@@ -20,8 +19,9 @@ function PublicFeed(props) {
     event.currentTarget.classList.toggle('show')
   }
 
-  const openComments = event => {
-    event.currentTarget.nextSibling.classList.toggle('show-comments')
+  const openComments = (event, thing) => {
+    event.currentTarget.nextSibling.classList.toggle('show-comments');
+    getComments(thing)
   }
   
   const handleAddComment = (e) => {
@@ -44,8 +44,8 @@ const postComment = (thing) => {
         })
 }
 
-const getComments = () => {
-  fetch('https://lit-ravine-06265.herokuapp.com/api/comments', {
+const getComments = (thing) => {
+  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments${thing.id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ const handleCommentDelete = (comment) => {
           <FcLike onClick={handleFeedback} id={thing.id} />
           <span id={thing.score}>{likes}</span>
 
-          <FaRegComment onClick={openComments} className='white' />
+          <FaRegComment onClick={() => openComments(thing)} className='white' />
           <div className='hide'>
             <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>

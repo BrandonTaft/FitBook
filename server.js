@@ -210,20 +210,13 @@ app.post('/api/addpublicthings', (req, res) => {
 app.post('/api/addcomment:thingId', (req, res) => {
     const thingId = parseInt(req.params.thingId)
     const comment = req.body.comment
-    // const postId = req.body.postId
-    // const userId = req.body.userId
-    // const spare = req.body.spare
-
     const comments = models.Comments.build({
         comment: comment,
         postId: thingId,
-        // userId: userId,
-        // spare: spare
     })
 
     comments.save()
         .then(savedComment => {
-            // res.json({ success: true, commentId: savedComment.id, postId: savedComment.postId, userId: savedComment.userId })
             res.json({ success: true })
         })
 })
@@ -233,8 +226,12 @@ app.post('/api/addcomment:thingId', (req, res) => {
 
 //Retrieve All Comments From DataBase
 
-app.get('/api/comments', (req, res) => {
-     models.Comments.findAll({})
+app.get('/api/comments/:commentId', (req, res) => {
+     models.Comments.findAll({
+        where: {
+            id: commentId
+        }
+     })
         .then(comments => {
             res.json(comments)
         })

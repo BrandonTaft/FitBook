@@ -230,7 +230,7 @@ app.get('/api/comments/:commentId', (req, res) => {
     const commentId = parseInt(req.params.commentId)
      models.Comments.findAll({
         where: {
-            id: commentId
+            postId: commentId
         }
      })
         .then(comments => {

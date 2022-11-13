@@ -227,6 +227,7 @@ app.post('/api/addcomment:thingId', (req, res) => {
 //Retrieve All Comments From DataBase
 
 app.get('/api/comments/:commentId', (req, res) => {
+    const commentId = parseInt(req.params.commentId)
      models.Comments.findAll({
         where: {
             id: commentId
@@ -284,7 +285,6 @@ app.delete('/api/publicthings/:thingId', (req, res) => {
 app.get('/api/things', authenticate, async(req, res) => {
     await models.Things.findAll({})
         .then(things => {
-            console.log(things)
             res.json(things)
         })
 })

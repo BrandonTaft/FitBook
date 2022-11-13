@@ -45,7 +45,7 @@ const postComment = (thing) => {
 }
 
 const getComments = (thing) => {
-  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments${thing.id}`, {
+  fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing.id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json'
@@ -102,7 +102,7 @@ const handleCommentDelete = (comment) => {
           <FcLike onClick={handleFeedback} id={thing.id} />
           <span id={thing.score}>{likes}</span>
 
-          <FaRegComment onClick={() => openComments(thing)} className='white' />
+          <FaRegComment onClick={(e) => openComments(e, thing)} className='white' />
           <div className='hide'>
             <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>

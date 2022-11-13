@@ -28,8 +28,8 @@ function PublicFeed(props) {
     setNewComment({[e.target.name]: e.target.value})
 }
 
-const postComment = () => {
-    fetch("https://lit-ravine-06265.herokuapp.com/api/addcomment", {
+const postComment = (thing) => {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/addcomment${thing.id}`, {
         method: 'POST',
          headers: {
                 'Content-Type': 'application/json'
@@ -105,7 +105,7 @@ const handleCommentDelete = (comment) => {
           <FaRegComment onClick={openComments} className='white' />
           <div className='hide'>
             <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button type='submit' onClick={postComment} className="">Submit</button>
+            <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
             {myComments}
           </div>
 

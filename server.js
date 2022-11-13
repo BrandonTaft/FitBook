@@ -207,8 +207,8 @@ app.post('/api/addpublicthings', (req, res) => {
 
 //***************************ADD COMMENTS TO DATABASE***************************//
 
-app.post('/api/addcomment', (req, res) => {
-    console.log(req.body.comment)
+app.post('/api/addcomment:thingId', (req, res) => {
+    const thingId = parseInt(req.params.thingId)
     const comment = req.body.comment
     // const postId = req.body.postId
     // const userId = req.body.userId
@@ -216,7 +216,7 @@ app.post('/api/addcomment', (req, res) => {
 
     const comments = models.Comments.build({
         comment: comment,
-        // postId: postId,
+        postId: thingId,
         // userId: userId,
         // spare: spare
     })

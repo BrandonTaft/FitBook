@@ -13,16 +13,17 @@ function PublicFeed(props) {
   const [newComment, setNewComment] = useState([])
   useEffect(() => {
     props.onThingsLoaded()
-  }, [newComment])
+    getComments()
+    console.log("comments", comments)
+  }, [])
 
   const toggleBody = event => {
     event.currentTarget.classList.toggle('show')
   }
 
   const openComments = (event, thing) => {
-
     event.currentTarget.nextSibling.classList.toggle('show-comments');
-    getComments(thing)
+   console.log("test",thing)
   }
 
   const handleAddComment = (e) => {
@@ -40,7 +41,7 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-          getComments(thing)
+          getComments()
         }
       })
   }
@@ -53,8 +54,8 @@ function PublicFeed(props) {
       }
     })
       .then(response => response.json())
-      .then(comment => {
-        setComments(comment)
+      .then(comments => {
+        setComments(comments)
       })
   }
 

@@ -11,10 +11,9 @@ function PublicFeed(props) {
   // const commentRef = useRef(null)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
+  const [matchingComment, setMatchingComment] = useState([])
   useEffect(() => {
     props.onThingsLoaded()
-    getComments()
-    console.log("comments", comments)
   }, [])
 
   const toggleBody = event => {
@@ -22,7 +21,12 @@ function PublicFeed(props) {
   }
 
   const openComments = (event, thing) => {
+    let close = document.getElementsByClassName('switch');
+    for (let i = 0; i < close.length; i++) {
+      close[i].classList.remove('show-comments');
+    }
     event.currentTarget.nextSibling.classList.toggle('show-comments');
+    getComments(thing.id)
    console.log("test",thing)
   }
 
@@ -41,13 +45,13 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-          getComments()
+          getComments(thing.id)
         }
       })
   }
 
-  const getComments = () => {
-    fetch("https://lit-ravine-06265.herokuapp.com/api/comments", {
+  const getComments = (thing) => {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -64,7 +68,7 @@ function PublicFeed(props) {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
-        getComments()
+        getComments(comment.postId)
       })
   }
 
@@ -88,6 +92,12 @@ function PublicFeed(props) {
 
 
   const thingItems = props.things.map(thing => {
+    comments.forEach((comment) => {
+      if(comment.postId === thing.Id){
+      setMatchingComment(comment.comment)
+      }
+    })
+   
     const randomNumber = Math.floor(Math.random() * 70) + 1;
     const likes = thing.score
     return (
@@ -105,12 +115,20 @@ function PublicFeed(props) {
           <span id={thing.score}>{likes}</span>
 
           <FaRegComment onClick={(e) => openComments(e, thing)} className='white' />
-          <div className='hide'>
+          
+          <div className='switch hide'>
+           
             <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
+            {/* {1 === 1 ? 
+            <div>
             {myComments}
+            </div>
+            :""
+            } */}
+            {matchingComment}
           </div>
-
+  
         </div>
       </div>
     )

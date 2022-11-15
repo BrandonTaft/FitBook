@@ -213,10 +213,17 @@ svg {
   flex-direction: column;
   background-color: #000;
   width: 100%;
-  min-height: 200px;
   overflow: auto;
   z-index: 1;
+  padding: 2em;
+  animation: showMe 3s;
 }
+
+/* @keyframes showMe {
+  0% {height: 0px;}
+  50% {height: 50px;}
+  100% {height: fit-content;}
+} */
 
 .icon {
   font-size: 3em;

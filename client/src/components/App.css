@@ -208,14 +208,16 @@ svg {
 }
 
 .show-comments {
-  position: relative;
+  position: absolute;
   display: flex;
   flex-direction: column;
   background-color: #000;
-  width: 100%;
+  min-height: 100%;
+  top: 105%;
+  left: 0;
+  right: 0;
   overflow: auto;
   z-index: 1;
-  padding: 2em;
   animation: showMe 3s;
 }
 
@@ -227,10 +229,25 @@ svg {
 
 .icon {
   font-size: 3em;
-    position: fixed;
-    top: 0;
-    right: 0;
-    z-index: 99;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 99;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25em;
+}
+
+.likes {
+  margin-right: 1em;
+}
+
+.heart {
+  margin-right: .15em;
 }
 
 #contact{

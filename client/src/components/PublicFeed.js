@@ -1,17 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
 import Avatar from 'react-avatar';
 import { FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
+import { MdClose } from "react-icons/md";
 import "./App.css"
 
 function PublicFeed(props) {
-  // const commentRef = useRef(null)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
-  const [matchingComment, setMatchingComment] = useState([])
+
   useEffect(() => {
     props.onThingsLoaded()
   }, [])
@@ -26,8 +26,7 @@ function PublicFeed(props) {
       close[i].classList.remove('show-comments');
     }
     event.currentTarget.nextSibling.classList.toggle('show-comments');
-    getComments(thing.id)
-   console.log("test",thing)
+    getComments()
   }
 
   const handleAddComment = (e) => {
@@ -45,13 +44,13 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-          getComments(thing.id)
+          getComments()
         }
       })
   }
 
-  const getComments = (thing) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${thing}`, {
+  const getComments = () => {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -68,7 +67,7 @@ function PublicFeed(props) {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
-        getComments(comment.postId)
+        getComments()
       })
   }
 
@@ -81,25 +80,17 @@ function PublicFeed(props) {
     }).then(response => response.json())
   }
 
-  const myComments = comments.map(comment => {
-    return (
-      <div key={comment.id} id={comment.postId} >
-        <div>{comment.comment}</div>
-        <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
-      </div>
-    )
-  })
 
 
   const thingItems = props.things.map(thing => {
-    comments.forEach((comment) => {
-      if(comment.postId === thing.Id){
-      setMatchingComment(comment.comment)
-      }
+    const myComments = comments.map(comment => {
+      return (
+        <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
+          <div>{comment.comment}</div>
+          <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
+        </div>
+      )
     })
-   
-    const randomNumber = Math.floor(Math.random() * 70) + 1;
-    const likes = thing.score
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
@@ -111,29 +102,23 @@ function PublicFeed(props) {
         <div className='post-body' onClick={toggleBody}>{thing.name}<p> {thing.description}</p></div>
         {/* <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a> */}
         <div className='feedback'>
-          <FcLike onClick={handleFeedback} id={thing.id} />
-          <span id={thing.score}>{likes}</span>
-
-          <FaRegComment onClick={(e) => openComments(e, thing)} className='white' />
-          
-          <div className='switch hide'>
-           
-            <input className="textbox" type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
-            {/* {1 === 1 ? 
-            <div>
-            {myComments}
-            </div>
-            :""
-            } */}
-            {matchingComment}
+          <div className="likes">
+            <FcLike onClick={handleFeedback} className="heart" id={thing.id} />
+            <span className='score' id={thing.score}>{thing.score}</span>
           </div>
-  
+          <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
+          <div className='switch hide'>
+            <MdClose />
+            <input type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+            <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
+            <div>
+              {myComments}
+            </div>
+          </div>
         </div>
       </div>
     )
   })
-
   return (
     <>
       <Navbar />

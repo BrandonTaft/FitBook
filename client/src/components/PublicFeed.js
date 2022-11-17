@@ -9,28 +9,34 @@ import { MdClose } from "react-icons/md";
 import "./App.css"
 
 function PublicFeed(props) {
+  const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
 
   useEffect(() => {
     props.onThingsLoaded()
-  }, [])
+    getComments()
+  }, [count])
 
   const toggleBody = event => {
     event.currentTarget.classList.toggle('show')
   }
 
-  const openComments = (event, thing) => {
+  const openComments = (event) => {
     let close = document.getElementsByClassName('switch');
     for (let i = 0; i < close.length; i++) {
       close[i].classList.remove('show-comments');
     }
+    setCount(count + 1)
     event.currentTarget.nextSibling.classList.toggle('show-comments');
-    getComments()
   }
 
-  const handleAddComment = (e) => {
-    setNewComment({ [e.target.name]: e.target.value })
+  const closeMe = (event) => {
+    event.currentTarget.parentElement.classList.remove('show-comments')
+  }
+
+  const handleAddComment = (event) => {
+    setNewComment({ [event.target.name]: event.target.value })
   }
 
   const postComment = (thing) => {
@@ -44,7 +50,9 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
+          setNewComment([])
           getComments()
+          setCount(count + 1)
         }
       })
   }
@@ -68,6 +76,7 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         getComments()
+        setCount(count + 1)
       })
   }
 
@@ -83,7 +92,11 @@ function PublicFeed(props) {
 
 
   const thingItems = props.things.map(thing => {
+    let total = 0;
     const myComments = comments.map(comment => {
+      if (comment.postId === thing.id) {
+        total++
+      }
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
           <div>{comment.comment}</div>
@@ -91,6 +104,9 @@ function PublicFeed(props) {
         </div>
       )
     })
+
+
+
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
@@ -99,21 +115,28 @@ function PublicFeed(props) {
             {thing.priority}
           </div>
         </div>
-        <div className='post-body' onClick={toggleBody}>{thing.name}<p> {thing.description}</p></div>
+        <div className='post-body' onClick={toggleBody}>
+          {thing.name}
+          <p className=''>
+            {thing.description}
+          </p>
+        </div>
         {/* <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a> */}
         <div className='feedback'>
           <div className="likes">
             <FcLike onClick={handleFeedback} className="heart" id={thing.id} />
             <span className='score' id={thing.score}>{thing.score}</span>
           </div>
+          {total}
           <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
           <div className='switch hide'>
-            <MdClose />
+            <MdClose onClick={closeMe} />
             <input type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
             <div>
               {myComments}
             </div>
+
           </div>
         </div>
       </div>

@@ -67,7 +67,7 @@ app.post('/api/login', async (req, res) => {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
                 const token = jwt.sign({ name: name }, "SECRETKEY")
-                res.json({ success: true, token: token, name:name, user_id: user.id})
+                res.json({ success: true, token: token, name:name, user_id: user.id, title: user.title, bio: user.bio})
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -233,18 +233,6 @@ app.get('/api/comments', (req, res) => {
             res.json(comments)
         })
 })
-
-// app.get('/api/comments/:postId', (req, res) => {
-//     const postId = parseInt(req.params.postId)
-//      models.Comments.findAll({
-//         where: {
-//             postId: postId
-//         }
-//      })
-//         .then(comments => {
-//             res.json(comments)
-//         })
-// })
 
 //***************************DELETE COMMENTS***************************//
 

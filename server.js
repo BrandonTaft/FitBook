@@ -19,6 +19,8 @@ app.post('/api/register', async (req, res) => {
     
     const name = req.body.name
     const password = req.body.password
+    const title = req.body.title
+    const bio = req.body.bio
     const token = req.body.token
 
     const persistedUser = await models.Users.findOne({
@@ -36,6 +38,8 @@ app.post('/api/register', async (req, res) => {
                 const user = models.Users.build({
                     name: name,
                     password: hash,
+                    title: title,
+                    bio: bio,
                     token: token
                 })
 

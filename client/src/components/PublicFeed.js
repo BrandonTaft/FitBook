@@ -103,15 +103,14 @@ function PublicFeed(props) {
         </div>
       )
     })
-
-
-
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
             {thing.priority}
+            {thing.title}
+            {thing.bio}
           </div>
         </div>
         <div className='post-body' >

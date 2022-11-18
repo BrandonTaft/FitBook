@@ -19,7 +19,7 @@ function PublicFeed(props) {
   }, [count])
 
   const toggleBody = event => {
-    event.currentTarget.classList.toggle('show')
+    event.currentTarget.parentElement.classList.toggle('show')
   }
 
   const openComments = (event) => {
@@ -50,7 +50,6 @@ function PublicFeed(props) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-          setNewComment([])
           getComments()
           setCount(count + 1)
         }
@@ -100,7 +99,7 @@ function PublicFeed(props) {
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
           <div>{comment.comment}</div>
-          <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button>
+          {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
         </div>
       )
     })
@@ -110,18 +109,21 @@ function PublicFeed(props) {
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
-          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} />
+          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
             {thing.priority}
           </div>
         </div>
-        <div className='post-body' onClick={toggleBody}>
+        <div className='post-body' >
+          <span className='post-title'>
           {thing.name}
-          <p className=''>
+          </span>
+          <p className='post-description'>
             {thing.description}
+            <span className='see-more' onClick={toggleBody}>See More</span><br />
+            <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a>
           </p>
         </div>
-        {/* <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a> */}
         <div className='feedback'>
           <div className="likes">
             <FcLike onClick={handleFeedback} className="heart" id={thing.id} />

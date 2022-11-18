@@ -153,7 +153,6 @@ svg {
   border-radius: 9px;
   padding: 0px 5px 10px;
   margin: 5px;
-  max-height: 200px;
   text-align: center;
 }
 
@@ -175,20 +174,15 @@ svg {
   border: none;
   box-shadow: 0px 8px 15px black inset; 
   color: var(--bs-light);
-  text-align: center;
-  font-size: 1em;
-  text-align: center;
   font-weight: 500;
   font-family: fantasy;
   text-decoration: none;
   letter-spacing: 1px;
   text-decoration: none;
   cursor: pointer;
-  padding: .3em 0em;
   margin: 5px;
-  min-width:100px;
-  height: 20px;
-  overflow: hidden;
+  max-height: 200px;
+  overflow: auto;
 }
 
 .show {
@@ -203,7 +197,8 @@ svg {
   left: 0;
   right: 0;
   overflow: auto;
-  height: 100%;
+  height: fit-content;
+  width: 33%;
   z-index: 99;
 }
 
@@ -255,6 +250,36 @@ svg {
   margin-left: .2em;
 }
 
+.post-title{
+  color: var(--bs-light);
+  font-weight: 500;
+  font-family: fantasy;
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.post-description {
+  font-family: 'Segoe UI';
+  font-size: 1em;
+  color:#fff;
+}
+
+.see-more {
+  color: var(--bs-blue);
+  font-size: 1em;
+  position: absolute;
+  bottom: 1.25em;
+  left: 0;
+  right: 0;
+}
+
+
+
+
+
+
+
 #contact{
   text-decoration:none;
   font-size: large;
@@ -265,10 +290,7 @@ svg {
   font-weight: bold;
 }
 
-.postTitle{
-  color: #fff;
-  text-shadow: 0px 7px 12px black;
-}
+
 
 @media( min-width: 600px ) {
   .grid-container {

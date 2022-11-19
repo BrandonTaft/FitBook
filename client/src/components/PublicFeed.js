@@ -111,7 +111,7 @@ function PublicFeed(props) {
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
             {thing.priority}<br />
-            {/* {thing.title}<br /> */}
+            {thing.contactNumber}<br />
           </div>
         </div>
         <div className='post-body' >

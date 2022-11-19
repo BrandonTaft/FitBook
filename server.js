@@ -84,8 +84,13 @@ app.post('/api/login', async (req, res) => {
 
 
 //***************************GET ALL USERS***************************//
-app.get('/api/users',(req, res) => {
-    models.Users.findAll({})
+app.get('/api/users:id',(req, res) => {
+    const id = parseInt(req.params.id)
+    models.Users.findOne({
+        where: {
+            id: id
+        }
+    })
         .then(users => {
             res.json(users)
         })

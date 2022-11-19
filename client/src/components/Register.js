@@ -40,7 +40,6 @@ function Register(props) {
             <input className="textbox" type="text" name="name" onChange={handleRegisterChange} placeholder=" Enter Desired User name" />
             <input className="textbox mb-2" type="password" name="password" onChange={handleRegisterChange} placeholder="Enter Desired Password" />
             <input className="textbox" type="text" name="title" onChange={handleRegisterChange} placeholder=" Enter Professional Title" />
-            <input className="textbox mb-2" type="text" name="bio" onChange={handleRegisterChange} placeholder="Enter Bio" />
             <button className="btn mb-1" onClick={handleRegisterButton}>SUBMIT</button>
             <NavLink to="/" className='white'>Back To Login</NavLink>
         </div>

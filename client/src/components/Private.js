@@ -7,11 +7,26 @@ import "./App.css"
 
 
 function Private(props) {
-
+  const [user, setUser] = useState()
   useEffect(() => {
     props.onThingsLoaded()
+    getUser()
   }, [])
 
+  const getUser = () => {
+    const id = localStorage.getItem('user_id')
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/users/${id}`,{
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+    })
+        .then(response => response.json())
+        .then(user => {
+            console.log(user)
+            setUser(user)
+        })
+    }
 
   const handlePrivateDelete = (thing) => {
     fetch(`https://lit-ravine-06265.herokuapp.com/api/mythings/${thing.id}`, {

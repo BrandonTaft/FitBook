@@ -31,21 +31,21 @@ const getUser = () => {
 
     
 
-    // const displayProfile = props.user.map(user => {
-    //     return <ul key={user.id} id="thingList">
-    //         <h1>UserName: {user.name}</h1>
-    //         <h2>Email: {user.email}</h2>
+    const displayProfile = props.user.map(user => {
+        return <ul key={user.id} id="thingList">
+            <h1>UserName: {user.name}</h1>
+            <h2>Email: {user.email}</h2>
             
-    //         {/* //<button className="button" onClick={() => handleUserDelete(user)}>Delete</button> */}
-    //     </ul>
+            {/* //<button className="button" onClick={() => handleUserDelete(user)}>Delete</button> */}
+        </ul>
         
 
-    // })
+    })
 
     
     return (
         <div>
-{/* //            {displayProfile} */}
+           {displayProfile}
         </div>
     )
     }

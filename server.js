@@ -154,7 +154,7 @@ app.get('/api/user/:userId',authenticate,(req, res) => {
 })
 
 //***************************GET ALL USERS***************************//
-app.get('/api/users', authenticate,(req, res) => {
+app.get('/api/users',(req, res) => {
     models.Users.findAll({})
         .then(users => {
             res.json(users)

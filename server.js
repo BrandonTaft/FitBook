@@ -180,7 +180,6 @@ app.post('/api/addpost', (req, res) => {
     const priority = req.body.priority
     const link = req.body.link
     const contact = req.body.contact
-    const contactNumber = req.body.contactNumber
     const user_id = req.body.userId
 
     const thing = models.Things.build({
@@ -189,6 +188,7 @@ app.post('/api/addpost', (req, res) => {
         contact: contact,
         description: description,
         priority: priority,
+        score: 0,
         user_id: user_id
     })
 

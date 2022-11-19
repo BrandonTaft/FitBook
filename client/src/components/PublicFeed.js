@@ -17,8 +17,6 @@ function PublicFeed(props) {
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
-    getUsers()
-   
   }, [count])
 
   const toggleBody = event => {
@@ -59,20 +57,6 @@ function PublicFeed(props) {
       })
   }
 
-  const getUsers = () => {
-    fetch('https://lit-ravine-06265.herokuapp.com/api/users', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(users => {
-        console.log("users", users)
-        setUsers(users)
-      })
-  }
-
   const getComments = () => {
     fetch(`https://lit-ravine-06265.herokuapp.com/api/comments`, {
       method: 'GET',
@@ -99,13 +83,9 @@ function PublicFeed(props) {
   const handleFeedback = event => {
     let id = event.currentTarget.id
     let score;
-    if(event.currentTarget.nextSibling.innerHTML === null){
-      score = 0
-    }else{
     score = event.currentTarget.nextSibling.innerHTML
-    }
     event.currentTarget.nextSibling.innerHTML = parseInt(score) + 1
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}`, {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/update/${id}`, {
       method: 'PUT'
     }).then(response => response.json())
   }
@@ -114,8 +94,6 @@ function PublicFeed(props) {
 
   const thingItems = props.things.map(thing => {
     let total = 0;
-    let bio;
-      let title;
     const myComments = comments.map(comment => {
       if (comment.postId === thing.id) {
         total++
@@ -127,22 +105,13 @@ function PublicFeed(props) {
         </div>
       )
     })
-
-    const theUsers = users.map(user => {
-      
-      if(user.id === thing.user_id) {
-        bio = user.bio
-        title = user.title
-      }
-    })
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
             {thing.priority}<br />
-            {title}<br />
-            {bio}<br />
+            {/* {thing.title}<br /> */}
           </div>
         </div>
         <div className='post-body' >

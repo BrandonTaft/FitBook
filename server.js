@@ -181,6 +181,7 @@ app.post('/api/addpost', (req, res) => {
     const link = req.body.link
     const contact = req.body.contact
     const user_id = req.body.userId
+    const title = req.body.title
 
     const thing = models.Things.build({
         name: name,
@@ -189,7 +190,8 @@ app.post('/api/addpost', (req, res) => {
         description: description,
         priority: priority,
         score: 0,
-        user_id: user_id
+        user_id: user_id,
+        contactNumber: title
     })
 
     thing.save()

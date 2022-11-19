@@ -12,13 +12,13 @@ function PublicFeed(props) {
   const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
-  const [users, setUsers] = useState([])
+  const [users, setUsers] = useState()
 
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
     getUsers()
-    console.log("users", users)
+   
   }, [count])
 
   const toggleBody = event => {
@@ -68,6 +68,7 @@ function PublicFeed(props) {
     })
       .then(response => response.json())
       .then(users => {
+        console.log("users", users)
         setUsers(users)
       })
   }
@@ -113,6 +114,8 @@ function PublicFeed(props) {
 
   const thingItems = props.things.map(thing => {
     let total = 0;
+    let bio;
+      let title;
     const myComments = comments.map(comment => {
       if (comment.postId === thing.id) {
         total++
@@ -124,14 +127,22 @@ function PublicFeed(props) {
         </div>
       )
     })
+
+    const theUsers = users.map(user => {
+      
+      if(user.id === thing.user_id) {
+        bio = user.bio
+        title = user.title
+      }
+    })
     return (
       <div key={thing.id} className="grid-item">
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
-            {thing.priority}
-            {thing.title}
-            {thing.bio}
+            {thing.priority}<br />
+            {title}<br />
+            {bio}<br />
           </div>
         </div>
         <div className='post-body' >

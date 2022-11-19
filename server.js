@@ -320,6 +320,8 @@ app.post('/api/addmythings', (req, res) => {
     const contact = req.body.contact
     const contactNumber = req.body.contactNumber
     const user_id = req.body.userId
+    const title = req.body.title
+    const bio = req.body.bio
 
     const thing = models.Things.build({
         name: name,
@@ -329,7 +331,9 @@ app.post('/api/addmythings', (req, res) => {
         link: link,
         contact: contact,
         contactNumber: contactNumber,
-        user_id: user_id
+        user_id: user_id,
+        title: title,
+        bio: bio
     })
 
     thing.save()

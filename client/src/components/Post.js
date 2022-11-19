@@ -14,8 +14,6 @@ function Post(props) {
             ...post,
             priority:(localStorage.getItem('name')),
             userId: parseInt(localStorage.getItem('user_Id')),
-            title: parseInt(localStorage.getItem('title')),
-            bio: parseInt(localStorage.getItem('bio')),
             [e.target.name]: e.target.value
 
         })
@@ -24,7 +22,7 @@ function Post(props) {
 
 
     const postTODB = () => {
-        fetch("https://lit-ravine-06265.herokuapp.com/api/addmythings", {
+        fetch("https://lit-ravine-06265.herokuapp.com/api/addpost", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

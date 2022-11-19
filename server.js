@@ -153,6 +153,15 @@ app.get('/api/user/:userId',authenticate,(req, res) => {
     })
 })
 
+//***************************GET ALL USERS***************************//
+app.get('/api/users', authenticate,(req, res) => {
+    models.Mail.findAll({
+    })
+        .then(users => {
+            res.json(users)
+        })
+})
+
 
 //***************************DELETE USER***************************//
 

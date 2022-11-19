@@ -81,7 +81,12 @@ function PublicFeed(props) {
 
   const handleFeedback = event => {
     let id = event.currentTarget.id
-    let score = event.currentTarget.nextSibling.innerHTML
+    let score;
+    if(event.currentTarget.nextSibling.innerHTML === null){
+      score = 0
+    }else{
+    score = event.currentTarget.nextSibling.innerHTML
+    }
     event.currentTarget.nextSibling.innerHTML = parseInt(score) + 1
     fetch(`https://lit-ravine-06265.herokuapp.com/api/publicthings/${id}`, {
       method: 'PUT'

@@ -12,10 +12,13 @@ function PublicFeed(props) {
   const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
+    getUsers()
+    console.log("users", users)
   }, [count])
 
   const toggleBody = event => {
@@ -53,6 +56,19 @@ function PublicFeed(props) {
           getComments()
           setCount(count + 1)
         }
+      })
+  }
+
+  const getUsers = () => {
+    fetch('https://lit-ravine-06265.herokuapp.com/api/users', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(users => {
+        setUsers(users)
       })
   }
 

@@ -155,8 +155,7 @@ app.get('/api/user/:userId',authenticate,(req, res) => {
 
 //***************************GET ALL USERS***************************//
 app.get('/api/users', authenticate,(req, res) => {
-    models.Mail.findAll({
-    })
+    models.Users.findAll({})
         .then(users => {
             res.json(users)
         })

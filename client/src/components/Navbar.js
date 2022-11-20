@@ -31,7 +31,7 @@ function Navbar() {
             <NavLink to="/post" className="bold m-2"><MdPostAdd className='white icon' /></NavLink>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
                 <li><NavLink to="/publicfeed" >Home</NavLink></li>
-                <li><NavLink to="/private" >Profile</NavLink></li>
+                <li><NavLink to="/profile" >Profile</NavLink></li>
                 <li><NavLink to="/messages" >Messages</NavLink></li>
                 <li><NavLink to="/logout" >Log Out</NavLink></li>
             </ul>

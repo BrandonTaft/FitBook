@@ -49,7 +49,7 @@ function Post(props) {
             <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link" />
             <input className="textbox" type="text" name="contact" onChange={handleAddPost} placeholder="Your Comments" />
             <div id="words">Description</div>
-            <textarea id='description' className="textbox" type="text" name="description" onChange={handleAddPost}  />
+            <textarea id='description' className="textbox" type="text" name="description" maxLength={255} onChange={handleAddPost}  />
             <button className="billButton" onClick={postTODB}>Submit</button>
         </>
     )

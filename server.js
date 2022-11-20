@@ -83,7 +83,7 @@ app.post('/api/login', async (req, res) => {
 })
 
 
-//***************************GET ALL USERS***************************//
+//***************************GET A USER***************************//
 app.get('/api/users:id',(req, res) => {
     const id = parseInt(req.params.id)
     models.Users.findOne({

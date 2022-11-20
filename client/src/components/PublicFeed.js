@@ -6,6 +6,7 @@ import Avatar from 'react-avatar';
 import { FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
+import { TbArrowsMaximize } from "react-icons/tb"
 import "./App.css"
 
 function PublicFeed(props) {
@@ -20,7 +21,11 @@ function PublicFeed(props) {
   }, [count])
 
   const toggleBody = event => {
+    document.getElementById('overlay').classList.toggle('hide-overlay')
+    // event.currentTarget.previousSibling.classList.toggle('grow')
+    // event.currentTarget.parentElement.classList.toggle('show')
     event.currentTarget.parentElement.classList.toggle('show')
+    event.currentTarget.getElementById('post-body').classList.toggle('grow')
   }
 
   const openComments = (event) => {
@@ -107,6 +112,7 @@ function PublicFeed(props) {
     })
     return (
       <div key={thing.id} className="grid-item">
+        <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)}/>
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
@@ -114,15 +120,16 @@ function PublicFeed(props) {
             {thing.contactNumber}<br />
           </div>
         </div>
-        <div className='post-body' >
+        <div className='post-body' id='post-body' >
           <span className='post-title'>
           {thing.name}
-          </span>
+          </span><br />
+          {thing.link ?
+            <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">Check it out</a>
+              : "" }
           <p className='post-description'>
             {thing.description}
-            <span className='see-more' onClick={toggleBody}>See More</span><br />
-            <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">{thing.name}</a>
-          </p>
+            </p>
         </div>
         <div className='feedback'>
           <div className="likes">
@@ -147,6 +154,7 @@ function PublicFeed(props) {
   return (
     <>
       <Navbar />
+      <aside id="overlay" className="overlay hide-overlay"></aside>
       {/* <div className="feed-logo">
       <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" width={200} height={150}/>
       </div> */}

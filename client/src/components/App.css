@@ -142,7 +142,7 @@ svg {
 
 .grid-container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
   padding: 5px;
   margin-top: 4em;
 }
@@ -173,32 +173,24 @@ svg {
 .post-body {
   border: none;
   box-shadow: 0px 8px 15px black inset; 
-  color: var(--bs-light);
   font-weight: 500;
-  font-family: fantasy;
-  text-decoration: none;
   letter-spacing: 1px;
   text-decoration: none;
   cursor: pointer;
   margin: 5px;
-  max-height: 200px;
-  overflow: auto;
 }
 
 .show {
   display: block;
   position: fixed;
-  background-color: rgba(0,0,0,0.9);
   font-family: 'Segoe UI';
   font-size: 1.5em;
   color:#fff;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  top: 15%;
+  /* left: 25%;
+  right: 25%; */
   overflow: auto;
-  height: fit-content;
-  width: 33%;
+  width: 100%;
   z-index: 99;
 }
 
@@ -233,6 +225,10 @@ svg {
 
 .feedback {
   display: flex;
+ 
+  bottom: 0;
+  left: 0;
+  right: 0;
   align-items: center;
   justify-content: center;
   font-size: 1.25em;
@@ -265,17 +261,43 @@ svg {
   color:#fff;
 }
 
+.maximize {
+  position: absolute;
+  left: 20px;
+  top: 10px;
+  font-size: 25px;
+}
+
 .see-more {
   color: var(--bs-blue);
   font-size: 1em;
-  position: absolute;
-  bottom: 1.25em;
-  left: 0;
-  right: 0;
+  cursor: pointer;
 }
 
+.overlay {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: hsl(0, 0%, 0%, 0.7);
+  width: 100%;
+  height: 100vh;
+  z-index: 2;
+  padding-right: 17px;
+  cursor: pointer;
+}
 
+.hide-overlay {
+  display: none;
+}
 
+.show-overflow {
+  overflow: visible;
+}
+
+.grow {
+  max-height: fit-content;
+}
 
 
 
@@ -293,6 +315,12 @@ svg {
 
 
 @media( min-width: 600px ) {
+  .grid-container {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media( min-width: 1025px ) {
   .grid-container {
     grid-template-columns: auto auto auto;
   }

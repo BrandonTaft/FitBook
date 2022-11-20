@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
-import { connect } from 'react-redux'
-import * as actionCreators from '../store/creators/actionCreators'
-import Navbar from './Navbar'
+import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../store/creators/actionCreators';
+import Navbar from './Navbar';
+import Avatar from 'react-avatar';
 import { NavLink } from 'react-router-dom'
 import "./App.css"
 
@@ -14,8 +15,8 @@ function Private(props) {
   }, [])
 
   const getUser = () => {
-    const id = localStorage.getItem('user_id')
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/users/${id}`,{
+    const id = localStorage.getItem('user_Id')
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/users${id}`,{
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
@@ -36,6 +37,7 @@ function Private(props) {
         props.onThingsLoaded()
       })
   }
+
   const thingItems = props.things.map(thing => {
     const randomNumber = Math.floor(Math.random() * 14) + 1;
     const name = localStorage.getItem('name')
@@ -43,7 +45,7 @@ function Private(props) {
       <div key={thing.id} id='listContainer'>
         <div id="picBox">
           <div className="fill">
-            <img id="profile-pic" src={"/" + "pic" + randomNumber + ".png"} alt="Profile-Pic" />
+          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           </div>
           <div id='nameBox'>
             {name}
@@ -69,7 +71,12 @@ function Private(props) {
       <div id="logo-container">
         <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
       </div>
-     
+      {user ?
+      <div>
+      <h1>{user.name}</h1>
+     <h2>{user.title}</h2>
+     </div>
+     : "" }
       {thingItems}
     </div>
   )

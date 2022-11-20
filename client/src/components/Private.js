@@ -14,6 +14,21 @@ function Private(props) {
     getUser()
   }, [])
 
+  // const getUser = () => {
+  //   const token = localStorage.getItem('jsonwebtoken')
+  //   fetch('http://localhost:8080/api/profile',{
+  //       method: 'GET',
+  //       headers: {
+  //           'Authorization': `Bearer ${token}`
+  //       }
+  //   })
+  //       .then(response => response.json())
+  //       .then(user => {
+  //           console.log(user)
+  //           setUser(user)
+  //       })
+  //   }
+
   const getUser = () => {
     const id = localStorage.getItem('user_Id')
     fetch(`https://lit-ravine-06265.herokuapp.com/api/users${id}`,{
@@ -66,19 +81,24 @@ function Private(props) {
 
   return (
 
-    <div className='flex-column full-page'>
+    <>
       <Navbar />
-      <div id="logo-container">
-        <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" />
-      </div>
+      <div className='profile-container'>
+      <div className="mb-2">
+                <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
+            </div>
       {user ?
       <div>
+         <div className="avatar-container">
+          <Avatar src={`https://i.pravatar.cc/150?img=${8}`} round={true} size={150} />
+        </div>
       <h1>{user.name}</h1>
      <h2>{user.title}</h2>
      </div>
      : "" }
       {thingItems}
-    </div>
+      </div>
+    </>
   )
 }
 

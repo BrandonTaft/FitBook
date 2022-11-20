@@ -105,7 +105,7 @@ function PublicFeed(props) {
       }
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
-          <div>{comment.comment}</div>
+          <div className='comment'>{comment.comment}</div>
           {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
         </div>
       )
@@ -116,8 +116,8 @@ function PublicFeed(props) {
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
           <div className="bold white">
-            {thing.priority}<br />
-            {thing.contactNumber}<br />
+            <span className='user-name'>{thing.priority}</span><br />
+           <span className="title yellow">{thing.contactNumber}</span>
           </div>
         </div>
         <div className='post-body' id='post-body' >
@@ -125,7 +125,7 @@ function PublicFeed(props) {
           {thing.name}
           </span><br />
           {thing.link ?
-            <a rel={'external'} target="_blank" href={`${thing.link}`} className="thingTitle">Check it out</a>
+            <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Check it out</a>
               : "" }
           <p className='post-description'>
             {thing.description}
@@ -139,9 +139,9 @@ function PublicFeed(props) {
           {total}
           <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
           <div className='switch hide'>
-            <MdClose onClick={closeMe} />
-            <input type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button type='submit' onClick={() => postComment(thing)} className="">Submit</button>
+            <MdClose className='comment-close' onClick={closeMe} />
+            <input className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+            <button type='submit' onClick={() => postComment(thing)} className="btn comment-btn">Submit</button>
             <div>
               {myComments}
             </div>

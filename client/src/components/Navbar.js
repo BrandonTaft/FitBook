@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation} from "react-router-dom";
 import { MdClose, MdPostAdd } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import "./App.css"
@@ -7,9 +7,9 @@ import "./App.css"
 
 
 function Navbar() {
-
     const [navbarOpen, setNavbarOpen] = useState(false)
-
+    const location = useLocation();
+    console.log('pathname', location.pathname);
     //change button from off to on at on click
     const handleToggle = () => {
         setNavbarOpen(!navbarOpen)
@@ -23,12 +23,14 @@ function Navbar() {
         <nav className="navBar">
             <button onClick={handleToggle}>
                 {navbarOpen ? (
-                    <MdClose style={{ color: "#3fffd2", width: "40px", height: "40px" }} />) : (
-                    <FiMenu style={{ color: "#3fffd2", width: "40px", height: "40px" }} />
+                    <MdClose className="nav-icon" />) : (
+                    <FiMenu className="nav-icon" />
                 )}
             </button>
+            { location.pathname === '/publicfeed' ?
             <h1>Feed</h1>
-            <NavLink to="/post" className="bold m-2"><MdPostAdd className='white icon' /></NavLink>
+            : "" }
+            <NavLink to="/post"><MdPostAdd className='nav-icon icon' /></NavLink>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
                 <li><NavLink to="/publicfeed" >Home</NavLink></li>
                 <li><NavLink to="/profile" >Profile</NavLink></li>

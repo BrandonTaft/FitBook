@@ -104,8 +104,10 @@ app.get('/api/users:id',(req, res) => {
 app.post('/api/addcomment:thingId', (req, res) => {
     const thingId = parseInt(req.params.thingId)
     const comment = req.body.comment
+    const userId = req.body.userId
     const comments = models.Comments.build({
         comment: comment,
+        userId: userId,
         postId: thingId,
     })
 

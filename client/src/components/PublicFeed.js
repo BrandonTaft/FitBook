@@ -14,7 +14,7 @@ function PublicFeed(props) {
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState([])
   const [users, setUsers] = useState()
-
+  const currentUser = localStorage.getItem('name')
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
@@ -22,8 +22,6 @@ function PublicFeed(props) {
 
   const toggleBody = event => {
     document.getElementById('overlay').classList.toggle('hide-overlay')
-    // event.currentTarget.previousSibling.classList.toggle('grow')
-    // event.currentTarget.parentElement.classList.toggle('show')
     event.currentTarget.parentElement.classList.toggle('show')
     event.currentTarget.getElementById('post-body').classList.toggle('grow')
   }
@@ -42,7 +40,10 @@ function PublicFeed(props) {
   }
 
   const handleAddComment = (event) => {
-    setNewComment({ [event.target.name]: event.target.value })
+    console.log("test",currentUser)
+    setNewComment({
+      userId : currentUser,
+      [event.target.name]: event.target.value })
   }
 
   const postComment = (thing) => {
@@ -142,7 +143,7 @@ function PublicFeed(props) {
             <MdClose className='comment-close' onClick={closeMe} />
             <input className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="btn comment-btn">Submit</button>
-            <div>
+            <div className='comment-box'>
               {myComments}
             </div>
 

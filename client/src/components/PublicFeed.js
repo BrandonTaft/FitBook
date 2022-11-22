@@ -15,7 +15,7 @@ function PublicFeed(props) {
   const [newComment, setNewComment] = useState([])
   const [users, setUsers] = useState()
   const currentUser = localStorage.getItem('name')
-  const currentUserId = localStorage.getItem('user_ID')
+  const currentUserId = localStorage.getItem('user_Id')
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
@@ -79,7 +79,7 @@ function PublicFeed(props) {
   }
 
   const handleCommentDelete = (comment) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.id}`, {
+    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.userId}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
@@ -103,14 +103,15 @@ function PublicFeed(props) {
   const thingItems = props.things.map(thing => {
     let total = 0;
     const myComments = comments.map(comment => {
+      // console.log(comment.userId)
       if (comment.postId === thing.id) {
         total++
       }
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
           <div className="yellow">
-          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={30} />
-            {comment.userId}
+          <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} />
+            {comment.spare}
             </div>
           <div className='comment'>{comment.comment}</div>
           {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
@@ -121,7 +122,7 @@ function PublicFeed(props) {
       <div key={thing.id} className="grid-item">
         <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)}/>
         <div className="avatar-container">
-          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={150} />
+          <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} />
           <div className="bold white">
             <span className='user-name'>{thing.priority}</span><br />
            <span className="title yellow">{thing.contactNumber}</span>

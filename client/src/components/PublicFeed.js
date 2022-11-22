@@ -15,6 +15,7 @@ function PublicFeed(props) {
   const [newComment, setNewComment] = useState([])
   const [users, setUsers] = useState()
   const currentUser = localStorage.getItem('name')
+  const currentUserId = localStorage.getItem('user_ID')
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
@@ -42,7 +43,8 @@ function PublicFeed(props) {
   const handleAddComment = (event) => {
     console.log("test",currentUser)
     setNewComment({
-      userId : currentUser,
+      userId: currentUserId,
+      spare: currentUser,
       [event.target.name]: event.target.value })
   }
 
@@ -106,6 +108,10 @@ function PublicFeed(props) {
       }
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
+          <div className="yellow">
+          <Avatar src={`https://i.pravatar.cc/150?img=${thing.id - 98}`} round={true} size={30} />
+            {comment.userId}
+            </div>
           <div className='comment'>{comment.comment}</div>
           {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
         </div>

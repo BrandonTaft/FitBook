@@ -49,6 +49,10 @@
   color: var(--bs-light);
 }
 
+.off-white {
+  color: var(--bs-off-white);
+}
+
 .yellow {
   color: var(--bs-yellow);
 }
@@ -145,6 +149,7 @@ svg {
   display: grid;
   grid-template-columns: auto;
   margin-top: 4em;
+  margin-bottom: 4em;
 }
 .grid-item {
   position: relative;
@@ -262,6 +267,11 @@ svg {
   padding: 3px;
   padding-left: 15px;
   margin-bottom: 10px;
+  margin-top: 3px;
+}
+
+.spare {
+  margin-left: 6px;
 }
 
 /* @keyframes showMe {
@@ -304,7 +314,7 @@ svg {
 }
 
 .post-link {
-  font-size: 1em;
+  font-size: 1.15em;
   color: var(--bs-light-purple);
 }
 
@@ -389,7 +399,7 @@ svg {
   color: var(--bs-off-white);
   width: 40px;
   height: 40px;
-  margin: px;
+  margin: 5px;
 }
 
 .icon {

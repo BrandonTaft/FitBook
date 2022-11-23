@@ -6,8 +6,9 @@ import Avatar from 'react-avatar';
 import { FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
-import { TbArrowsMaximize } from "react-icons/tb"
-import "./App.css"
+import { TbArrowsMaximize } from "react-icons/tb";
+import "./App.css";
+import { timeSince } from '../utils/utils.js'
 
 function PublicFeed(props) {
   const [count, setCount] = useState(0)
@@ -41,11 +42,12 @@ function PublicFeed(props) {
   }
 
   const handleAddComment = (event) => {
-    console.log("test",currentUser)
+    console.log("test", currentUser)
     setNewComment({
       userId: currentUserId,
       spare: currentUser,
-      [event.target.name]: event.target.value })
+      [event.target.name]: event.target.value
+    })
   }
 
   const postComment = (thing) => {
@@ -98,10 +100,12 @@ function PublicFeed(props) {
     }).then(response => response.json())
   }
 
-
-
+  
   const thingItems = props.things.map(thing => {
     let total = 0;
+    const dateCreated = new Date(thing.createdAt)
+    console.log("DATE", timeSince(dateCreated))
+
     const myComments = comments.map(comment => {
       // console.log(comment.userId)
       if (comment.postId === thing.id) {
@@ -110,9 +114,9 @@ function PublicFeed(props) {
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
           <div className="yellow">
-          <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} />
-            {comment.spare}
-            </div>
+            <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} />
+            <span className="spare">{comment.spare}</span>
+          </div>
           <div className='comment'>{comment.comment}</div>
           {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
         </div>
@@ -120,24 +124,26 @@ function PublicFeed(props) {
     })
     return (
       <div key={thing.id} className="grid-item">
-        <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)}/>
+        <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)} />
         <div className="avatar-container">
           <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} />
           <div className="bold white">
             <span className='user-name'>{thing.priority}</span><br />
-           <span className="title yellow">{thing.contactNumber}</span>
+            <span className="title yellow">{thing.contactNumber}</span>
           </div>
         </div>
         <div className='post-body' id='post-body' >
           <span className='post-title'>
-          {thing.name}
+            {thing.name}
           </span><br />
           {thing.link ?
-            <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Check it out</a>
-              : "" }
+            <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Try it out</a>
+            : ""}
+            <br />
+          <span className="off-white">{timeSince(dateCreated)}</span>
           <p className='post-description'>
             {thing.description}
-            </p>
+          </p>
         </div>
         <div className='feedback'>
           <div className="likes">

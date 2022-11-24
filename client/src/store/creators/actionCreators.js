@@ -11,7 +11,6 @@ export const fetchThings = () => {
     })
       .then(response => response.json())
       .then(things => {
-        console.log("Things", things)
         if (things.success === false) {
           history.push('/')
         } else {

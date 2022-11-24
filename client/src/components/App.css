@@ -259,7 +259,7 @@ svg {
 
 .comment {
   background-color: #ffffff;
-  box-shadow: 0px 8px 15px black inset;
+  box-shadow: 0px 3px 15px black inset;
   color: black;
   text-align: left;
   border: 1px solid grey;
@@ -268,6 +268,7 @@ svg {
   padding-left: 15px;
   margin-bottom: 10px;
   margin-top: 3px;
+  font-size: .85em;
 }
 
 .spare {
@@ -472,12 +473,35 @@ svg {
 
 /* ******************PROFILE********************* */
 .profile-container{
-  height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   color: #fff;
-  margin-top: 7em;
+  margin-top: 5em;
+  margin-bottom: 4em;
   text-align: center;
+}
+
+.my-posts {
+  flex-grow: 1;
+  border: 1px solid grey;
+  border-radius: 10px;
+  width: 90%;
+  padding: .75em;
+  margin-top: 2px;
+}
+
+.comment-btn {
+  width: fit-content;
+  padding: 5px;
+  margin: 10px auto 5px;
+  font-size: .75em;
+}
+
+.profile-post {
+  border-bottom: 1px solid grey;
+  margin-bottom: 2em;
+  padding-bottom: 2em;
 }

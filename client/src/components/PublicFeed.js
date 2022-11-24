@@ -13,8 +13,7 @@ import { timeSince } from '../utils/utils.js'
 function PublicFeed(props) {
   const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
-  const [newComment, setNewComment] = useState([])
-  const [users, setUsers] = useState()
+  const [newComment, setNewComment] = useState()
   const currentUser = localStorage.getItem('name')
   const currentUserId = localStorage.getItem('user_Id')
   useEffect(() => {
@@ -42,7 +41,6 @@ function PublicFeed(props) {
   }
 
   const handleAddComment = (event) => {
-    console.log("test", currentUser)
     setNewComment({
       userId: currentUserId,
       spare: currentUser,
@@ -65,6 +63,7 @@ function PublicFeed(props) {
           setCount(count + 1)
         }
       })
+      document.getElementById(`comment-input${thing.id}`).value = ""
   }
 
   const getComments = () => {
@@ -104,15 +103,13 @@ function PublicFeed(props) {
   const thingItems = props.things.map(thing => {
     let total = 0;
     const dateCreated = new Date(thing.createdAt)
-    console.log("DATE", timeSince(dateCreated))
-
     const myComments = comments.map(comment => {
       // console.log(comment.userId)
       if (comment.postId === thing.id) {
         total++
       }
       return (
-        <div key={comment.id} className={comment.postId} style={comment.postId != thing.id ? { display: 'none' } : { display: 'block' }} >
+        <div key={comment.id} className={comment.postId} style={comment.postId !== thing.id ? { display: 'none' } : { display: 'block' }} >
           <div className="yellow">
             <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} />
             <span className="spare">{comment.spare}</span>
@@ -154,7 +151,7 @@ function PublicFeed(props) {
           <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
           <div className='switch hide'>
             <MdClose className='comment-close' onClick={closeMe} />
-            <input className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+            <input id = {`comment-input${thing.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="btn comment-btn">Submit</button>
             <div className='comment-box'>
               {myComments}

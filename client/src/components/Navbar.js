@@ -9,7 +9,6 @@ import "./App.css"
 function Navbar() {
     const [navbarOpen, setNavbarOpen] = useState(false)
     const location = useLocation();
-    console.log('pathname', location.pathname);
     //change button from off to on at on click
     const handleToggle = () => {
         setNavbarOpen(!navbarOpen)

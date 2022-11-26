@@ -36,14 +36,14 @@ class UploadImage extends React.Component {
             // drawn on another canvas, or added to the DOM.
             const image = {"img" : this.editor.getImageScaledToCanvas().toDataURL()};
             const userId = parseInt(localStorage.getItem('user_Id'));
-            // const newImage = {"img": img, userId : userId}
+            const newImage = {"img": "img", userId : userId}
             console.log(image)
             fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(image)
+            body: JSON.stringify(newImage)
         }).then(response => response.json())
             .then(result => {
                 console.log(result)

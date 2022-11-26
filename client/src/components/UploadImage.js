@@ -37,6 +37,7 @@ class UploadImage extends React.Component {
             const img = this.editor.getImageScaledToCanvas().toDataURL();
             const userId = parseInt(localStorage.getItem('user_Id'));
             const newImage = {img: img, userId : userId}
+            console.log(newImage)
             fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
             method: 'PUT',
             headers: {

@@ -91,7 +91,7 @@ app.put('/api/add-image', (req, res) => {
     },
         {
             where: {
-                id: id
+                id: 92
             }
         }).then(res.json({ success: true }))
 })

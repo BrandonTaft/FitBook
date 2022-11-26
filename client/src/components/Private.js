@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Navbar from './Navbar';
@@ -67,6 +68,7 @@ function Private(props) {
           <div>
             <div className="avatar-container">
             <Avatar src={`https://i.pravatar.cc/150?img=${user.id - 68}`} round={true} size={150} />
+            <NavLink to="/upload-image" >Upload New Image</NavLink>
             </div>
             <h1 className='yellow'>{user.name}</h1>
             <h2>{user.title}</h2>

@@ -19,6 +19,7 @@ import Messages from './components/Messages'
 import history from './store/History';
 import Logout from './components/Logout';
 import PublicFeed from './components/PublicFeed';
+import UploadImage from './components/UploadImage';
 
 
 
@@ -48,7 +49,7 @@ ReactDOM.render(
     <Route exact path = "/profile" component = {Private} />
     <Route exact path = "/post" component = {Post} />
     <Route exact path = "/logout" component = {Logout} />
-    {/* <Route exact path = "/privatepost" component = {PrivatePost} /> */}
+    <Route exact path = "/upload-image" component = {UploadImage} />
     <Route exact path = "/sendmessage" component = {SendMessage} />
     
     </Switch>

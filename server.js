@@ -82,6 +82,19 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
+//***************************ADD PROFILE PIC***************************//
+app.put('/api/add-image',(req, res) => {
+    const id = req.body.userId
+    const img = req.body.img
+    models.Users.update({
+        bio : img
+    },
+        {where: {
+            id: id
+        }
+    }).then(res.json({success: true}))
+})
+
 
 //***************************GET A USER***************************//
 app.get('/api/users:id',(req, res) => {

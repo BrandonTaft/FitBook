@@ -17,20 +17,12 @@ function Post(props) {
         })
     }
     const postTODB = () => {
-        console.log(post)
-
-        const test = {
-            "name": "test"
-        }
-
-        console.log(test)
         fetch("https://lit-ravine-06265.herokuapp.com/api/addpost", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(post)
-            //body: JSON.stringify(test)
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {

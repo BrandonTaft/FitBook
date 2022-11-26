@@ -160,7 +160,11 @@ app.put('/api/update/:id', (req, res) => {
 //Retrieve All From DataBase
 
 app.get('/api/things', async(req, res) => {
-    await models.Things.findAll({})
+    await models.Things.findAll({
+        order: [
+            ['id', 'DESC']
+        ],
+    })
         .then(things => {
             res.json(things)
         })
@@ -175,9 +179,6 @@ app.get('/api/mythings/:user_Id', authenticate,(req, res) => {
         where: {
             user_id: user_Id
         },
-        order: [
-            ['id', 'DESC']
-        ],
     })
         .then(things => {
             res.json(things)

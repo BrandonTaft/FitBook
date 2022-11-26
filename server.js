@@ -86,15 +86,14 @@ app.post('/api/login', async (req, res) => {
 app.put('/api/add-image', (req, res) => {
     const id = req.body.userId
     const img = req.body.img
-    models.Users.increment('bio', { by: 1, where: { id: id } });
-    // models.Users.update({
-    //     bio: img
-    // },
-    //     {
-    //         where: {
-    //             id: id
-    //         }
-    //     }).then(res.json({ success: true }))
+    models.Users.update({
+        bio: img
+    },
+        {
+            where: {
+                id: id
+            }
+        }).then(res.json({ success: true }))
 })
 
 

@@ -38,19 +38,14 @@ class UploadImage extends React.Component {
             const userId = parseInt(localStorage.getItem('user_Id'));
             const newImage = {img: img, userId : userId}
             fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(newImage)
         }).then(response => response.json())
             .then(result => {
-                if (result.success) {
-                   
-                    console.log("pic was loaded")
-                } else {
-                    console.log("error", result.message)
-                }
+                console.log(result)
             })
         }
     }

@@ -16,7 +16,7 @@ app.use(cors())
 
 app.post('/api/register', async (req, res) => {
 
-    
+
     const name = req.body.name
     const password = req.body.password
     const title = req.body.title
@@ -63,7 +63,7 @@ app.post('/api/login', async (req, res) => {
 
     let user = await models.Users.findOne({
         where: {
-            name : name,
+            name: name,
         }
     })
 
@@ -71,7 +71,7 @@ app.post('/api/login', async (req, res) => {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
                 const token = jwt.sign({ name: name }, "SECRETKEY")
-                res.json({ success: true, token: token, name:name, user_id: user.id, title: user.title, bio: user.bio})
+                res.json({ success: true, token: token, name: name, user_id: user.id, title: user.title, bio: user.bio })
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -83,21 +83,23 @@ app.post('/api/login', async (req, res) => {
 })
 
 //***************************ADD PROFILE PIC***************************//
-app.put('/api/add-image',(req, res) => {
+app.put('/api/add-image', (req, res) => {
     const id = req.body.userId
     const img = req.body.img
-    models.Users.update({
-        bio : img
-    },
-        {where: {
-            id: id
-        }
-    }).then(res.json({success: true}))
+    models.Users.increment('bio', { by: 1, where: { id: id } });
+    // models.Users.update({
+    //     bio: img
+    // },
+    //     {
+    //         where: {
+    //             id: id
+    //         }
+    //     }).then(res.json({ success: true }))
 })
 
 
 //***************************GET A USER***************************//
-app.get('/api/users:id',(req, res) => {
+app.get('/api/users:id', (req, res) => {
     const id = parseInt(req.params.id)
     models.Users.findOne({
         where: {
@@ -138,8 +140,8 @@ app.post('/api/addcomment:thingId', (req, res) => {
 //Retrieve All Comments From DataBase
 
 app.get('/api/comments', (req, res) => {
-     models.Comments.findAll({
-     })
+    models.Comments.findAll({
+    })
         .then(comments => {
             res.json(comments)
         })
@@ -163,16 +165,16 @@ app.delete('/api/comments/:commentId', (req, res) => {
 
 app.put('/api/update/:id', (req, res) => {
     const id = parseInt(req.params.id)
-    models.Things.increment('score', { by: 1, where: { id: id }});
+    models.Things.increment('score', { by: 1, where: { id: id } });
 })
 
 
 
- //**************************SHOW ALL POSTS**************************//
+//**************************SHOW ALL POSTS**************************//
 
 //Retrieve All From DataBase
 
-app.get('/api/things', async(req, res) => {
+app.get('/api/things', async (req, res) => {
     await models.Things.findAll({
         order: [
             ['id', 'DESC']
@@ -186,7 +188,7 @@ app.get('/api/things', async(req, res) => {
 
 //**********Retrieve All From DataBase With Specific user_Id***********//
 
-app.get('/api/mythings/:user_Id', authenticate,(req, res) => {
+app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
         where: {
@@ -446,6 +448,6 @@ app.delete('/api/user/:userId', (req, res) => {
 // })
 //***************************SET PORT***************************//
 
-app.listen( process.env.PORT);
+app.listen(process.env.PORT);
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')

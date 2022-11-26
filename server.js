@@ -174,7 +174,10 @@ app.get('/api/mythings/:user_Id', authenticate,(req, res) => {
     models.Things.findAll({
         where: {
             user_id: user_Id
-        }
+        },
+        order: [
+            ['id', 'DESC']
+        ],
     })
         .then(things => {
             res.json(things)

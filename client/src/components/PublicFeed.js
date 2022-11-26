@@ -16,6 +16,7 @@ function PublicFeed(props) {
   const [newComment, setNewComment] = useState()
   const currentUser = localStorage.getItem('name')
   const currentUserId = localStorage.getItem('user_Id')
+  
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
@@ -98,8 +99,7 @@ function PublicFeed(props) {
       method: 'PUT'
     }).then(response => response.json())
   }
-
-  
+   
   const thingItems = props.things.map(thing => {
     let total = 0;
     const dateCreated = new Date(thing.createdAt)

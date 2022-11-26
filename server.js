@@ -10,7 +10,7 @@ const salt = 10
 
 // app.use(bodyParser.json());
 // app.use(bodyParser({limit: '5mb'}));
-app.use(express.limit('5mb'));
+//app.use(express.limit('5mb'));
 app.use(express.json())
 app.use(cors())
 

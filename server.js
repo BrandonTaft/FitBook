@@ -89,7 +89,7 @@ app.put('/api/add-image', async (req, res, next) => {
     try {
         const fileStr = req.body.data
         const uploadResponse = await cloudinary.uploader.upload(fileStr, {
-        upload_preset: 'Upload',
+        public_id: 'test',
         })
         let secureURL = uploadResponse.secure_url
         } catch (error) {

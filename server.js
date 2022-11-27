@@ -87,6 +87,8 @@ app.put('/api/add-image', async (req, res, next) => {
     //         }
     //     }).then(res.json({ success: true }))
     const options = {
+        use_filename: false,
+      unique_filename: true,
         public_id: 'test',
         overwrite: true,
       };

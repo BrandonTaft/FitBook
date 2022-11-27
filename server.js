@@ -6,7 +6,7 @@ const app = express();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('./middlewares/authMiddleware');
-const cloudinary = require('./cloudinary').default;
+const cloudinary = require('./cloudinary');
 const salt = 10;
 app.use(express.json())
 app.use(cors())

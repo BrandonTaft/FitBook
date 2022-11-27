@@ -1,36 +1,29 @@
-require('dotenv').config()
-const express = require('express')
-const models = require('./models')
-const cors = require('cors')
-const app = express()
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
-const authenticate = require('./middlewares/authMiddleware')
-const salt = 10
-
-// app.use(bodyParser.json());
-// app.use(bodyParser({limit: '5mb'}));
-//app.use(express.limit('5mb'));
+require('dotenv').config();
+const express = require('express');
+const models = require('./models');
+const cors = require('cors');
+const app = express();
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const authenticate = require('./middlewares/authMiddleware');
+const cloudinary = require('./cloudinary');
+const salt = 10;
 app.use(express.json())
 app.use(cors())
 
 //***************************REGISTRATION PAGE***************************//
 
 app.post('/api/register', async (req, res) => {
-
-
     const name = req.body.name
     const password = req.body.password
     const title = req.body.title
     const bio = req.body.bio
     const token = req.body.token
-
     const persistedUser = await models.Users.findOne({
         where: {
             name: name
         }
     })
-
     if (persistedUser == null) {
         bcrypt.hash(password, salt, async (error, hash) => {
             console.log(hash)
@@ -59,16 +52,13 @@ app.post('/api/register', async (req, res) => {
 //***************************LOGIN PAGE***************************//
 
 app.post('/api/login', async (req, res) => {
-
     const name = req.body.name
     const password = req.body.password
-
     let user = await models.Users.findOne({
         where: {
             name: name,
         }
     })
-
     if (user != null) {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
@@ -78,28 +68,34 @@ app.post('/api/login', async (req, res) => {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
         })
-
     } else {
         res.json({ message: "Username Incorrect" })
     }
 })
 
 //***************************ADD PROFILE PIC***************************//
-app.put('/api/add-image', (req, res) => {
-    const id = req.body.userId
-    const img = req.body.img
-    models.Things.increment('score', { by: 1, where: { id: id } });
-    models.Users.update({
-        'bio': img
-    },
-        {
-            where: {
-                id: id
-            }
-        }).then(res.json({ success: true }))
+app.put('/api/add-image', async (req, res, next) => {
+    // const id = req.body.userId
+    // const img = req.body.img
+    // models.Things.increment('score', { by: 1, where: { id: id } });
+    // models.Users.update({
+    //     'bio': img
+    // },
+    //     {
+    //         where: {
+    //             id: id
+    //         }
+    //     }).then(res.json({ success: true }))
+    try {
+        const fileStr = req.body.data
+        const uploadResponse = await cloudinary.uploader.upload(fileStr, {
+        upload_preset: 'Upload',
+        })
+        let secureURL = uploadResponse.secure_url
+        } catch (error) {
+        next(error)
+        }
 })
-
-
 //***************************GET A USER***************************//
 app.get('/api/users:id', (req, res) => {
     const id = parseInt(req.params.id)
@@ -113,11 +109,7 @@ app.get('/api/users:id', (req, res) => {
         })
 })
 
-
-
-
 //***************************ADD COMMENTS TO DATABASE***************************//
-
 app.post('/api/addcomment:thingId', (req, res) => {
     const thingId = parseInt(req.params.thingId)
     const comment = req.body.comment
@@ -129,18 +121,14 @@ app.post('/api/addcomment:thingId', (req, res) => {
         spare: spare,
         postId: thingId,
     })
-
     comments.save()
         .then(savedComment => {
             res.json({ success: true })
         })
 })
 
-
 //***************************SHOW ALL COMMENTS***************************//
-
 //Retrieve All Comments From DataBase
-
 app.get('/api/comments', (req, res) => {
     models.Comments.findAll({
     })
@@ -149,8 +137,7 @@ app.get('/api/comments', (req, res) => {
         })
 })
 
-//***************************DELETE COMMENTS***************************//
-
+//**************************DELETE COMMENTS***************************//
 app.delete('/api/comments/:commentId', (req, res) => {
     const commentId = parseInt(req.params.commentId)
     models.Comments.destroy({
@@ -162,20 +149,14 @@ app.delete('/api/comments/:commentId', (req, res) => {
     })
 })
 
-
 //***********************UPDATE LIKES**********************//
-
 app.put('/api/update/:id', (req, res) => {
     const id = parseInt(req.params.id)
     models.Things.increment('score', { by: 1, where: { id: id } });
 })
 
-
-
 //**************************SHOW ALL POSTS**************************//
-
 //Retrieve All From DataBase
-
 app.get('/api/things', async (req, res) => {
     await models.Things.findAll({
         order: [
@@ -187,9 +168,7 @@ app.get('/api/things', async (req, res) => {
         })
 })
 
-
 //**********Retrieve All From DataBase With Specific user_Id***********//
-
 app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
@@ -203,7 +182,6 @@ app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
 })
 
 //*****************ADD POSTS TO DATABASE********************//
-
 app.post('/api/addpost', (req, res) => {
     const name = req.body.name
     const description = req.body.description
@@ -212,7 +190,6 @@ app.post('/api/addpost', (req, res) => {
     const contact = req.body.contact
     const user_id = req.body.userId
     const title = req.body.title
-
     const thing = models.Things.build({
         name: name,
         link: link,
@@ -223,37 +200,27 @@ app.post('/api/addpost', (req, res) => {
         user_id: user_id,
         contactNumber: title
     })
-
     thing.save()
         .then(savedThing => {
             res.json({ success: true, thingId: savedThing.id, user_ID: savedThing.user_id })
         })
 })
 
-
-
 //***************************DELETE POST FROM DATABASE***************************//
-
 app.delete('/api/mythings/:thingId', (req, res) => {
-
     const thingId = parseInt(req.params.thingId)
-
     models.Things.destroy({
         where: {
             id: thingId
         }
-
     }).then(_ => {
         res.json({ message: "IT GONE" })
     })
 })
 
 //***************************DELETE USER***************************//
-
 app.delete('/api/user/:userId', (req, res) => {
-
     const userId = parseInt(req.params.userId)
-
     models.Users.destroy({
         where: {
             id: userId

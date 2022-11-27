@@ -43,7 +43,7 @@ class UploadImage extends React.Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(newImage)
+            body: JSON.stringify({data: img})
         }).then(response => response.json())
             .then(result => {
                 console.log(result)

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
-import { useHistory } from "react-router-dom";
 
 class UploadImage extends React.Component {
     constructor(props) {
@@ -13,8 +12,8 @@ class UploadImage extends React.Component {
             rotate: 0,
             borderRadius: 50,
             preview: null,
-            width: 330,
-            height: 330,
+            width: 130,
+            height: 130,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -36,17 +35,21 @@ class UploadImage extends React.Component {
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
             const userId = parseInt(localStorage.getItem('user_Id'));
-            const newImage = {"img": img, userId : userId}
-            console.log(newImage)
-            fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
+            // fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
+                fetch("http://127.0.0.1:8080/api/add-image", {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({data: img})
+            body: JSON.stringify({data: img, userId: userId})
         }).then(response => response.json())
             .then(result => {
-                console.log(result)
+                if (result.success) {
+                    this.props.history.push('/profile')
+                    console.log("did", result)
+                } else {
+                    console.log("error", result.message)
+                }
             })
         }
     }

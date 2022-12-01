@@ -6,11 +6,16 @@ const app = express();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('./middlewares/authMiddleware');
-const cloudinary = require('./cloudinary');
+var cloudinary = require('cloudinary').v2;
 const salt = 10;
 app.use(express.json())
 app.use(cors())
 
+cloudinary.config({
+    cloud_name: 'dxbieon3u',
+    api_key: '868885289639448',
+    api_secret: "OV5DS6dPJBRw2Zmqbx6MwlYNEUA"
+})
 //***************************REGISTRATION PAGE***************************//
 
 app.post('/api/register', async (req, res) => {
@@ -74,7 +79,7 @@ app.post('/api/login', async (req, res) => {
 })
 
 //***************************ADD PROFILE PIC***************************//
-app.put('/api/add-image', async (req, res, next) => {
+app.put('/api/add-image', async (req, res) => {
     // const id = req.body.userId
     // const img = req.body.img
     // models.Things.increment('score', { by: 1, where: { id: id } });
@@ -86,21 +91,34 @@ app.put('/api/add-image', async (req, res, next) => {
     //             id: id
     //         }
     //     }).then(res.json({ success: true }))
-    const options = {
-        use_filename: false,
-      unique_filename: true,
-        public_id: 'test',
-        overwrite: true,
-      };
-  
     try {
         const fileStr = req.body.data
-        const uploadResponse = await cloudinary.uploader.upload(fileStr, options)
+        const id = req.body.userId
+        const uploadResponse = await cloudinary.uploader.upload(fileStr,
+            {
+                resource_type: "image",
+                public_id: id,
+                overwrite: true,
+                invalidate: true,
+                notification_url: "https://127.0.0.1:3000/upload-image"
+            }
+        )
         let secureURL = uploadResponse.secure_url
-        } catch (error) {
-        next(error)
-        }
+    } catch (error) {
+        res.json({ message: error })
+    }
+    res.json({ success: true })
 })
+
+//***************************GET PROFILE PIC***************************//
+app.get('/api/get-image/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    cloudinary.search
+        .expression(`public_id =${id}`)
+        .execute()
+        .then(result => res.json(result));
+})
+
 //***************************GET A USER***************************//
 app.get('/api/users:id', (req, res) => {
     const id = parseInt(req.params.id)
@@ -422,6 +440,7 @@ app.delete('/api/user/:userId', (req, res) => {
 // })
 //***************************SET PORT***************************//
 
-app.listen(process.env.PORT);
-// app.listen(8080, (req, res) => {
-//     console.log('Server Is Running....')
+//app.listen(process.env.PORT);
+app.listen(8080, (req, res) => {
+    console.log('Server Is Running....')
+})

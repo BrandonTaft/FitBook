@@ -440,7 +440,7 @@ app.delete('/api/user/:userId', (req, res) => {
 // })
 //***************************SET PORT***************************//
 
-//app.listen(process.env.PORT);
-app.listen(8080, (req, res) => {
-    console.log('Server Is Running....')
-})
+app.listen(process.env.PORT);
+// app.listen(8080, (req, res) => {
+//     console.log('Server Is Running....')
+// })

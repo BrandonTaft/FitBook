@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import * as actionCreators from '../store/creators/actionCreators'
 import Navbar from './Navbar';
 import Avatar from 'react-avatar';
+import {AdvancedImage} from '@cloudinary/react';
+import {Cloudinary} from "@cloudinary/url-gen";
 import { FcLike } from 'react-icons/fc';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
@@ -14,13 +16,24 @@ function PublicFeed(props) {
   const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState()
+  const [profilePic, setProfilePic] = useState(false)
   const currentUser = localStorage.getItem('name')
   const currentUserId = localStorage.getItem('user_Id')
-  
+
   useEffect(() => {
     props.onThingsLoaded()
     getComments()
   }, [count])
+
+  // Creates and configures the Cloudinary instance.
+  const cld = new Cloudinary({
+    cloud: {
+      cloudName: 'dxbieon3u',
+      invalidate: true
+    }
+  });
+
+
 
   const toggleBody = event => {
     document.getElementById('overlay').classList.toggle('hide-overlay')
@@ -50,7 +63,7 @@ function PublicFeed(props) {
   }
 
   const postComment = (thing) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/addcomment${thing.id}`, {
+    fetch(`http://127.0.0.1:8080/api/addcomment${thing.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -68,7 +81,7 @@ function PublicFeed(props) {
   }
 
   const getComments = () => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments`, {
+    fetch(`http://127.0.0.1:8080/api/comments`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -81,7 +94,7 @@ function PublicFeed(props) {
   }
 
   const handleCommentDelete = (comment) => {
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/comments/${comment.userId}`, {
+    fetch(`http://127.0.0.1:8080/api/comments/${comment.userId}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
@@ -95,13 +108,14 @@ function PublicFeed(props) {
     let score;
     score = event.currentTarget.nextSibling.innerHTML
     event.currentTarget.nextSibling.innerHTML = parseInt(score) + 1
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/update/${id}`, {
+    fetch(`http://127.0.0.1:8080/api/update/${id}`, {
       method: 'PUT'
     }).then(response => response.json())
   }
-   
+
   const thingItems = props.things.map(thing => {
     let total = 0;
+    const myImage = cld.image(thing.user_id);
     const dateCreated = new Date(thing.createdAt)
     const myComments = comments.map(comment => {
       // console.log(comment.userId)
@@ -111,7 +125,8 @@ function PublicFeed(props) {
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId !== thing.id ? { display: 'none' } : { display: 'block' }} >
           <div className="yellow">
-            <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} />
+            {/* <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} /> */}
+            <AdvancedImage cldImg={myImage} />
             <span className="spare">{comment.spare}</span>
           </div>
           <div className='comment'>{comment.comment}</div>
@@ -123,7 +138,8 @@ function PublicFeed(props) {
       <div key={thing.id} className="grid-item">
         <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)} />
         <div className="avatar-container">
-          <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} />
+          {/* <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} /> */}
+          <AdvancedImage cldImg={myImage} />
           <div className="bold white">
             <span className='user-name'>{thing.priority}</span><br />
             <span className="title yellow">{thing.contactNumber}</span>

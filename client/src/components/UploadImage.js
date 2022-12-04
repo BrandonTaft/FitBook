@@ -35,8 +35,7 @@ class UploadImage extends React.Component {
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
             const userId = parseInt(localStorage.getItem('user_Id'));
-            const id = 158
-            // fetch("https://lit-ravine-06265.herokuapp.com/api/add-image", {
+            // fetch("http://127.0.0.1:8080/api/add-image", {
                 fetch("http://127.0.0.1:8080/api/add-image", {
             method: 'PUT',
             headers: {
@@ -51,7 +50,7 @@ class UploadImage extends React.Component {
                 } else {
                     console.log("error", result.message)
                 }
-            }).then(fetch(`https://lit-ravine-06265.herokuapp.com/api/update/${id}`, {
+            }).then(fetch(`http://127.0.0.1:8080/api/update-user/${userId}`, {
                 method: 'PUT'
               }).then(response => response.json()))
         }

@@ -11,7 +11,7 @@ function GetMessages() {
 
   const getMessages = () => {
     const name = localStorage.getItem('name')
-    fetch(`https://lit-ravine-06265.herokuapp.com/api/getmail/${name}`)
+    fetch(`http://127.0.0.1:8080/api/getmail/${name}`)
       .then(response => response.json())
       .then(message => {
         console.log(message)

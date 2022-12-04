@@ -10,11 +10,12 @@ function Register(props) {
     const handleRegisterChange = (e) => {
         setUser({
             ...user,
+            bio: 'n',
             [e.target.name]: e.target.value
         })
     }
     const handleRegisterButton = () => {
-        fetch('https://lit-ravine-06265.herokuapp.com/api/register', {
+        fetch('http://127.0.0.1:8080/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

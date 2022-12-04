@@ -132,6 +132,15 @@ app.get('/api/users:id', (req, res) => {
         })
 })
 
+//***********************UPDATE USER IMAGE**********************//
+app.put('/api/update-user/:userId', (req, res) => {
+    const id = parseInt(req.params.userId)
+    models.Users.update(
+        {bio: 'y'},
+        { where:{id:id}}
+        )
+})
+
 //***************************ADD COMMENTS TO DATABASE***************************//
 app.post('/api/addcomment:thingId', (req, res) => {
     const thingId = parseInt(req.params.thingId)
@@ -440,7 +449,7 @@ app.delete('/api/user/:userId', (req, res) => {
 // })
 //***************************SET PORT***************************//
 
-app.listen(process.env.PORT);
-// app.listen(8080, (req, res) => {
-//     console.log('Server Is Running....')
-// })
+//app.listen(process.env.PORT);
+app.listen(8080, (req, res) => {
+    console.log('Server Is Running....')
+})

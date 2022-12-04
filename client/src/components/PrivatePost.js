@@ -19,7 +19,7 @@ const [privatepost, setPrivatepost] = useState({})
     
     
     const postTODB = () => {
-        fetch("https://lit-ravine-06265.herokuapp.com/api/addmythings", {
+        fetch("http://127.0.0.1:8080/api/addmythings", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

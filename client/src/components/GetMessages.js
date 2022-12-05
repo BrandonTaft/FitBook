@@ -15,7 +15,7 @@ function GetMessages() {
       .then(response => response.json())
       .then(message => {
         console.log(message)
-        setMail(message)
+        setMessage(message)
       })
   }
 
@@ -24,7 +24,6 @@ function GetMessages() {
   return (
     <div>
       <Messages message={message} />
-
     </div>
   )
 

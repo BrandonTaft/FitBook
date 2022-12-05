@@ -11,7 +11,6 @@ export const fetchThings = () => {
     })
       .then(response => response.json())
       .then(things => {
-        console.log("Things", things)
         if (things.success === false) {
           history.push('/')
         } else {
@@ -55,6 +54,7 @@ export const fetchMyMail = () => {
     })
       .then(response => response.json())
       .then(mail => {
+        console.log(mail,"mail")
         if (mail.success === false) {
           history.push('/')
         } else {

@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import Navbar from './Navbar'
 import "./App.css"
 
-
-
 function Post(props) {
     const [post, setPost] = useState()
     const handleAddPost = (e) => {
@@ -12,6 +10,7 @@ function Post(props) {
             priority: (localStorage.getItem('name')),
             userId: parseInt(localStorage.getItem('user_Id')),
             title: (localStorage.getItem('title')),
+            contact: (localStorage.getItem('bio')),
             [e.target.name]: e.target.value
 
         })

@@ -16,9 +16,9 @@ function PublicFeed(props) {
   const [count, setCount] = useState(0)
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState()
-  const [profilePic, setProfilePic] = useState(false)
   const currentUser = localStorage.getItem('name')
   const currentUserId = localStorage.getItem('user_Id')
+
 
   useEffect(() => {
     props.onThingsLoaded()
@@ -32,8 +32,6 @@ function PublicFeed(props) {
       invalidate: true
     }
   });
-
-
 
   const toggleBody = event => {
     document.getElementById('overlay').classList.toggle('hide-overlay')
@@ -58,6 +56,7 @@ function PublicFeed(props) {
     setNewComment({
       userId: currentUserId,
       spare: currentUser,
+      pic: localStorage.getItem('bio'),
       [event.target.name]: event.target.value
     })
   }
@@ -115,18 +114,30 @@ function PublicFeed(props) {
 
   const thingItems = props.things.map(thing => {
     let total = 0;
+    let profileImage;
     const myImage = cld.image(thing.user_id);
-    const dateCreated = new Date(thing.createdAt)
+    const dateCreated = new Date(thing.createdAt);
+    thing.contact === "true" ? 
+    profileImage = <AdvancedImage cldImg={myImage} className="rounded" />
+    :
+    profileImage = <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} />;
+
     const myComments = comments.map(comment => {
-      // console.log(comment.userId)
+      const myCommentImage = cld.image(comment.userId);
+      let commentImage;
       if (comment.postId === thing.id) {
         total++
-      }
+      };
+
+      comment.pic === "true" ?
+      commentImage = <AdvancedImage cldImg={myCommentImage} className="rounded" />
+      :
+      commentImage = <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={150} />;
+
       return (
         <div key={comment.id} className={comment.postId} style={comment.postId !== thing.id ? { display: 'none' } : { display: 'block' }} >
-          <div className="yellow">
-            {/* <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={30} /> */}
-            <AdvancedImage cldImg={myImage} />
+          <div className="yellow comment-image">
+          {commentImage}
             <span className="spare">{comment.spare}</span>
           </div>
           <div className='comment'>{comment.comment}</div>
@@ -138,8 +149,7 @@ function PublicFeed(props) {
       <div key={thing.id} className="grid-item">
         <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)} />
         <div className="avatar-container">
-          {/* <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} /> */}
-          <AdvancedImage cldImg={myImage} />
+          {profileImage}
           <div className="bold white">
             <span className='user-name'>{thing.priority}</span><br />
             <span className="title yellow">{thing.contactNumber}</span>

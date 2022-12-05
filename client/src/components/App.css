@@ -271,6 +271,16 @@ svg {
   font-size: .85em;
 }
 
+.comment-image div {
+  height: 40px !important;
+  width: 40px !important;
+}
+
+.comment-image img {
+  height: 40px !important;
+  width: 40px !important;
+}
+
 .spare {
   margin-left: 6px;
 }
@@ -410,6 +420,15 @@ svg {
   z-index: 99;
 }
 
+.profile-icon {
+  position: fixed;
+  right: 50px;
+  top: 3px;
+  color: var(--bs-off-white);
+  width: 40px;
+  height: 35px;
+}
+
 .navBar button {
   cursor: pointer;
   background: transparent;;
@@ -484,11 +503,14 @@ svg {
   text-align: center;
 }
 
+.profile-bottom {
+  display: flex;
+}
+
 .my-posts {
-  flex-grow: 1;
   border: 1px solid grey;
   border-radius: 10px;
-  width: 90%;
+  width: 50%;
   padding: .75em;
   margin-top: 2px;
 }
@@ -504,4 +526,12 @@ svg {
   border-bottom: 1px solid grey;
   margin-bottom: 2em;
   padding-bottom: 2em;
+}
+
+.rounded {
+  border-radius: 50%;
+}
+
+.message {
+  display: flex;
 }

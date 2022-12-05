@@ -136,7 +136,7 @@ app.get('/api/users:id', (req, res) => {
 app.put('/api/update-user/:userId', (req, res) => {
     const id = parseInt(req.params.userId)
     models.Users.update(
-        {bio: 'y'},
+        {bio: 'true'},
         { where:{id:id}}
         )
 })
@@ -147,11 +147,13 @@ app.post('/api/addcomment:thingId', (req, res) => {
     const comment = req.body.comment
     const userId = req.body.userId
     const spare = req.body.spare
+    const pic = req.body.pic
     const comments = models.Comments.build({
         comment: comment,
         userId: userId,
         spare: spare,
         postId: thingId,
+        pic: pic,
     })
     comments.save()
         .then(savedComment => {
@@ -248,6 +250,64 @@ app.delete('/api/mythings/:thingId', (req, res) => {
     }).then(_ => {
         res.json({ message: "IT GONE" })
     })
+})
+
+ //***************************GET MAIL***************************//
+app.get('/api/getmail/:name',(req, res) => {
+    const userName = (req.params.name)
+    models.Mail.findAll({
+        where: {
+            priority: userName
+        }
+    })
+        .then(mail => {
+            res.json(mail)
+        })
+})
+//***************************ADD TO MAIL DATABASE***************************//
+
+app.post('/api/addmail', (req, res) => {
+    const name = req.body.name
+    const duedate = req.body.duedate
+    const description = req.body.description
+    const priority = req.body.priority
+    const link = req.body.link
+    const contact = req.body.contact
+    const contactNumber = req.body.contactNumber
+    const user_id = req.body.userId
+
+    const mail = models.Mail.build({
+        name: name,
+        duedate: duedate,
+        description: description,
+        priority: priority,
+        link: link,
+        contact: contact,
+        contactNumber: contactNumber,
+        user_id: user_id
+    })
+
+    mail.save()
+        .then(savedThing => {
+            res.json({ success: true})
+        })
+})
+
+//***************************DELETE Mail FROM DATABASE***************************//
+
+app.delete('/api/deletemail/:mailId',(req, res) => {
+
+    const mailId = parseInt(req.params.mailId)
+
+    models.Mail.destroy({
+        where: {
+            id: mailId
+        }
+
+    }).then(_ => {
+        res.json({ message: "IT GONE" })
+    })
+
 })
 
 //***************************DELETE USER***************************//
@@ -390,63 +450,7 @@ app.delete('/api/user/:userId', (req, res) => {
 // })
 
 
-// //***************************GET MAIL***************************//
-// app.get('/api/getmail/:name', authenticate,(req, res) => {
-//     const userName = (req.params.name)
-//     models.Mail.findAll({
-//         where: {
-//             priority: userName
-//         }
-//     })
-//         .then(mail => {
-//             res.json(mail)
-//         })
-// })
-// //***************************ADD TO MAIL DATABASE***************************//
-
-// app.post('/api/addmail', (req, res) => {
-//     const name = req.body.name
-//     const duedate = req.body.duedate
-//     const description = req.body.description
-//     const priority = req.body.priority
-//     const link = req.body.link
-//     const contact = req.body.contact
-//     const contactNumber = req.body.contactNumber
-//     const user_id = req.body.userId
-
-//     const mail = models.Mail.build({
-//         name: name,
-//         duedate: duedate,
-//         description: description,
-//         priority: priority,
-//         link: link,
-//         contact: contact,
-//         contactNumber: contactNumber,
-//         user_id: user_id
-//     })
-
-//     mail.save()
-//         .then(savedThing => {
-//             res.json({ success: true})
-//         })
-// })
-
-// //***************************DELETE Mail FROM DATABASE***************************//
-
-// app.delete('/api/deletemail/:mailId',(req, res) => {
-
-//     const mailId = parseInt(req.params.mailId)
-
-//     models.Mail.destroy({
-//         where: {
-//             id: mailId
-//         }
-
-//     }).then(_ => {
-//         res.json({ message: "IT GONE" })
-//     })
-
-// })
+//
 //***************************SET PORT***************************//
 
 //app.listen(process.env.PORT);

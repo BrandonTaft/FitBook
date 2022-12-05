@@ -12,8 +12,8 @@ class UploadImage extends React.Component {
             rotate: 0,
             borderRadius: 50,
             preview: null,
-            width: 130,
-            height: 130,
+            width: 150,
+            height: 150,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -35,24 +35,25 @@ class UploadImage extends React.Component {
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
             const userId = parseInt(localStorage.getItem('user_Id'));
-            // fetch("http://127.0.0.1:8080/api/add-image", {
-                fetch("http://127.0.0.1:8080/api/add-image", {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({data: img, userId: userId})
-        }).then(response => response.json())
-            .then(result => {
-                if (result.success) {
-                    this.props.history.push('/profile')
+            fetch("http://127.0.0.1:8080/api/add-image", {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: img, userId: userId })
+            }).then(response => response.json())
+                .then(result => {
+                    if (result.success) {
+                        fetch(`http://127.0.0.1:8080/api/update-user/${userId}`, {
+                            method: 'PUT'
+                        })
+                    }
+                }).then(result => {
+
+                    localStorage.setItem('bio', true)
                     console.log("did", result)
-                } else {
-                    console.log("error", result.message)
-                }
-            }).then(fetch(`http://127.0.0.1:8080/api/update-user/${userId}`, {
-                method: 'PUT'
-              }).then(response => response.json()))
+                    this.props.history.push('/profile')
+                })
         }
     }
     render() {

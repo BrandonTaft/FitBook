@@ -4,14 +4,16 @@ import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Navbar from './Navbar';
 import Avatar from 'react-avatar';
-import {AdvancedImage} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
-import {Transformation} from "@cloudinary/url-gen";
-import {image} from "@cloudinary/url-gen/qualifiers/source";
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from "@cloudinary/url-gen";
+import { Transformation } from "@cloudinary/url-gen";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
+import Messages from './Messages';
 
 
 function Private(props) {
   const [pic, setPic] = useState(false);
+  const [postPresent, setPostPresent] = useState(false)
   const id = localStorage.getItem('user_Id');
   const name = localStorage.getItem('name');
   const title = localStorage.getItem('title')
@@ -20,21 +22,33 @@ function Private(props) {
     getUser()
   }, [])
 
-   // Creates and configures the Cloudinary instance.
-   const cld = new Cloudinary({
+  // Creates and configures the Cloudinary instance.
+  const cld = new Cloudinary({
     cloud: {
       cloudName: 'dxbieon3u',
       invalidate: true
     }
-  }); 
+  });
 
   const myImage = cld.image(id);
 
   const getUser = () => {
     const bio = localStorage.getItem('bio')
-        if(bio === 'y') {
-          setPic(true)
-        }
+    bio === "true" ? setPic(true) : setPic(false)
+  }
+
+  let postDisplay;
+  if (Object.keys(props.things).length === 0) {
+    postDisplay = <h2>You Haven't Posted Anything!</h2>
+  } else {
+    postDisplay = ""
+  }
+
+  let profileImage;
+  if (pic === false) {
+    profileImage = <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={name} round={true} />
+  } else {
+    profileImage = <AdvancedImage cldImg={myImage} className="rounded" />
   }
 
 
@@ -51,12 +65,12 @@ function Private(props) {
     const name = localStorage.getItem('name')
     return (
       <div key={thing.id} className="profile-post">
-          <div className="fill">
-            <Avatar src={`https://i.pravatar.cc/150?img=${thing.user_id - 68}`} round={true} size={150} />
-          </div>
-          <div>
-            {name}
-          </div>
+        <div className="fill">
+          {profileImage}
+        </div>
+        <div>
+          {name}
+        </div>
         <div key={thing.id}>
           <a rel={'external'} href={`${thing.link}`} className="thingTitle">{thing.name}</a>
           <p> {thing.description}</p>
@@ -65,14 +79,8 @@ function Private(props) {
       </div>
     )
   })
-  let profileImage;
-  if(pic === false){
-    profileImage = <Avatar src={`https://i.pravatar.cc/150?img=${id - 68}`} round={true} size={150} />
-  } else {
-    profileImage = <AdvancedImage cldImg={myImage} />
 
-  }  
-
+  
   return (
 
     <>
@@ -81,21 +89,26 @@ function Private(props) {
         <div>
           <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
         </div>
-          <div>
-         
-            <div className="avatar-container">
+        <div>
+
+          <div className="avatar-container">
             {profileImage}
             <NavLink to="/upload-image" >Upload New Image</NavLink>
-            </div>
-            <h1 className='yellow'>{name}</h1>
-            <h2>{title}</h2>
-            <label>POSTS</label>
-           
           </div>
-         
+          <h1 className='yellow'>{name}</h1>
+          <h2>{title}</h2>
+          <label>POSTS</label>
+
+        </div>
+      <div className="profile-bottom">
         <div className='my-posts'>
+          {postDisplay}
           {thingItems}
         </div>
+       
+        <Messages />
+ 
+      </div>
       </div>
     </>
   )

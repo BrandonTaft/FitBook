@@ -10,7 +10,7 @@ function Register(props) {
     const handleRegisterChange = (e) => {
         setUser({
             ...user,
-            bio: 'n',
+            bio: false,
             [e.target.name]: e.target.value
         })
     }

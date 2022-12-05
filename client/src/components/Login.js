@@ -29,7 +29,6 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success == true) {
-                    console.log("result", result.user_id)
                     const token = result.token
                     localStorage.setItem('jsonwebtoken', token)
                     localStorage.setItem('user_Id', result.user_id)

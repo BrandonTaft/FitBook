@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     comment: DataTypes.TEXT,
     postId: DataTypes.INTEGER,
     userId: DataTypes.TEXT,
-    spare: DataTypes.TEXT
+    spare: DataTypes.TEXT,
+    pic: DataTypes.TEXT
   }, {
     sequelize,
     modelName: 'Comments',

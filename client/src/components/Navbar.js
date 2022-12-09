@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { NavLink, useLocation} from "react-router-dom";
 import { MdClose, MdPostAdd } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
-import { CgProfile } from "react-icons/cg"
+import { CgProfile } from "react-icons/cg";
+import { TiMessages } from "react-icons/ti"
 import "./App.css"
 
 
@@ -30,6 +31,7 @@ function Navbar() {
             { location.pathname === '/publicfeed' ?
             <h1>Feed</h1>
             : "" }
+             <NavLink to="/post"><TiMessages className='nav-icon message-icon icon' /></NavLink>
             <NavLink to="/profile"><CgProfile className='nav-icon profile-icon' /></NavLink>
             <NavLink to="/post"><MdPostAdd className='nav-icon icon' /></NavLink>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>

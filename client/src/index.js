@@ -51,13 +51,9 @@ ReactDOM.render(
     <Route exact path = "/logout" component = {Logout} />
     <Route exact path = "/upload-image" component = {UploadImage} />
     <Route exact path = "/sendmessage" component = {SendMessage} />
-    
+    <Route exact path = "/messages" component = {Messages} />
     </Switch>
     </BaseLayout>
-   
-    </Provider>
-    <Provider store = {store2}>
-    <Route exact path = "/messages" component = {Messages} />
     </Provider>
     </Router>
     {/* </BrowserRouter> */}

@@ -6,7 +6,7 @@
   --bs-pink: #d63384;
   --bs-red: #dc3545;
   --bs-orange: #f4623a;
-  --bs-yellow: #fffd00;
+  
   --bs-green: #03dac6;
   --bs-teal: #20c997;
   --bs-cyan: #0decf0;
@@ -31,6 +31,35 @@
   --bs-danger: #dc3545;
   --bs-light: #f8f9fa;
   --bs-dark: #121212;
+}
+
+[data-theme='dark'] {
+  --background: black;
+  --secondary-background: #121212;
+  --text-primary: white;
+  --text-secondary: grey;
+  --bs-yellow: #fffd00;
+  --accent: darkred;
+}
+
+[data-theme='light'] {
+  --background: white;
+  --secondary-background: #121212;
+  --text-primary: black;
+  --text-secondary: grey;
+  --bs-yellow: #fffd00;
+  --accent: darkred;
+}
+
+.background {
+  background-color: var(--background);
+}
+
+
+.theme-toggle {
+  position: fixed;
+  top: 100px;
+  z-index: 99;
 }
 
 .bold {
@@ -77,8 +106,8 @@
   margin-bottom: 1em !important;
 }
 
-html {
-  background-color: #000;
+body {
+  height: 100vh;
 }
 
 h1, h2{
@@ -148,12 +177,12 @@ svg {
 .grid-container {
   display: grid;
   grid-template-columns: auto;
-  margin-top: 4em;
+  margin-top: 60px;
   margin-bottom: 4em;
 }
 .grid-item {
   position: relative;
-  background-color: #121212;
+  background-color: var(--secondary-background);
   color: rgba(255, 255, 255, 0.8);
   border-radius: 9px;
   padding: 0px 5px 10px;
@@ -332,7 +361,7 @@ svg {
 .post-description {
   font-family: 'Segoe UI';
   font-size: 1em;
-  color:#fff;
+  color:var(--text-primary);
 }
 
 .maximize {
@@ -427,6 +456,11 @@ svg {
   color: var(--bs-off-white);
   width: 40px;
   height: 35px;
+}
+
+.message-icon {
+  position: fixed;
+  right: 100px;
 }
 
 .navBar button {

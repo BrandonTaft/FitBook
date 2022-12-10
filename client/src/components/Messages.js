@@ -1,7 +1,4 @@
 import { useEffect, useState } from 'react'
-import { NavLink } from 'react-router-dom'
-import { connect } from 'react-redux'
-import Navbar from './Navbar'
 import  "./App.css"
 
 

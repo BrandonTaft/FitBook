@@ -3,12 +3,16 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Navbar from './Navbar';
+import PostDisplay from './PostDisplay';
 import Avatar from 'react-avatar';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
+import { TbArrowsMaximize } from "react-icons/tb";
 import { Transformation } from "@cloudinary/url-gen";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import Messages from './Messages';
+import { timeSince, toggleBody } from '../utils/utils.js';
+import Card from './Card';
 
 
 function Private(props) {
@@ -44,11 +48,11 @@ function Private(props) {
     postDisplay = ""
   }
 
-  let profileImage;
+  let profilePic;
   if (pic === false) {
-    profileImage = <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={name} round={true} />
+    profilePic = <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={name} round={true} />
   } else {
-    profileImage = <AdvancedImage cldImg={myImage} className="rounded" />
+    profilePic = <AdvancedImage cldImg={myImage} className="rounded" />
   }
 
 
@@ -61,38 +65,54 @@ function Private(props) {
       })
   }
 
-  const thingItems = props.things.map(thing => {
-    const name = localStorage.getItem('name')
-    return (
-      <div key={thing.id} className="profile-post">
-        <div className="fill">
-          {profileImage}
-        </div>
-        <div>
-          {name}
-        </div>
-        <div key={thing.id}>
-          <a rel={'external'} href={`${thing.link}`} className="thingTitle">{thing.name}</a>
-          <p> {thing.description}</p>
-          <button className='profile-btn btn' onClick={() => handlePrivateDelete(thing)}>Delete</button>
-        </div>
-      </div>
-    )
-  })
+  // const thingItems = props.things.map(thing => {
+  //   const name = localStorage.getItem('name')
+  //   const dateCreated = new Date(thing.createdAt);
+  //   return (
+  //     <div key={thing.id} className="profile-post">
+  //      <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)} />
+  //               <div className="avatar-container">
+  //                   {profilePic}
+  //                   <div className="bold white">
+  //                       <span className='user-name'>{thing.priority}</span><br />
+  //                       <span className="title yellow">{thing.contactNumber}</span>
+  //                   </div>
+  //               </div>
+  //               <div className='post-body' id='post-body' >
+  //                   <span className='post-title'>
+  //                       {thing.name}
+  //                   </span><br />
+  //                   {thing.link ?
+  //                       <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Try it out</a>
+  //                       : ""}
+  //                   <br />
+  //                   <span className="off-white">{timeSince(dateCreated)}</span>
+  //                   <p className='post-description'>
+  //                       {thing.description}
+  //                   </p>
+  //                   <button className='profile-btn btn' onClick={() => handlePrivateDelete(thing)}>Delete</button>
+  //               </div>
+          
+       
+  //     </div>
+  //   )
+  // })
 
   
   return (
 
     <>
       <Navbar />
+      <aside id="overlay" className="overlay hide-overlay"></aside>
       <div className='profile-container'>
+      
         <div>
           <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
         </div>
         <div>
 
           <div className="avatar-container">
-            {profileImage}
+            {profilePic}
             <NavLink to="/upload-image" >Upload New Image</NavLink>
           </div>
           <h1 className='yellow'>{name}</h1>
@@ -103,7 +123,8 @@ function Private(props) {
       <div className="profile-bottom">
         <div className='my-posts'>
           {postDisplay}
-          {thingItems}
+          {/* {thingItems} */}
+          <Card things={props.things} />
         </div>
        
         <Messages />

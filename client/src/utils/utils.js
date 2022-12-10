@@ -33,3 +33,8 @@ export function timeSince(date) {
     }
     return Math.floor(seconds) + " seconds ago";
   }
+
+  export function toggleBody(event) {
+    document.getElementById('overlay').classList.toggle('hide-overlay')
+    event.currentTarget.parentElement.classList.toggle('show')
+};

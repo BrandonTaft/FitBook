@@ -15,6 +15,9 @@ function Comments({thing}) {
 
     useEffect(() => {
         getComments()
+        return () => {
+          setComments([]); // This worked for me
+        };
       }, [count]);
 
     const cld = new Cloudinary({
@@ -25,7 +28,7 @@ function Comments({thing}) {
       });
     
     const openComments = (event) => {
-        let close = document.getElementsByClassName('switch');
+        let close = document.getElementsByClassName('swap');
         for (let i = 0; i < close.length; i++) {
           close[i].classList.remove('show-comments');
         }
@@ -114,7 +117,7 @@ function Comments({thing}) {
         <>
          {total}
           <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
-          <div className='switch hide'>
+          <div className='swap hide'>
             <MdClose className='comment-close' onClick={closeMe} />
             <input id = {`comment-input${thing.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
             <button type='submit' onClick={() => postComment(thing)} className="btn comment-btn">Submit</button>

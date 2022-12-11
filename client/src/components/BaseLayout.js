@@ -1,31 +1,10 @@
-// import React, { useState, useEffect } from 'react';
-
-// function BaseLayout(props) {
-//   const [theme, setTheme] = useState('light');
-//   const toggleTheme = () => {
-//     if (theme === 'light') {
-//       setTheme('dark');
-//     } else {
-//       setTheme('light');
-//     }
-//   };
-//   useEffect(() => {
-//     document.body.className = theme;
-//   }, [theme]);
-//   return (
-//     <div>
-//       <div className={`App ${theme}`}>
-//         <button className='theme-toggle' onClick={toggleTheme}>Toggle Theme</button>
-//       </div>
-//       {props.children}
-//     </div>
-//   )
-// }
-
-
-import useLocalStorage from 'use-local-storage'
+import useLocalStorage from 'use-local-storage';
+import { useLocation} from "react-router-dom";
+import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
+import Footer from './Footer';
 
 function BaseLayout(props) {
+  const location = useLocation();
   const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
   const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
   const switchTheme = () => {
@@ -35,9 +14,16 @@ function BaseLayout(props) {
   return (
     <div data-theme={theme} className="background">
       <div >
-        <button className='theme-toggle' onClick={switchTheme}>Toggle Theme to {theme === 'light' ? 'Dark' : 'Light'}</button>
+      { location.pathname === '/' || location.pathname === '/register'  ?
+        ""
+         : 
+         <button className='theme-toggle' onClick={switchTheme}>
+          {theme === 'light' ? <BsFillMoonStarsFill className='highlight'/> : <BsFillSunFill className='highlight' />}
+        </button>
+         }
       </div>
       {props.children}
+      <Footer />
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
+import logo from "../assets/logo-aqua.png"
 import "./App.css"
 
 
@@ -33,8 +34,9 @@ function Register(props) {
     }
     return (
         <div className="full-page flex-column">
+             <div className='login-container flex-column'>
             <div className="mb-2">
-                <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
+            <img src={logo} alt="logo" height={150} width={250} />
             </div>
             <h2>REGISTER</h2>
             {message && <p>{message}</p>}
@@ -42,7 +44,8 @@ function Register(props) {
             <input className="textbox mb-2" type="password" name="password" onChange={handleRegisterChange} placeholder="Enter Desired Password" />
             <input className="textbox" type="text" name="title" onChange={handleRegisterChange} placeholder=" Enter Professional Title" />
             <button className="btn mb-1" onClick={handleRegisterButton}>SUBMIT</button>
-            <NavLink to="/" className='white'>Back To Login</NavLink>
+            <NavLink to="/" className='highlight'>Back To Login</NavLink>
+            </div>
         </div>
     )
 }

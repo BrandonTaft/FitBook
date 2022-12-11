@@ -3,20 +3,20 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Navbar from './Navbar';
-import PostDisplay from './PostDisplay';
 import Avatar from 'react-avatar';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
-import { TbArrowsMaximize } from "react-icons/tb";
 import { Transformation } from "@cloudinary/url-gen";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import Messages from './Messages';
-import { timeSince, toggleBody } from '../utils/utils.js';
 import Card from './Card';
+import { BsFillPencilFill } from "react-icons/bs";
+import logo from "../assets/logo-aqua.png"
 
 
 function Private(props) {
   const [pic, setPic] = useState(false);
+  const [reset, setReset] = useState(false);
   const [postPresent, setPostPresent] = useState(false)
   const id = localStorage.getItem('user_Id');
   const name = localStorage.getItem('name');
@@ -24,7 +24,7 @@ function Private(props) {
   useEffect(() => {
     props.onThingsLoaded()
     getUser()
-  }, [])
+  }, [reset])
 
   // Creates and configures the Cloudinary instance.
   const cld = new Cloudinary({
@@ -43,7 +43,7 @@ function Private(props) {
 
   let postDisplay;
   if (Object.keys(props.things).length === 0) {
-    postDisplay = <h2>You Haven't Posted Anything!</h2>
+    postDisplay = <h2 className='text-secondary'>You Haven't Posted Anything!</h2>
   } else {
     postDisplay = ""
   }
@@ -70,12 +70,12 @@ function Private(props) {
   //   const dateCreated = new Date(thing.createdAt);
   //   return (
   //     <div key={thing.id} className="profile-post">
-  //      <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, thing)} />
+  //      <TbArrowsMaximize className="text-primary maximize" onClick={(e) => toggleBody(e, thing)} />
   //               <div className="avatar-container">
   //                   {profilePic}
-  //                   <div className="bold white">
+  //                   <div className="bold text-primary">
   //                       <span className='user-name'>{thing.priority}</span><br />
-  //                       <span className="title yellow">{thing.contactNumber}</span>
+  //                       <span className="title highlight">{thing.contactNumber}</span>
   //                   </div>
   //               </div>
   //               <div className='post-body' id='post-body' >
@@ -86,7 +86,7 @@ function Private(props) {
   //                       <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Try it out</a>
   //                       : ""}
   //                   <br />
-  //                   <span className="off-white">{timeSince(dateCreated)}</span>
+  //                   <span className="text-secondary">{timeSince(dateCreated)}</span>
   //                   <p className='post-description'>
   //                       {thing.description}
   //                   </p>
@@ -107,28 +107,24 @@ function Private(props) {
       <div className='profile-container'>
       
         <div>
-          <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
+          <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
         </div>
         <div>
 
           <div className="avatar-container">
             {profilePic}
-            <NavLink to="/upload-image" >Upload New Image</NavLink>
+            <NavLink to="/upload-image" className='text-primary edit-image-icon' ><BsFillPencilFill />Edit</NavLink>
           </div>
-          <h1 className='yellow'>{name}</h1>
-          <h2>{title}</h2>
-          <label>POSTS</label>
+          <h1 className='highlight'>{name}</h1>
+          <h2 className='text-secondary'>{title}</h2>
+          <label className='text-secondary'>POSTS</label>
 
         </div>
       <div className="profile-bottom">
         <div className='my-posts'>
           {postDisplay}
-          {/* {thingItems} */}
-          <Card things={props.things} />
+          <Card things={props.things} reset={reset} setReset={setReset} />
         </div>
-       
-        <Messages />
- 
       </div>
       </div>
     </>

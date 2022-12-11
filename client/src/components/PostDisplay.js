@@ -1,10 +1,23 @@
+import { useLocation} from "react-router-dom";
 import { TbArrowsMaximize } from "react-icons/tb";
 import { timeSince, toggleBody } from '../utils/utils.js';
 import Avatar from 'react-avatar';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
+import { useState, useEffect } from "react";
 
-function PostDisplay({thing}) {
+function PostDisplay({thing, reset, setReset}) {
+    const location = useLocation();
+    const handlePrivateDelete = (thing) => {
+        fetch(`http://127.0.0.1:8080/api/mythings/${thing.id}`, {
+          method: 'DELETE'
+        }).then(response => response.json())
+          .then(result => {
+            reset ? setReset(false) : setReset(true)
+            console.log(reset)
+          })
+      };
+
     const cld = new Cloudinary({
         cloud: {
             cloudName: 'dxbieon3u',
@@ -40,6 +53,10 @@ function PostDisplay({thing}) {
             <p className='post-description'>
                 {thing.description}
             </p>
+            { location.pathname === '/profile' ?
+             <button className='profile-btn btn' onClick={() => handlePrivateDelete(thing)}>Delete</button>
+            : "" }
+           
         </div>
         </>
     )

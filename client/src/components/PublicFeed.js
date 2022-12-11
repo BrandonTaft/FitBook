@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import Card from './Card';
+import { Card } from './Cards';
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
@@ -8,29 +8,25 @@ import * as actionCreators from '../store/creators/actionCreators';
 
 function PublicFeed(props) {
   useEffect(() => {
-    props.onThingsLoaded()
-}, []);
-
+    props.onPublicPostsLoaded()
+  }, []);
   return (
     <>
       <Navbar />
-      <Card things={props.things}/>
-      {/* <div className="feed-logo">
-      <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" width={200} height={150}/>
-      </div> */}
+      <Card publicPosts={props.posts} />
     </>
   )
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-      onThingsLoaded: () => dispatch(actionCreators.fetchThings())
+    onPublicPostsLoaded: () => dispatch(actionCreators.fetchPublicPosts())
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-      things: state.things
+    posts: state.posts
   }
 }
 

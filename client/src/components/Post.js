@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Navbar from './Navbar'
+import Navbar from './Navbar';
+import logo from "../assets/logo-aqua.png"
 import "./App.css"
 
 function Post(props) {
@@ -25,7 +26,7 @@ function Post(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    props.history.push('/publicfeed')
+                    props.history.push('/feed')
                     console.log("did", result)
                 } else {
                     console.log("error", result.message)
@@ -36,16 +37,16 @@ function Post(props) {
         <>
             <Navbar />
             <div className='post-container'>
-                <div className="mb-2">
-                    <img id="full-logo" src="fitbook-full-aqua.png" alt="logo" height={150} width={250} />
-                </div>
                 <div className='form'>
+                <div className="mb-2">
+                    <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
+                </div>
                     <h1 className="postTitle">Make A Post</h1>
                     <input className="textbox" type="text" name="name" onChange={handleAddPost} placeholder="Title" />
                     <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link" />
                     <div>Description</div>
                     <textarea className="textbox text-area" type="text" name="description" maxLength={255} onChange={handleAddPost} />
-                    <button className="btn" onClick={postTODB}>Submit</button>
+                    <button className="btn mt-2" onClick={postTODB}>Submit</button>
                 </div>
             </div>
         </>

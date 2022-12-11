@@ -36,7 +36,7 @@ function Login(props) {
                     localStorage.setItem('name', result.name)
                     localStorage.setItem('title', result.title)
                     localStorage.setItem('bio', result.bio)
-                    props.history.push('/publicfeed')
+                    props.history.push('/feed')
 
                 }
                 else {

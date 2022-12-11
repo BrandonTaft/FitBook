@@ -9,20 +9,21 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { Transformation } from "@cloudinary/url-gen";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import Messages from './Messages';
-import Card from './Card';
+import { MyCard } from './Cards';
 import { BsFillPencilFill } from "react-icons/bs";
 import logo from "../assets/logo-aqua.png"
 
 
-function Private(props) {
+function Private() {
+  const [myPosts, setMyPosts] = useState([])
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
-  const [postPresent, setPostPresent] = useState(false)
   const id = localStorage.getItem('user_Id');
   const name = localStorage.getItem('name');
   const title = localStorage.getItem('title')
+
   useEffect(() => {
-    props.onThingsLoaded()
+    fetchMyPosts()
     getUser()
   }, [reset])
 
@@ -41,13 +42,6 @@ function Private(props) {
     bio === "true" ? setPic(true) : setPic(false)
   }
 
-  let postDisplay;
-  if (Object.keys(props.things).length === 0) {
-    postDisplay = <h2 className='text-secondary'>You Haven't Posted Anything!</h2>
-  } else {
-    postDisplay = ""
-  }
-
   let profilePic;
   if (pic === false) {
     profilePic = <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={name} round={true} />
@@ -56,16 +50,37 @@ function Private(props) {
   }
 
 
-  const handlePrivateDelete = (thing) => {
-    fetch(`http://127.0.0.1:8080/api/mythings/${thing.id}`, {
+  const handlePrivateDelete = (posts) => {
+    fetch(`http://127.0.0.1:8080/api/mythings/${posts.id}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
-        props.onThingsLoaded()
+       fetchMyPosts()
       })
   }
 
-  // const thingItems = props.things.map(thing => {
+
+  function fetchMyPosts() {
+      const user_Id = localStorage.getItem('user_Id')
+      const token = localStorage.getItem('jsonwebtoken')
+      fetch(`http://127.0.0.1:8080/api/mythings/${user_Id}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(myPosts => {
+          console.log(myPosts)
+          if (myPosts.success === false) {
+           setMyPosts("")
+          } else {
+           setMyPosts(myPosts)
+          }
+        })
+  }
+ 
+  // const thingItems = props.posts.map(thing => {
   //   const name = localStorage.getItem('name')
   //   const dateCreated = new Date(thing.createdAt);
   //   return (
@@ -92,20 +107,20 @@ function Private(props) {
   //                   </p>
   //                   <button className='profile-btn btn' onClick={() => handlePrivateDelete(thing)}>Delete</button>
   //               </div>
-          
-       
+
+
   //     </div>
   //   )
   // })
 
-  
+
   return (
 
     <>
       <Navbar />
       <aside id="overlay" className="overlay hide-overlay"></aside>
       <div className='profile-container'>
-      
+
         <div>
           <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
         </div>
@@ -115,17 +130,21 @@ function Private(props) {
             {profilePic}
             <NavLink to="/upload-image" className='text-primary edit-image-icon' ><BsFillPencilFill />Edit</NavLink>
           </div>
-          <h1 className='highlight'>{name}</h1>
-          <h2 className='text-secondary'>{title}</h2>
+          <h1 className='highlight mb-0'>{name}</h1>
+          <h3 className='text-secondary mt-0'>{title}</h3>
           <label className='text-secondary'>POSTS</label>
-
+          <div className="h-divider ma mt-5"></div>
         </div>
-      <div className="profile-bottom">
-        <div className='my-posts'>
-          {postDisplay}
-          <Card things={props.things} reset={reset} setReset={setReset} />
+        <div className="profile-bottom">
+          {myPosts.length === 0
+            ?
+            <h2 className='text-secondary'>You Haven't Posted Anything!</h2>
+            :
+            <div className='my-posts'>
+              <MyCard posts={myPosts} reset={reset} setReset={setReset} />
+            </div>
+          }
         </div>
-      </div>
       </div>
     </>
   )
@@ -133,18 +152,18 @@ function Private(props) {
 
 
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onThingsLoaded: () => dispatch(actionCreators.fetchMyThings())
-  }
-}
+// const mapDispatchToProps = (dispatch) => {
+//   return {
+//     onpostsLoaded: () => dispatch(actionCreators.fetchMyPosts())
+//   }
+// }
 
-const mapStateToProps = (state) => {
-  return {
-    things: state.things
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     posts: state.posts
+//   }
+// }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Private);
-
+// export default connect(mapStateToProps, mapDispatchToProps)(Private);
+export default Private

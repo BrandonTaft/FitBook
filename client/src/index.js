@@ -45,7 +45,7 @@ ReactDOM.render(
   
     <Route exact path = "/register"component = {Register} />
     <Route exact path = "/" component = {Login} />
-    <Route exact path = "/publicfeed" component = {PublicFeed} />
+    <Route exact path = "/feed" component = {PublicFeed} />
     <Route exact path = "/profile" component = {Private} />
     <Route exact path = "/post" component = {Post} />
     <Route exact path = "/logout" component = {Logout} />

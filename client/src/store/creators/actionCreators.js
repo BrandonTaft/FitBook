@@ -1,6 +1,6 @@
 import history from "../History"
 
-export const fetchThings = () => {
+export const fetchPublicPosts = () => {
   const token = localStorage.getItem('jsonwebtoken')
   return (dispatch) => {
     fetch('http://127.0.0.1:8080/api/things', {
@@ -10,18 +10,18 @@ export const fetchThings = () => {
       }
     })
       .then(response => response.json())
-      .then(things => {
-        if (things.success === false) {
-          history.push('/')
+      .then(posts => {
+        if (posts.success === false) {
+          history.push('/feed')
         } else {
-          dispatch({ type: 'THINGS_LOADED', payload: things })
+          dispatch({ type:'POSTS_LOADED', payload: posts })
         }
       })
 
   }
 }
 
-export const fetchMyThings = () => {
+export const fetchMyPosts = () => {
   return (dispatch) => {
     const user_Id = localStorage.getItem('user_Id')
     const token = localStorage.getItem('jsonwebtoken')
@@ -32,11 +32,11 @@ export const fetchMyThings = () => {
       }
     })
       .then(response => response.json())
-      .then(things => {
-        if (things.success === false) {
-          history.push('/')
+      .then(myPosts => {
+        if (myPosts.success === false) {
+          history.push('/feed')
         } else {
-          dispatch({ type: 'THINGS_LOADED', payload: things })
+          dispatch({ type:'POSTS_LOADED', payload: myPosts })
         }
       })
   }

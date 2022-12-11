@@ -3,7 +3,7 @@ import { NavLink, useLocation} from "react-router-dom";
 import { MdClose, MdPostAdd } from "react-icons/md";
 import { FiMenu } from "react-icons/fi";
 import { CgProfile } from "react-icons/cg";
-import { TiMessages } from "react-icons/ti"
+import { TiMessages, TiHome } from "react-icons/ti";
 import "./App.css"
 
 
@@ -31,11 +31,12 @@ function Navbar() {
             { location.pathname === '/publicfeed' ?
             <h1>Feed</h1>
             : "" }
+            <NavLink to="/feed"><TiHome className='nav-icon home-icon icon highlight' /></NavLink>
             <NavLink to="/messages"><TiMessages className='nav-icon message-icon icon highlight' /></NavLink>
             <NavLink to="/profile"><CgProfile className='nav-icon profile-icon highlight' /></NavLink>
             <NavLink to="/post"><MdPostAdd className='nav-icon icon highlight' /></NavLink>
             <ul className={`menuNav ${navbarOpen ? " showMenu" : ""}`}>
-                <li><NavLink to="/publicfeed" >Home</NavLink></li>
+                <li><NavLink to="/feed" >Home</NavLink></li>
                 <li><NavLink to="/profile" >Profile</NavLink></li>
                 <li><NavLink to="/messages" >Messages</NavLink></li>
                 <li><NavLink to="/logout" >Log Out</NavLink></li>

@@ -15,11 +15,13 @@ function Footer() {
                     </path>
                 </svg>
             <div className="footer" >
-                <img src={logo} alt="logo" height={90} width={120} />
-                <div className="highlight ta-center mt-5">
+                <img className="footer-logo" src={logo} alt="logo" height={90} width={120} />
+                <div className="v-divider mt-5"></div>
+                <div className="highlight ta-center m-10">
                     <span className="text-secondary navigate">
                         Navigate
                     </span>
+                    <div className="h-divider ma mt-5"></div>
                     <div className="highlight links ta-left">
                         <NavLink className="link" to="/messages">Messages</NavLink>
                         <NavLink className="link" to="/profile">Profile</NavLink>
@@ -29,6 +31,7 @@ function Footer() {
                         </a>
                     </div>
                 </div>
+                <div className="v-divider mt-5"></div>
                 <div className='text-secondary socials'>
                     <div>
                         <a href="https://github.com/BrandonTaft" target="_blank" rel="noreferrer">

@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
+import Navbar from './Navbar';
 import  "./App.css"
 
 
@@ -39,7 +40,8 @@ function Messages(props) {
     })
 
         return (
-          <div className='my-posts'>
+          <div className='messages'>
+            <Navbar />
             {messageItems}
         </div>
 

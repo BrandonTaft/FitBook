@@ -1,6 +1,6 @@
 import { FcLike } from 'react-icons/fc';
 
-function FeedBack({thing}) {
+function FeedBack({post}) {
     const handleFeedback = event => {
         let id = event.currentTarget.id
         let score;
@@ -12,8 +12,8 @@ function FeedBack({thing}) {
     }
     return (
             <div className="likes">
-                <FcLike onClick={handleFeedback} className="heart" id={thing.id} />
-                <span className='score' id={thing.score}>{thing.score}</span>
+                <FcLike onClick={handleFeedback} className="heart" id={post.id} />
+                <span className='score' id={post.score}>{post.score}</span>
             </div>
     )
 }

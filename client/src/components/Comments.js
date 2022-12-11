@@ -5,7 +5,7 @@ import Avatar from 'react-avatar';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
 
-function Comments({thing}) {
+function Comments({post}) {
     const [comments, setComments] = useState([])
     const [newComment, setNewComment] = useState()
     const currentUser = localStorage.getItem('name')
@@ -49,8 +49,8 @@ function Comments({thing}) {
         })
       }
     
-      const postComment = (thing) => {
-        fetch(`http://127.0.0.1:8080/api/addcomment${thing.id}`, {
+      const postComment = (post) => {
+        fetch(`http://127.0.0.1:8080/api/addcomment${post.id}`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -64,7 +64,7 @@ function Comments({thing}) {
               setCount(count + 1)
             }
           })
-          document.getElementById(`comment-input${thing.id}`).value = ""
+          document.getElementById(`comment-input${post.id}`).value = ""
       }
     
       const getComments = () => {
@@ -82,7 +82,7 @@ function Comments({thing}) {
       const myComments = comments.map(comment => {
         const myCommentImage = cld.image(comment.userId);
         let commentImage;
-        if (comment.postId === thing.id) {
+        if (comment.postId === post.id) {
           total++
         };
   
@@ -92,7 +92,7 @@ function Comments({thing}) {
         commentImage = <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={150} />;
   
         return (
-          <div key={comment.id} className={comment.postId} style={comment.postId !== thing.id ? { display: 'none' } : { display: 'block' }} >
+          <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
             <div className="yellow comment-image">
             {commentImage}
               <span className="spare">{comment.spare}</span>
@@ -116,11 +116,11 @@ function Comments({thing}) {
     return(
         <>
          {total}
-          <FaRegComment onClick={(e) => openComments(e, thing)} className='white comment-icon' />
+          <FaRegComment onClick={(e) => openComments(e, post)} className='white comment-icon' />
           <div className='swap hide'>
             <MdClose className='comment-close' onClick={closeMe} />
-            <input id = {`comment-input${thing.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button type='submit' onClick={() => postComment(thing)} className="btn comment-btn">Submit</button>
+            <input id = {`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+            <button type='submit' onClick={() => postComment(post)} className="btn comment-btn">Submit</button>
             <div className='comment-box'>
               {myComments}
             </div>

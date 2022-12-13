@@ -12,8 +12,6 @@ import BaseLayout from './components/BaseLayout';
 import Private from './components/Private';
 import Register from './components/Register';
 import Login from './components/Login';
-import Post from './components/Post';
-// import PrivatePost from './components/PrivatePost'
 import SendMessage from './components/SendMessage'
 import Messages from './components/Messages'
 import history from './store/History';
@@ -47,7 +45,6 @@ ReactDOM.render(
     <Route exact path = "/" component = {Login} />
     <Route exact path = "/feed" component = {PublicFeed} />
     <Route exact path = "/profile" component = {Private} />
-    <Route exact path = "/post" component = {Post} />
     <Route exact path = "/logout" component = {Logout} />
     <Route exact path = "/upload-image" component = {UploadImage} />
     <Route exact path = "/sendmessage" component = {SendMessage} />

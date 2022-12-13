@@ -1,7 +1,9 @@
 import useLocalStorage from 'use-local-storage';
-import { useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
+import Navbar from './Navbar';
 import Footer from './Footer';
+
 
 function BaseLayout(props) {
   const location = useLocation();
@@ -13,17 +15,17 @@ function BaseLayout(props) {
   }
   return (
     <div data-theme={theme} className="background">
-      <div >
-      { location.pathname === '/' || location.pathname === '/register'  ?
+      {location.pathname === '/' || location.pathname === '/register' ?
         ""
-         : 
-         <button className='theme-toggle' onClick={switchTheme}>
-          {theme === 'light' ? <BsFillMoonStarsFill className='highlight'/> : <BsFillSunFill className='highlight' />}
-        </button>
-         }
-      </div>
+        :
+        <Navbar theme={theme} switchTheme={switchTheme} />
+      }
       {props.children}
-      <Footer />
+      {location.pathname === '/' || location.pathname === '/register' ?
+        ""
+        :
+        <Footer />
+      }
     </div>
   )
 }

@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
-import Navbar from './Navbar';
-import  "./App.css"
+import SendMessage from './SendMessage';
+import { sendMailPopup } from '../utils/utils';
+import { RiMailAddLine } from "react-icons/ri";
+import { MdClose } from "react-icons/md";
+import "./App.css"
 
 
 function Messages(props) {
+  console.log("MESSAGE", props)
   const [message, setMessage] = useState([])
-    useEffect(() => { getMessages() }, [])
+  useEffect(() => { getMessages() }, [])
 
   const getMessages = () => {
     const name = localStorage.getItem('name')
@@ -16,38 +20,42 @@ function Messages(props) {
         setMessage(message)
       })
   }
-  
-      console.log("MAIL", message )
-      const handleMessageDelete = (mail) => {
-          fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
-            method: 'DELETE'
-          }).then(response => response.json())
-          .then(result => { 
-            props.onMailLoaded()
-           
-          })
-      }
 
-    const messageItems = message.map(mail=> {
-        return <div key={mail.id} >
-          <div className="yellow comment-image">
-            <span className="spare">{mail.contact}</span>
-          </div>
-          <div className='comment message'>{mail.description}
-            <button className="deleteButton" onClick={() => handleMessageDelete(mail)}>Delete</button>
-            </div>
-        </div>
-    })
+  console.log("MAIL", message)
+  const handleMessageDelete = (mail) => {
+    fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
+      method: 'DELETE'
+    }).then(response => response.json())
+      .then(result => {
+        props.onMailLoaded()
 
-        return (
-          <div className='messages'>
-            <Navbar />
-            {messageItems}
-        </div>
+      })
+  }
 
-    )
+  const messageItems = message.map(mail => {
+    return <div key={mail.id} >
+      <div className="yellow comment-image">
+        <span className="spare">{mail.contact}</span>
+      </div>
+      <div className='comment message'>{mail.description}
+        <button className="deleteButton" onClick={() => handleMessageDelete(mail)}>Delete</button>
+      </div>
+    </div>
+  })
+
+  return (
+    <div className='messages'>
+      < RiMailAddLine className='mail-icon highlight' onClick={ sendMailPopup }/>
+      <div id="mail-form" className='mail-form'>
+        <MdClose className='add-post-close' onClick={ sendMailPopup } />
+        <SendMessage />
+      </div>
+      {messageItems}
+    </div>
+
+  )
 
 }
- export default Messages;
- 
+export default Messages;
+
 

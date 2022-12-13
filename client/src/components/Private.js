@@ -1,8 +1,5 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import * as actionCreators from '../store/creators/actionCreators';
-import Navbar from './Navbar';
 import Avatar from 'react-avatar';
 import { AdvancedImage } from '@cloudinary/react';
 import { Cloudinary } from "@cloudinary/url-gen";
@@ -117,7 +114,6 @@ function Private() {
   return (
 
     <>
-      <Navbar />
       <aside id="overlay" className="overlay hide-overlay"></aside>
       <div className='profile-container'>
 

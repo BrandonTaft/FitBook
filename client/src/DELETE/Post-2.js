@@ -1,10 +1,18 @@
 import React, { useState } from 'react';
-import { addPostPopup } from '../utils/utils';
-import logo from "../assets/logo-aqua.png";
-import { MdClose } from "react-icons/md";
-import "./App.css"
-  
-  function Post(props) {
+import Navbar from './Navbar';
+import logo from "../assets/logo-aqua.png"
+import "./App.css";
+
+// .post-container{
+//     display: flex;
+//     flex-direction: column;
+//     flex-grow: 1;
+//     justify-content: center;
+//     align-items: center;
+//     color: #fff;
+//   }
+
+function Post(props) {
     const [post, setPost] = useState()
     const handleAddPost = (e) => {
         setPost({
@@ -28,14 +36,17 @@ import "./App.css"
             .then(result => {
                 if (result.success) {
                     props.history.push('/feed')
+                    console.log("did", result)
                 } else {
                     console.log("error", result.message)
                 }
             })
     }
-    return(
-        <div className='form'>
-            <MdClose className='add-post-close' onClick={ addPostPopup } />
+    return (
+        <>
+            <Navbar />
+            <div className='post-container'>
+                <div className='form'>
                 <div className="mb-2">
                     <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
                 </div>
@@ -46,7 +57,11 @@ import "./App.css"
                     <textarea className="textbox text-area" type="text" name="description" maxLength={255} onChange={handleAddPost} />
                     <button className="btn mt-2" onClick={postTODB}>Submit</button>
                 </div>
+            </div>
+        </>
     )
-  }
 
-  export default Post
+
+}
+
+export default Post

@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Card } from './Cards';
-import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 
@@ -12,7 +11,6 @@ function PublicFeed(props) {
   }, []);
   return (
     <>
-      <Navbar />
       <Card publicPosts={props.posts} />
     </>
   )

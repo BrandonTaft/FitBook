@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import { addPostPopup } from '../utils/utils';
 import logo from "../assets/logo-aqua.png";
 import { MdClose } from "react-icons/md";
 import "./App.css"
-  
-  function Post(props) {
+
+function Post(props) {
     const [post, setPost] = useState()
+    const history = useHistory();
     const handleAddPost = (e) => {
         setPost({
             ...post,
@@ -27,26 +29,27 @@ import "./App.css"
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    props.history.push('/feed')
+                    addPostPopup()
+                    history.push('/feed')
                 } else {
                     console.log("error", result.message)
                 }
             })
     }
-    return(
+    return (
         <div className='form'>
-            <MdClose className='add-post-close' onClick={ addPostPopup } />
-                <div className="mb-2">
-                    <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
-                </div>
-                    <h1 className="postTitle">Make A Post</h1>
-                    <input className="textbox" type="text" name="name" onChange={handleAddPost} placeholder="Title" />
-                    <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link" />
-                    <div>Description</div>
-                    <textarea className="textbox text-area" type="text" name="description" maxLength={255} onChange={handleAddPost} />
-                    <button className="btn mt-2" onClick={postTODB}>Submit</button>
-                </div>
+            <MdClose className='add-post-close' onClick={addPostPopup} />
+            <div className="mb-2">
+                <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
+            </div>
+            <h1 className="postTitle">Make A Post</h1>
+            <input className="textbox" type="text" name="name" onChange={handleAddPost} placeholder="Title" />
+            <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link" />
+            <div>Description</div>
+            <textarea className="textbox text-area" type="text" name="description" maxLength={255} onChange={handleAddPost} />
+            <button className="btn mt-2" onClick={postTODB}>Submit</button>
+        </div>
     )
-  }
+}
 
-  export default Post
+export default Post

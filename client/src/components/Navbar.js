@@ -14,7 +14,7 @@ function Navbar({ theme, switchTheme }) {
         <nav className="navBar">
             {theme === 'light' ? <RiMoonClearFill className='nav-icon highlight' onClick={switchTheme} /> : <RiSunFill className='nav-icon highlight' onClick={switchTheme} />}
             <NavLink to="/logout" ><RiLogoutBoxFill className="nav-icon highlight" /></NavLink>
-            {location.pathname === '/publicfeed' ?
+            {location.pathname === '/feed' ?
                 <h1>Feed</h1>
                 : ""}
             <NavLink to="/feed"><RiHomeSmileFill className='nav-icon home-icon icon highlight' /></NavLink>

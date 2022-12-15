@@ -250,7 +250,7 @@ svg {
   background-color: var(--secondary-background);
   color: rgba(255, 255, 255, 0.8);
   border-radius: 9px;
-  padding: 0px 5px 10px;
+  padding: 0px 5px 20px;
   margin: 20px 10px 0px;
   text-align: center;
 }
@@ -387,13 +387,14 @@ svg {
 
 .feedback {
   display: flex;
- 
+  position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   align-items: center;
   justify-content: center;
   font-size: 1.25em;
+  margin: 10px;
 }
 
 .likes {
@@ -568,6 +569,15 @@ svg {
 
 .menuNav a {
   color:#fff;
+}
+
+/* ****************** REDIRECT ********************* */
+
+.redirect {
+  display: flex;
+  flex-grow: 1;
+  justify-content: center;
+  align-items: center;
 }
 
 /* ******************POST********************* */
@@ -784,4 +794,54 @@ svg {
 
 .show-mail-form {
   display: block;
+}
+
+
+/*********** CHAT ************/
+
+.chat-container {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+}
+
+.messages-container {
+  display: grid;
+  grid-template-columns: auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.message-item {
+  color: white;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.my-message {
+  background-color: #07246a;
+  grid-column: 2;
+}
+
+.received-message {
+  background-color: #03dac6;
+  grid-column: 1;
+}
+
+.message-list {
+overflow: auto;
+}
+
+.chat-input {
+ 
+  margin-top: auto;
+}
+
+.send-chat {
+  font-size: 40px;
 }

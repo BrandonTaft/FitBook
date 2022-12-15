@@ -10,6 +10,34 @@ var cloudinary = require('cloudinary').v2;
 const salt = 10;
 app.use(express.json())
 app.use(cors())
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const httpServer = createServer(app);
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*",
+    },
+});
+
+/******************* CHAT *******************/
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+io.on("connection", (socket) => {
+
+    // Join a conversation
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
+
+    // Listen for new messages
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+    });
+
+    // Leave the room if the user closes the socket
+    socket.on("disconnect", () => {
+        socket.leave(roomId);
+    });
+});
+
 
 cloudinary.config({
     cloud_name: 'dxbieon3u',
@@ -136,9 +164,9 @@ app.get('/api/users:id', (req, res) => {
 app.put('/api/update-user/:userId', (req, res) => {
     const id = parseInt(req.params.userId)
     models.Users.update(
-        {bio: 'true'},
-        { where:{id:id}}
-        )
+        { bio: 'true' },
+        { where: { id: id } }
+    )
 })
 
 //***************************ADD COMMENTS TO DATABASE***************************//
@@ -252,8 +280,8 @@ app.delete('/api/mythings/:thingId', (req, res) => {
     })
 })
 
- //***************************GET MAIL***************************//
-app.get('/api/getmail/:name',(req, res) => {
+//***************************GET MAIL***************************//
+app.get('/api/getmail/:name', (req, res) => {
     const userName = (req.params.name)
     models.Mail.findAll({
         where: {
@@ -289,13 +317,13 @@ app.post('/api/addmail', (req, res) => {
 
     mail.save()
         .then(savedThing => {
-            res.json({ success: true})
+            res.json({ success: true })
         })
 })
 
 //***************************DELETE Mail FROM DATABASE***************************//
 
-app.delete('/api/deletemail/:mailId',(req, res) => {
+app.delete('/api/deletemail/:mailId', (req, res) => {
 
     const mailId = parseInt(req.params.mailId)
 
@@ -453,7 +481,8 @@ app.delete('/api/user/:userId', (req, res) => {
 //
 //***************************SET PORT***************************//
 
-//app.listen(process.env.PORT);
-app.listen(8080, (req, res) => {
-    console.log('Server Is Running....')
-})
+
+// app.listen(8080, (req, res) => {
+//     console.log('Server Is Running....')
+// })
+httpServer.listen(8080);

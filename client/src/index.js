@@ -11,13 +11,16 @@ import thunk from 'redux-thunk'
 import BaseLayout from './components/BaseLayout';
 import Private from './components/Private';
 import Register from './components/Register';
+import Redirect from './components/Redirect';
 import Login from './components/Login';
 import SendMessage from './components/SendMessage'
 import Messages from './components/Messages'
 import history from './store/History';
 import Logout from './components/Logout';
 import PublicFeed from './components/PublicFeed';
+import ChatRoom from './components/Chat/ChatRoom';
 import UploadImage from './components/UploadImage';
+import Chat from './components/Chat/Chat';
 
 
 
@@ -40,7 +43,7 @@ ReactDOM.render(
     
     <BaseLayout>
     <Switch>
-  
+    <Route exact path = "/redirect"component = {Redirect} />
     <Route exact path = "/register"component = {Register} />
     <Route exact path = "/" component = {Login} />
     <Route exact path = "/feed" component = {PublicFeed} />
@@ -49,6 +52,8 @@ ReactDOM.render(
     <Route exact path = "/upload-image" component = {UploadImage} />
     <Route exact path = "/sendmessage" component = {SendMessage} />
     <Route exact path = "/messages" component = {Messages} />
+    <Route exact path="/chat" component={Chat} />
+    <Route exact path="/:roomId" component={ChatRoom} />
     </Switch>
     </BaseLayout>
     </Provider>

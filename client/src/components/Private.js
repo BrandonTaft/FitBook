@@ -52,31 +52,31 @@ function Private() {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {
-       fetchMyPosts()
+        fetchMyPosts()
       })
   }
 
 
   function fetchMyPosts() {
-      const user_Id = localStorage.getItem('user_Id')
-      const token = localStorage.getItem('jsonwebtoken')
-      fetch(`http://127.0.0.1:8080/api/mythings/${user_Id}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${token}`
+    const user_Id = localStorage.getItem('user_Id')
+    const token = localStorage.getItem('jsonwebtoken')
+    fetch(`http://127.0.0.1:8080/api/mythings/${user_Id}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(myPosts => {
+        console.log(myPosts)
+        if (myPosts.success === false) {
+          setMyPosts("")
+        } else {
+          setMyPosts(myPosts)
         }
       })
-        .then(response => response.json())
-        .then(myPosts => {
-          console.log(myPosts)
-          if (myPosts.success === false) {
-           setMyPosts("")
-          } else {
-           setMyPosts(myPosts)
-          }
-        })
   }
- 
+
   // const thingItems = props.posts.map(thing => {
   //   const name = localStorage.getItem('name')
   //   const dateCreated = new Date(thing.createdAt);
@@ -136,9 +136,7 @@ function Private() {
             ?
             <h2 className='text-secondary'>You Haven't Posted Anything!</h2>
             :
-            <div className='my-posts'>
-              <MyCard posts={myPosts} reset={reset} setReset={setReset} />
-            </div>
+            <MyCard posts={myPosts} reset={reset} setReset={setReset} />
           }
         </div>
       </div>

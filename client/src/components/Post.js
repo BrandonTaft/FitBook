@@ -30,7 +30,7 @@ function Post(props) {
             .then(result => {
                 if (result.success) {
                     addPostPopup()
-                    history.push('/feed')
+                    history.push('/redirect')
                 } else {
                     console.log("error", result.message)
                 }

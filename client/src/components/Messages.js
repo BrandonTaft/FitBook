@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Chat from './Chat/Chat';
 import SendMessage from './SendMessage';
 import { sendMailPopup } from '../utils/utils';
 import { RiMailAddLine } from "react-icons/ri";
@@ -51,6 +52,7 @@ function Messages(props) {
         <SendMessage />
       </div>
       {messageItems}
+      <Chat />
     </div>
 
   )

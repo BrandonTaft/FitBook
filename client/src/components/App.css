@@ -629,6 +629,18 @@ svg {
   padding-top: 20px;
 }
 
+.upload-image-popup {
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.image.form {
+  
+}
+
 .profile-bottom {
   display: flex;
   justify-content: center;
@@ -777,7 +789,9 @@ svg {
 
 
 /* ****************** MESSAGE ********************* */
-
+.test{
+  touch-action: none;
+}
 .messages {
   margin-top: 60px;
   flex-grow: 1;
@@ -795,6 +809,15 @@ svg {
 .show-mail-form {
   display: block;
 }
+
+.upload-image-popup {
+  display: none;
+}
+
+.show-upload-image-popup {
+  display: block;
+}
+
 
 
 /*********** CHAT ************/

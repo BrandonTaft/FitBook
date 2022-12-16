@@ -1,5 +1,7 @@
 import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
+import { addImagePopup } from '../utils/utils';
+import { MdClose } from "react-icons/md";
 
 class UploadImage extends React.Component {
     constructor(props) {
@@ -8,12 +10,12 @@ class UploadImage extends React.Component {
             image: "",
             allowZoomOut: false,
             position: { x: 0.5, y: 0.5 },
-            scale: 1,
+            scale: .5,
             rotate: 0,
             borderRadius: 50,
             preview: null,
-            width: 150,
-            height: 150,
+            width: 250,
+            height: 250,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -27,6 +29,7 @@ class UploadImage extends React.Component {
     handlePositionChange = (position) => {
         this.setState({ position });
     };
+
     setEditorRef = (editor) => (this.editor = editor);
 
     async handleSubmit(e) {
@@ -58,7 +61,8 @@ class UploadImage extends React.Component {
     }
     render() {
         return (
-            <div>
+            <div className="image form">
+                <MdClose className='add-post-close' onClick={addImagePopup} />
                 <div>
                     <ReactAvatarEditor
                         ref={this.setEditorRef}

@@ -46,3 +46,7 @@ export function addPostPopup() {
 export function sendMailPopup() {
   document.getElementById('mail-form').classList.toggle('show-mail-form')
 }
+
+export function addImagePopup() {
+  document.getElementById('upload-image-popup').classList.toggle('show-upload-image-popup')
+}

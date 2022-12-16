@@ -6,10 +6,11 @@ import { Cloudinary } from "@cloudinary/url-gen";
 import { Transformation } from "@cloudinary/url-gen";
 import { image } from "@cloudinary/url-gen/qualifiers/source";
 import Messages from './Messages';
+import UploadImage from './UploadImage';
 import { MyCard } from './Cards';
 import { BsFillPencilFill } from "react-icons/bs";
-import logo from "../assets/logo-aqua.png"
-
+import logo from "../assets/logo-aqua.png";
+import { addImagePopup } from '../utils/utils';
 
 function Private() {
   const [myPosts, setMyPosts] = useState([])
@@ -115,8 +116,10 @@ function Private() {
 
     <>
       <aside id="overlay" className="overlay hide-overlay"></aside>
+      <div id="upload-image-popup" className="upload-image-popup">
+        <UploadImage />
+      </div>
       <div className='profile-container'>
-
         <div>
           <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
         </div>
@@ -124,7 +127,7 @@ function Private() {
 
           <div className="avatar-container">
             {profilePic}
-            <NavLink to="/upload-image" className='text-primary edit-image-icon' ><BsFillPencilFill />Edit</NavLink>
+            <span onClick={addImagePopup} className='text-primary edit-image-icon' ><BsFillPencilFill />Edit</span>
           </div>
           <h1 className='highlight mb-0'>{name}</h1>
           <h3 className='text-secondary mt-0'>{title}</h3>

@@ -14,8 +14,8 @@ class UploadImage extends React.Component {
             rotate: 0,
             borderRadius: 50,
             preview: null,
-            width: 250,
-            height: 250,
+            width: 150,
+            height: 150,
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -52,10 +52,9 @@ class UploadImage extends React.Component {
                         })
                     }
                 }).then(result => {
-
+                    addImagePopup()
                     localStorage.setItem('bio', true)
                     console.log("did", result)
-                    this.props.history.push('/profile')
                 })
         }
     }

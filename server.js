@@ -6,10 +6,13 @@ const app = express();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('./middlewares/authMiddleware');
-var cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary').v2;
 const salt = 10;
-app.use(express.json())
-app.use(cors())
+const contentType = require('content-type');
+const getRawBody = require('raw-body');
+const bodyParser = require('body-parser')
+app.use(express.json());
+app.use(cors());
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
@@ -19,6 +22,10 @@ const io = new Server(httpServer, {
     },
 });
 
+
+
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 /******************* CHAT *******************/
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 io.on("connection", (socket) => {

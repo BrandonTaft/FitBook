@@ -85,9 +85,9 @@ function Comments({post}) {
         if (comment.postId === post.id) {
           total++
         };
-  
+        const theImage = localStorage.getItem('url')
         comment.pic === "true" ?
-        commentImage = <AdvancedImage cldImg={myCommentImage} className="rounded" />
+        commentImage = <Avatar src={theImage} className="rounded" />
         :
         commentImage = <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={150} />;
   

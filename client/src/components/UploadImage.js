@@ -2,6 +2,7 @@ import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
 import { addImagePopup } from '../utils/utils';
 import { MdClose } from "react-icons/md";
+import History from "../store/History";
 
 class UploadImage extends React.Component {
     constructor(props) {
@@ -31,7 +32,6 @@ class UploadImage extends React.Component {
     };
 
     setEditorRef = (editor) => (this.editor = editor);
-
     async handleSubmit(e) {
         if (this.editor) {
             // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
@@ -47,6 +47,8 @@ class UploadImage extends React.Component {
             }).then(response => response.json())
                 .then(result => {
                     if (result.success) {
+                        console.log("VERSION", result)
+                        localStorage.setItem('url', result.url)
                         fetch(`http://127.0.0.1:8080/api/update-user/${userId}`, {
                             method: 'PUT'
                         })
@@ -55,6 +57,7 @@ class UploadImage extends React.Component {
                     addImagePopup()
                     localStorage.setItem('bio', true)
                     console.log("did", result)
+                    History.push('/profile')
                 })
         }
     }

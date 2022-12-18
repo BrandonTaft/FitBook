@@ -137,12 +137,12 @@ app.put('/api/add-image', async (req, res) => {
                 invalidate: true,
                 notification_url: "https://127.0.0.1:3000/upload-image"
             }
-        )
+        )      
         let secureURL = uploadResponse.secure_url
+        res.json({ success: true, url: secureURL })
     } catch (error) {
         res.json({ message: error })
-    }
-    res.json({ success: true })
+    }   
 })
 
 //***************************GET PROFILE PIC***************************//

@@ -19,7 +19,7 @@ function Private() {
   const id = localStorage.getItem('user_Id');
   const name = localStorage.getItem('name');
   const title = localStorage.getItem('title')
-
+  const theImage = localStorage.getItem('url')
   useEffect(() => {
     fetchMyPosts()
     getUser()
@@ -29,6 +29,7 @@ function Private() {
   const cld = new Cloudinary({
     cloud: {
       cloudName: 'dxbieon3u',
+      version: '1671323430',
       invalidate: true
     }
   });
@@ -44,7 +45,7 @@ function Private() {
   if (pic === false) {
     profilePic = <Avatar color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])} name={name} round={true} />
   } else {
-    profilePic = <AdvancedImage cldImg={myImage} className="rounded" />
+    profilePic = <Avatar src={theImage} className="rounded" />
   }
 
 
@@ -78,38 +79,6 @@ function Private() {
       })
   }
 
-  // const thingItems = props.posts.map(thing => {
-  //   const name = localStorage.getItem('name')
-  //   const dateCreated = new Date(thing.createdAt);
-  //   return (
-  //     <div key={thing.id} className="profile-post">
-  //      <TbArrowsMaximize className="text-primary maximize" onClick={(e) => toggleBody(e, thing)} />
-  //               <div className="avatar-container">
-  //                   {profilePic}
-  //                   <div className="bold text-primary">
-  //                       <span className='user-name'>{thing.priority}</span><br />
-  //                       <span className="title highlight">{thing.contactNumber}</span>
-  //                   </div>
-  //               </div>
-  //               <div className='post-body' id='post-body' >
-  //                   <span className='post-title'>
-  //                       {thing.name}
-  //                   </span><br />
-  //                   {thing.link ?
-  //                       <a rel={'external'} target="_blank" href={`${thing.link}`} className="post-link">Try it out</a>
-  //                       : ""}
-  //                   <br />
-  //                   <span className="text-secondary">{timeSince(dateCreated)}</span>
-  //                   <p className='post-description'>
-  //                       {thing.description}
-  //                   </p>
-  //                   <button className='profile-btn btn' onClick={() => handlePrivateDelete(thing)}>Delete</button>
-  //               </div>
-
-
-  //     </div>
-  //   )
-  // })
 
 
   return (
@@ -117,7 +86,7 @@ function Private() {
     <>
       <aside id="overlay" className="overlay hide-overlay"></aside>
       <div id="upload-image-popup" className="upload-image-popup">
-        <UploadImage />
+        <UploadImage reset={reset} setReset={setReset}/>
       </div>
       <div className='profile-container'>
         <div>

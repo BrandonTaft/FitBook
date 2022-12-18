@@ -2,12 +2,10 @@ import { useLocation} from "react-router-dom";
 import { TbArrowsMaximize } from "react-icons/tb";
 import { timeSince, toggleBody } from '../utils/utils.js';
 import Avatar from 'react-avatar';
-import { AdvancedImage } from '@cloudinary/react';
-import { Cloudinary } from "@cloudinary/url-gen";
 
 function PostDisplay({post, reset, setReset}) {
     const location = useLocation();
-    const handlePrivateDelete = (post) => {
+    const handlePostDelete = (post) => {
         fetch(`http://127.0.0.1:8080/api/mythings/${post.id}`, {
           method: 'DELETE'
         }).then(response => response.json())
@@ -16,19 +14,14 @@ function PostDisplay({post, reset, setReset}) {
           })
       };
 
-    const cld = new Cloudinary({
-        cloud: {
-            cloudName: 'dxbieon3u',
-            invalidate: true
-        }
-    });
+    
     let profileImage;
-    const myImage = cld.image(post.user_id);
     const dateCreated = new Date(post.createdAt);
-    post.contact === "true" ?
-        profileImage = <AdvancedImage cldImg={myImage} className="rounded" />
+    post.contact === "invalid"
+        ?
+    profileImage = <Avatar color="blue" name={post.priority} round={true} size={150} textSizeRatio={2} maxInitials={2} />
         :
-        profileImage = <Avatar src={`https://i.pravatar.cc/150?img=${post.user_id - 68}`} round={true} size={150} />;
+    profileImage = <Avatar src={post.contact} className="rounded" size={150} />
     return(
         <>
         <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, post)} />
@@ -52,7 +45,7 @@ function PostDisplay({post, reset, setReset}) {
                 {post.description}
             </p>
             { location.pathname === '/profile' ?
-             <button className='profile-btn btn' onClick={() => handlePrivateDelete(post)}>Delete</button>
+             <button className='profile-btn btn' onClick={() => handlePostDelete(post)}>Delete</button>
             : "" }
            
         </div>

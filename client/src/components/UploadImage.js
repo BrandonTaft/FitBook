@@ -1,5 +1,10 @@
 import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from "@cloudinary/url-gen";
+import { Transformation } from "@cloudinary/url-gen";
+import { image } from "@cloudinary/url-gen/qualifiers/source";
+import Messages from './Messages';
 import { addImagePopup } from '../utils/utils';
 import { MdClose } from "react-icons/md";
 import History from "../store/History";
@@ -47,16 +52,15 @@ class UploadImage extends React.Component {
             }).then(response => response.json())
                 .then(result => {
                     if (result.success) {
-                        console.log("VERSION", result)
-                        localStorage.setItem('url', result.url)
-                        fetch(`http://127.0.0.1:8080/api/update-user/${userId}`, {
+                        let url = encodeURIComponent(result.url)
+                        localStorage.setItem('profile_pic', result.url)
+                        fetch(`http://127.0.0.1:8080/api/update-user/${userId}/${url}`, {
                             method: 'PUT'
                         })
                     }
                 }).then(result => {
                     addImagePopup()
-                    localStorage.setItem('bio', true)
-                    console.log("did", result)
+                    this.props.reset ? this.props.setReset(false) : this.props.setReset(true)
                     History.push('/profile')
                 })
         }

@@ -16,7 +16,7 @@ function Comments({post}) {
     useEffect(() => {
         getComments()
         return () => {
-          setComments([]); // This worked for me
+          setComments([]); //clean up
         };
       }, [count]);
 
@@ -79,17 +79,33 @@ function Comments({post}) {
             setComments(comments)
           })
       }
+
+       const handleCommentDelete = (comment) => {
+    fetch(`http://127.0.0.1:8080/api/comments/${comment.id}`, {
+      method: 'DELETE'
+    }).then(response => response.json())
+      .then(result => {
+        getComments()
+        setCount(count + 1)
+      })
+  }
+
       const myComments = comments.map(comment => {
+        let deleteCommentBtn;
+        comment.userId === currentUserId ?
+        deleteCommentBtn = 'show-comment-delete-btm'
+        :
+        deleteCommentBtn = 'hide-comment-delete-btn';
         const myCommentImage = cld.image(comment.userId);
         let commentImage;
         if (comment.postId === post.id) {
           total++
         };
-        const theImage = localStorage.getItem('url')
-        comment.pic === "true" ?
+        const theImage = localStorage.getItem('profile_pic')
+        comment.pic === "invalid" ?
         commentImage = <Avatar src={theImage} className="rounded" />
         :
-        commentImage = <Avatar src={`https://i.pravatar.cc/150?img=${comment.userId - 68}`} round={true} size={150} />;
+        commentImage = <Avatar name={comment.spare} round={true} size={150} />;
   
         return (
           <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
@@ -98,20 +114,10 @@ function Comments({post}) {
               <span className="spare">{comment.spare}</span>
             </div>
             <div className='comment'>{comment.comment}</div>
-            {/* <button type='submit' onClick={() => handleCommentDelete(comment)} className="">Delete</button> */}
+            <button className={`btn ${deleteCommentBtn}`} type='submit' onClick={() => handleCommentDelete(comment)}>Delete</button>
           </div>
         )
       })
-
-       // const handleCommentDelete = (comment) => {
-  //   fetch(`http://127.0.0.1:8080/api/comments/${comment.userId}`, {
-  //     method: 'DELETE'
-  //   }).then(response => response.json())
-  //     .then(result => {
-  //       getComments()
-  //       setCount(count + 1)
-  //     })
-  // }
 
     return(
         <>

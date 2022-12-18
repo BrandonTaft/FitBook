@@ -85,7 +85,7 @@ app.post('/api/register', async (req, res) => {
             }
         })
     } else {
-        res.json({ message: " Sorry This UserName Already Exists." })
+        res.json({ message: " Sorry This UserName Already Exists" })
     }
 })
 
@@ -103,7 +103,7 @@ app.post('/api/login', async (req, res) => {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
                 const token = jwt.sign({ name: name }, "SECRETKEY")
-                res.json({ success: true, token: token, name: name, user_id: user.id, title: user.title, bio: user.bio })
+                res.json({ success: true, token: token, user: user })
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
             }
@@ -168,10 +168,15 @@ app.get('/api/users:id', (req, res) => {
 })
 
 //***********************UPDATE USER IMAGE**********************//
-app.put('/api/update-user/:userId', (req, res) => {
+app.put('/api/update-user/:userId/:url', (req, res) => {
     const id = parseInt(req.params.userId)
+    const url = req.params.url
+    console.log("URL", url)
     models.Users.update(
-        { bio: 'true' },
+        {
+            bio: 'true',
+            email: url
+        },
         { where: { id: id } }
     )
 })

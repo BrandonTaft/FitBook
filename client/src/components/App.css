@@ -148,6 +148,10 @@ body {
   margin-top: 2em !important;
 }
 
+.mt-3 {
+  margin-top: 3px;
+}
+
 .mt-5 {
   margin-top: 5px;
 }
@@ -182,6 +186,26 @@ svg {
   width: 60px;
   height: 3px;
   border-radius: 5px;
+}
+
+.tooltip {
+  position: relative;
+}
+
+.tooltip span{
+  display: none;
+}
+
+.tooltip:hover span{
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 5px;
+  background-color: grey;
+  padding: 5px;
+  z-index: 2;
 }
 
 /******************* LOGIN / REGISTER *******************/
@@ -229,6 +253,10 @@ svg {
   padding: .3em 0em;
   margin: 5px;
   min-width:100px;
+}
+
+.auth-error {
+  min-height: 1.5em;
 }
 
 /*******************PUBLIC FEED********************* */
@@ -379,6 +407,15 @@ svg {
   margin-left: 6px;
 }
 
+.show-comment-delete-btn {
+  display: block;
+}
+
+.hide-comment-delete-btn {
+  display: none;
+}
+
+
 /* @keyframes showMe {
   0% {height: 0px;}
   50% {height: 50px;}
@@ -506,7 +543,7 @@ svg {
 .nav-icon {
   width: 40px;
   height: 40px;
-  margin: 5px;
+  margin-top: 9px;
 }
 
 /* .icon {
@@ -684,6 +721,7 @@ svg {
   background-color: var(--background);
   color: var(--text-primary);
   padding: 3px;
+  cursor: pointer;
 }
 
 /* ****************** FOOTER ********************* */

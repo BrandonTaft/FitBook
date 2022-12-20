@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import FeedBack from './FeedBack';
 import Comments from './Comments';
 import PostDisplay from "./PostDisplay";

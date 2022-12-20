@@ -167,6 +167,14 @@ app.get('/api/users:id', (req, res) => {
         })
 })
 
+//***************************GET ALL USERS***************************//
+app.get('/api/users', (req, res) => {
+    models.Users.findAll({})
+        .then(users => {
+            res.json(users)
+        })
+})
+
 //***********************UPDATE USER IMAGE**********************//
 app.put('/api/update-user/:userId/:url', (req, res) => {
     const id = parseInt(req.params.userId)
@@ -205,6 +213,9 @@ app.post('/api/addcomment:thingId', (req, res) => {
 //Retrieve All Comments From DataBase
 app.get('/api/comments', (req, res) => {
     models.Comments.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ],
     })
         .then(comments => {
             res.json(comments)

@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import {AdvancedImage} from '@cloudinary/react';
-import {Cloudinary} from "@cloudinary/url-gen";
 import Avatar from 'react-avatar';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
@@ -19,13 +17,6 @@ function Comments({post}) {
           setComments([]); //clean up
         };
       }, [count]);
-
-    const cld = new Cloudinary({
-        cloud: {
-          cloudName: 'dxbieon3u',
-          invalidate: true
-        }
-      });
     
     const openComments = (event) => {
         let close = document.getElementsByClassName('swap');
@@ -44,7 +35,7 @@ function Comments({post}) {
         setNewComment({
           userId: currentUserId,
           spare: currentUser,
-          pic: localStorage.getItem('bio'),
+          pic: localStorage.getItem('profile_pic'),
           [event.target.name]: event.target.value
         })
       }
@@ -96,17 +87,14 @@ function Comments({post}) {
         deleteCommentBtn = 'show-comment-delete-btm'
         :
         deleteCommentBtn = 'hide-comment-delete-btn';
-        const myCommentImage = cld.image(comment.userId);
         let commentImage;
         if (comment.postId === post.id) {
           total++
         };
-        const theImage = localStorage.getItem('profile_pic')
         comment.pic === "invalid" ?
-        commentImage = <Avatar src={theImage} className="rounded" />
+        commentImage = <Avatar name={comment.spare} round={true} size={150} />
         :
-        commentImage = <Avatar name={comment.spare} round={true} size={150} />;
-  
+        commentImage = <Avatar src={comment.pic} className="rounded" />
         return (
           <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
             <div className="yellow comment-image">
@@ -121,8 +109,10 @@ function Comments({post}) {
 
     return(
         <>
-         {total}
-          <FaRegComment onClick={(e) => openComments(e, post)} className='white comment-icon' />
+        <div className='comment-total' onClick={(e) => openComments(e, post)} >
+          <FaRegComment className='white comment-icon' />
+          <span>{total}</span>
+        </div>
           <div className='swap hide'>
             <MdClose className='comment-close' onClick={closeMe} />
             <input id = {`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />

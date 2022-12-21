@@ -37,6 +37,8 @@ const useChat = (roomId) => {
     socketRef.current.emit(NEW_CHAT_MESSAGE_EVENT, {
       body: messageBody,
       senderId: socketRef.current.id,
+      name: (localStorage.getItem('name')),
+      pic: (localStorage.getItem('profile_pic')),
     });
   };
 

@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useState } from 'react';
 import "../App.css";
 import useChat from "./useChat";
-import { MdOutlineSend } from "react-icons/md"
+import { MdOutlineSend } from "react-icons/md";
+import Avatar from 'react-avatar';
 
 const ChatRoom = (props) => {
   const { roomId } = props.match.params; // Gets roomId from URL
   const { messages, sendMessage } = useChat(roomId); // Creates a websocket and manages messaging
-  const [newMessage, setNewMessage] = React.useState(""); // Message to be sent
+  const [newMessage, setNewMessage] = useState(""); // Message to be sent
 
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
@@ -28,6 +29,13 @@ const ChatRoom = (props) => {
                 message.ownedByCurrentUser ? "my-message" : "received-message"
               }`}
             >
+              {message.pic === "invalid"
+              ?
+              <Avatar name={message.name} round={true} size={150} />
+              :
+              <Avatar src={message.pic} className="rounded" />
+              }
+              {message.name}
               {message.body}
             </div>
           ))}

@@ -1,9 +1,9 @@
-import React from "react";
+import { useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import "../App.css";
 
 const Chat = () => {
-  const [roomName, setRoomName] = React.useState("");
+  const [roomName, setRoomName] = useState("");
 
   const handleRoomNameChange = (event) => {
     setRoomName(event.target.value);
@@ -18,7 +18,7 @@ const Chat = () => {
         onChange={handleRoomNameChange}
         className="text-input-field"
       />
-      <Link to={`/${roomName}`} className="enter-room-button">
+      <Link to={`/${roomName}`} id="enter-room-btn" className="enter-room-btn ">
         Join room
       </Link>
     </div>

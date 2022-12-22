@@ -45,6 +45,57 @@ io.on("connection", (socket) => {
     });
 });
 
+//***************************ADD CHAT TO DATABASE***************************//
+app.post('/api/savechat', (req, res) => {
+    console.log(req.body)
+    const roomId = req.body.roomId
+    const body = req.body.body
+    const senderId = req.body.senderId
+    const name = req.body.name
+    const pic = req.body.pic
+    const description = req.body.description
+    const chats = models.Chat.build({
+        roomId: roomId,
+        body: body,
+        senderId: senderId,
+        name: name,
+        pic: pic,
+        description: description,
+    })
+    chats.save()
+        .then(savedChats => {
+            res.json({ success: true })
+        })
+})
+
+
+//***************************GET ALL CHATS***************************//
+
+app.get('/api/getchats/:roomId', (req, res) => {
+    const roomId = parseInt(req.params.roomId)
+    models.Chat.findAll({
+        where: {
+            roomId: roomId
+        }
+    })
+        .then(chats => {
+            res.json(chats)
+        })
+})
+
+
+//***********************DELETE ALL CHATS***********************//
+app.delete('/api/delete-chats/:roomId', (req, res) => {
+    const roomId = parseInt(req.params.roomId)
+    models.Chat.destroy({
+        where: {
+            roomId: roomId
+        }
+    }).then(_ => {
+        res.json({ deleted: true })
+    })
+})
+
 //***************************REGISTRATION PAGE***************************//
 
 app.post('/api/register', async (req, res) => {
@@ -109,17 +160,6 @@ app.post('/api/login', async (req, res) => {
 
 //***************************ADD PROFILE PIC***************************//
 app.put('/api/add-image', async (req, res) => {
-    // const id = req.body.userId
-    // const img = req.body.img
-    // models.Things.increment('score', { by: 1, where: { id: id } });
-    // models.Users.update({
-    //     'bio': img
-    // },
-    //     {
-    //         where: {
-    //             id: id
-    //         }
-    //     }).then(res.json({ success: true }))
     try {
         const fileStr = req.body.data
         const id = req.body.userId

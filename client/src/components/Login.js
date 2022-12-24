@@ -23,7 +23,7 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success == true) {
-                    localStorage.setItem('jsonwebtoken', result.token)
+                    localStorage.setItem('token', result.token)
                     localStorage.setItem('user_Id', result.user.id)
                     localStorage.setItem('name', result.user.name)
                     localStorage.setItem('title', result.user.title)

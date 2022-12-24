@@ -53,7 +53,7 @@ ReactDOM.render(
     <Route exact path = "/sendmessage" component = {SendMessage} />
     <Route exact path = "/messages" component = {Messages} />
     <Route exact path="/chat" component={Chat} />
-    <Route exact path="/:roomId" component={ChatRoom} />
+    <Route exact path="/chatroom/:roomId" component={ChatRoom} />
     </Switch>
     </BaseLayout>
     </Provider>

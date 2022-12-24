@@ -1,10 +1,5 @@
 import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
-import { AdvancedImage } from '@cloudinary/react';
-import { Cloudinary } from "@cloudinary/url-gen";
-import { Transformation } from "@cloudinary/url-gen";
-import { image } from "@cloudinary/url-gen/qualifiers/source";
-import Messages from './Messages';
 import { addImagePopup } from '../utils/utils';
 import { MdClose } from "react-icons/md";
 import History from "../store/History";
@@ -14,9 +9,8 @@ class UploadImage extends React.Component {
         super(props);
         this.state = {
             image: "",
-            allowZoomOut: false,
             position: { x: 0.5, y: 0.5 },
-            scale: .5,
+            scale: 1,
             rotate: 0,
             borderRadius: 50,
             preview: null,
@@ -51,6 +45,7 @@ class UploadImage extends React.Component {
                 body: JSON.stringify({ data: img, userId: userId })
             }).then(response => response.json())
                 .then(result => {
+                    console.log(result)
                     if (result.success) {
                         let url = encodeURIComponent(result.url)
                         localStorage.setItem('profile_pic', result.url)
@@ -99,9 +94,9 @@ class UploadImage extends React.Component {
                     name="scale"
                     type="range"
                     onChange={this.handleScale}
-                    min={this.state.allowZoomOut ? "0.1" : "1"}
-                    max="2"
-                    step="0.01"
+                    min="1"
+                    max="5"
+                    step=".25"
                     defaultValue="1"
                 />
                 <div>

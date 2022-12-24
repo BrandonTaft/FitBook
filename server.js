@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const models = require('./models');
 const cors = require('cors');
@@ -6,26 +5,29 @@ const app = express();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authenticate = require('./middlewares/authMiddleware');
-const cloudinary = require('cloudinary').v2;
 const salt = 10;
-const contentType = require('content-type');
-const getRawBody = require('raw-body');
-const bodyParser = require('body-parser')
 app.use(express.json());
 app.use(cors());
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
+const sequelize = require('sequelize');
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
     },
 });
 
+const cloudinary = require('cloudinary').v2;
+cloudinary.config({
+    cloud_name: 'dxbieon3u',
+    api_key: '868885289639448',
+    api_secret: "OV5DS6dPJBRw2Zmqbx6MwlYNEUA"
+})
 
-
-app.use(bodyParser.json({limit: "50mb"}));
-app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
+require('dotenv').config();
+app.use(express.json({limit: 52428800}));
+app.use(express.urlencoded({ extended: true, limit: 52428800}));
 /******************* CHAT *******************/
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 io.on("connection", (socket) => {
@@ -47,7 +49,6 @@ io.on("connection", (socket) => {
 
 //***************************ADD CHAT TO DATABASE***************************//
 app.post('/api/savechat', (req, res) => {
-    console.log(req.body)
     const roomId = req.body.roomId
     const body = req.body.body
     const senderId = req.body.senderId
@@ -72,7 +73,7 @@ app.post('/api/savechat', (req, res) => {
 //***************************GET ALL CHATS***************************//
 
 app.get('/api/getchats/:roomId', (req, res) => {
-    const roomId = parseInt(req.params.roomId)
+    const roomId = req.params.roomId
     models.Chat.findAll({
         where: {
             roomId: roomId
@@ -86,7 +87,7 @@ app.get('/api/getchats/:roomId', (req, res) => {
 
 //***********************DELETE ALL CHATS***********************//
 app.delete('/api/delete-chats/:roomId', (req, res) => {
-    const roomId = parseInt(req.params.roomId)
+    const roomId = req.params.roomId
     models.Chat.destroy({
         where: {
             roomId: roomId
@@ -103,15 +104,15 @@ app.post('/api/register', async (req, res) => {
     const password = req.body.password
     const title = req.body.title
     const bio = req.body.bio
-    const token = req.body.token
     const persistedUser = await models.Users.findOne({
-        where: {
-            name: name
-        }
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')), 
+            sequelize.fn('lower', name)
+          )
     })
+    console.log(persistedUser)
     if (persistedUser == null) {
         bcrypt.hash(password, salt, async (error, hash) => {
-            console.log(hash)
             if (error) {
                 res.json({ message: "Something Went Wrong!!!" })
             } else {
@@ -120,7 +121,6 @@ app.post('/api/register', async (req, res) => {
                     password: hash,
                     title: title,
                     bio: bio,
-                    token: token
                 })
 
                 let savedUser = await user.save()
@@ -140,9 +140,10 @@ app.post('/api/login', async (req, res) => {
     const name = req.body.name
     const password = req.body.password
     let user = await models.Users.findOne({
-        where: {
-            name: name,
-        }
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')), 
+            sequelize.fn('lower', name)
+          )
     })
     if (user != null) {
         bcrypt.compare(password, user.password, (error, result) => {
@@ -213,7 +214,6 @@ app.get('/api/users', (req, res) => {
 app.put('/api/update-user/:userId/:url', (req, res) => {
     const id = parseInt(req.params.userId)
     const url = req.params.url
-    console.log("URL", url)
     models.Users.update(
         {
             bio: 'true',

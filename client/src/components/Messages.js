@@ -8,7 +8,6 @@ import "./App.css"
 
 
 function Messages(props) {
-  console.log("MESSAGE", props)
   const [message, setMessage] = useState([])
   useEffect(() => { getMessages() }, [])
 
@@ -17,12 +16,10 @@ function Messages(props) {
     fetch(`http://127.0.0.1:8080/api/getmail/${name}`)
       .then(response => response.json())
       .then(message => {
-        console.log(message)
         setMessage(message)
       })
   }
 
-  console.log("MAIL", message)
   const handleMessageDelete = (mail) => {
     fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
       method: 'DELETE'

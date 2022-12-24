@@ -25,7 +25,7 @@ function Private() {
 
   function fetchMyPosts() {
     const user_Id = localStorage.getItem('user_Id')
-    const token = localStorage.getItem('jsonwebtoken')
+    const token = localStorage.getItem('token')
     fetch(`http://127.0.0.1:8080/api/mythings/${user_Id}`, {
       method: 'GET',
       headers: {

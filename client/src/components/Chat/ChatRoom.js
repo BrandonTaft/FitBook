@@ -18,7 +18,6 @@ const ChatRoom = (props) => {
     fetch(`http://127.0.0.1:8080/api/getchats/${roomId}`)
       .then(response => response.json())
       .then(chats => {
-        console.log(chats)
         setOldChats(chats)
       })
   }
@@ -46,7 +45,6 @@ const ChatRoom = (props) => {
   }
 
   const postChat = () => {
-    console.log(savedChat)
     fetch('http://127.0.0.1:8080/api/savechat', {
       method: 'POST',
       headers: {
@@ -57,7 +55,7 @@ const ChatRoom = (props) => {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-         console.log(result)
+        //  console.log(result)
         }
       })
      

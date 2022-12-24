@@ -1,77 +1,78 @@
 import { useEffect, useState } from 'react';
+import { timeSince } from '../utils/utils.js';
 import Avatar from 'react-avatar';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
 
-function Comments({post}) {
-    const [comments, setComments] = useState([])
-    const [newComment, setNewComment] = useState()
-    const currentUser = localStorage.getItem('name')
-    const currentUserId = localStorage.getItem('user_Id')
-    const [count, setCount] = useState(0)
-    let total = 0;
+function Comments({ post }) {
+  const [comments, setComments] = useState([])
+  const [newComment, setNewComment] = useState()
+  const currentUser = localStorage.getItem('name')
+  const currentUserId = localStorage.getItem('user_Id')
+  const [count, setCount] = useState(0)
+  let total = 0;
 
-    useEffect(() => {
-        getComments()
-        return () => {
-          setComments([]); //clean up
-        };
-      }, [count]);
-    
-    const openComments = (event) => {
-        let close = document.getElementsByClassName('swap');
-        for (let i = 0; i < close.length; i++) {
-          close[i].classList.remove('show-comments');
+  useEffect(() => {
+    getComments()
+    return () => {
+      setComments([]); //clean up
+    };
+  }, [count]);
+
+  const openComments = (event) => {
+    let close = document.getElementsByClassName('swap');
+    for (let i = 0; i < close.length; i++) {
+      close[i].classList.remove('show-comments');
+    }
+    setCount(count + 1)
+    event.currentTarget.nextSibling.classList.toggle('show-comments');
+  }
+
+  const closeMe = (event) => {
+    event.currentTarget.parentElement.classList.remove('show-comments')
+  }
+
+  const handleAddComment = (event) => {
+    setNewComment({
+      userId: currentUserId,
+      spare: currentUser,
+      pic: localStorage.getItem('profile_pic'),
+      [event.target.name]: event.target.value
+    })
+  }
+
+  const postComment = (post) => {
+    fetch(`http://127.0.0.1:8080/api/addcomment${post.id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newComment)
+
+    }).then(response => response.json())
+      .then(result => {
+        if (result.success) {
+          getComments()
+          setCount(count + 1)
         }
-        setCount(count + 1)
-        event.currentTarget.nextSibling.classList.toggle('show-comments');
-      }
+      })
+    document.getElementById(`comment-input${post.id}`).value = ""
+  }
 
-      const closeMe = (event) => {
-        event.currentTarget.parentElement.classList.remove('show-comments')
+  const getComments = () => {
+    fetch(`http://127.0.0.1:8080/api/comments`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
       }
+    })
+      .then(response => response.json())
+      .then(comments => {
+        setComments(comments)
+      })
+  }
 
-      const handleAddComment = (event) => {
-        setNewComment({
-          userId: currentUserId,
-          spare: currentUser,
-          pic: localStorage.getItem('profile_pic'),
-          [event.target.name]: event.target.value
-        })
-      }
-    
-      const postComment = (post) => {
-        fetch(`http://127.0.0.1:8080/api/addcomment${post.id}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newComment)
-    
-        }).then(response => response.json())
-          .then(result => {
-            if (result.success) {
-              getComments()
-              setCount(count + 1)
-            }
-          })
-          document.getElementById(`comment-input${post.id}`).value = ""
-      }
-    
-      const getComments = () => {
-        fetch(`http://127.0.0.1:8080/api/comments`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        })
-          .then(response => response.json())
-          .then(comments => {
-            setComments(comments)
-          })
-      }
-
-       const handleCommentDelete = (comment) => {
+  const handleCommentDelete = (comment) => {
     fetch(`http://127.0.0.1:8080/api/comments/${comment.id}`, {
       method: 'DELETE'
     }).then(response => response.json())
@@ -81,49 +82,51 @@ function Comments({post}) {
       })
   }
 
-      const myComments = comments.map(comment => {
-        let deleteCommentBtn;
-        comment.userId === currentUserId ?
-        deleteCommentBtn = 'show-comment-delete-btm'
-        :
-        deleteCommentBtn = 'hide-comment-delete-btn';
-        let commentImage;
-        if (comment.postId === post.id) {
-          total++
-        };
-        comment.pic === "invalid" ?
-        commentImage = <Avatar name={comment.spare} round={true} size={150} />
-        :
-        commentImage = <Avatar src={comment.pic} className="rounded" />
-        return (
-          <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
-            <div className="yellow comment-image">
-            {commentImage}
-              <span className="spare">{comment.spare}</span>
-            </div>
-            <div className='comment'>{comment.comment}</div>
-            <button className={`btn ${deleteCommentBtn}`} type='submit' onClick={() => handleCommentDelete(comment)}>Delete</button>
-          </div>
-        )
-      })
-
-    return(
-        <>
-        <div className='comment-total' onClick={(e) => openComments(e, post)} >
-          <FaRegComment className='white comment-icon' />
-          <span>{total}</span>
+  const myComments = comments.map(comment => {
+    const dateCreated = new Date(comment.createdAt);
+    let deleteCommentBtn;
+    comment.userId === currentUserId ?
+      deleteCommentBtn = 'show-comment-delete-btm'
+      :
+      deleteCommentBtn = 'hide-comment-delete-btn';
+    let commentImage;
+    if (comment.postId === post.id) {
+      total++
+    };
+    comment.pic === "invalid" ?
+      commentImage = <Avatar name={comment.spare} round={true} size={150} />
+      :
+      commentImage = <Avatar src={comment.pic} className="rounded" />
+    return (
+      <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
+        <div className="yellow comment-image">
+          {commentImage}
+          <span className="spare">{comment.spare}</span>
         </div>
-          <div className='swap hide'>
-            <MdClose className='comment-close' onClick={closeMe} />
-            <input id = {`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
-            <button type='submit' onClick={() => postComment(post)} className="btn comment-btn">Submit</button>
-            <div className='comment-box'>
-              {myComments}
-            </div>
-
-          </div>
-        </>
+        <span className="off-white">{timeSince(dateCreated)}</span>
+        <div className='comment'>{comment.comment}</div>
+        <button className={`btn ${deleteCommentBtn}`} type='submit' onClick={() => handleCommentDelete(comment)}>Delete</button>
+      </div>
     )
+  })
+
+  return (
+    <>
+      <div className='comment-total' onClick={(e) => openComments(e, post)} >
+        <FaRegComment className='white comment-icon' />
+        <span>{total}</span>
+      </div>
+      <div className='swap hide'>
+        <MdClose className='comment-close' onClick={closeMe} />
+        <input id={`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+        <button type='submit' onClick={() => postComment(post)} className="btn comment-btn">Submit</button>
+        <div className='comment-box'>
+          {myComments}
+        </div>
+
+      </div>
+    </>
+  )
 }
 
 export default Comments

@@ -1,10 +1,24 @@
+import { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import { TbArrowsMaximize } from "react-icons/tb";
 import { timeSince, toggleBody } from '../utils/utils.js';
 import Avatar from 'react-avatar';
 
 function PostDisplay({ post, reset, setReset }) {
+    const [ currentPic, setCurrentPic] = useState()
     const location = useLocation();
+
+    useEffect(() => { getUser() }, []);
+
+    const getUser = () => {
+        fetch(`http://127.0.0.1:8080/api/users${post.user_id}`)
+          .then(response => response.json())
+          .then(user => {
+            setCurrentPic(user.email)
+          })
+      }
+
+
     const handlePostDelete = (post) => {
         fetch(`http://127.0.0.1:8080/api/mythings/${post.id}`, {
             method: 'DELETE'
@@ -14,13 +28,14 @@ function PostDisplay({ post, reset, setReset }) {
             })
     };
 
+    
     let profileImage;
     const dateCreated = new Date(post.createdAt);
-    post.contact === "invalid"
+    currentPic === null
         ?
         profileImage = <Avatar color="blue" name={post.priority} round={true} size={150} textSizeRatio={2} maxInitials={2} />
         :
-        profileImage = <Avatar src={post.contact} className="rounded" size={150} />
+        profileImage = <Avatar src={currentPic} className="rounded" size={150} />
     return (
         <>
             <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, post)} />

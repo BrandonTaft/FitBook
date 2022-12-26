@@ -1,16 +1,28 @@
 const initialState = {
-    posts: [] 
+    posts: [],
+    mail: [],
+    users: []
 }
 
 const reducer = (state = initialState, action) => {
-    switch(action.type) {
-        case 'POSTS_LOADED': 
+    switch (action.type) {
+        case 'POSTS_LOADED':
             return {
-                ...state, 
+                ...state,
                 posts: action.payload
             }
-        default: 
-            return state 
+        case 'USERS_LOADED':
+            return {
+                ...state,
+                users: action.payload
+            }
+        case 'MAIL_LOADED':
+            return {
+                ...state,
+                mail: action.payload
+            }
+        default:
+            return state
     }
 }
 

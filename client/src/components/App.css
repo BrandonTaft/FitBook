@@ -271,8 +271,8 @@ svg {
   display: grid;
   grid-template-columns: auto;
   margin-top: 60px;
-  flex-grow: 1;
 }
+
 .grid-item {
   position: relative;
   background-color: var(--secondary-background);

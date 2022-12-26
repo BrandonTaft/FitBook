@@ -26,8 +26,8 @@ cloudinary.config({
 })
 
 require('dotenv').config();
-app.use(express.json({limit: 52428800}));
-app.use(express.urlencoded({ extended: true, limit: 52428800}));
+app.use(express.json({ limit: 52428800 }));
+app.use(express.urlencoded({ extended: true, limit: 52428800 }));
 /******************* CHAT *******************/
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 io.on("connection", (socket) => {
@@ -106,9 +106,9 @@ app.post('/api/register', async (req, res) => {
     const bio = req.body.bio
     const persistedUser = await models.Users.findOne({
         where: sequelize.where(
-            sequelize.fn('lower', sequelize.col('name')), 
+            sequelize.fn('lower', sequelize.col('name')),
             sequelize.fn('lower', name)
-          )
+        )
     })
     console.log(persistedUser)
     if (persistedUser == null) {
@@ -141,14 +141,20 @@ app.post('/api/login', async (req, res) => {
     const password = req.body.password
     let user = await models.Users.findOne({
         where: sequelize.where(
-            sequelize.fn('lower', sequelize.col('name')), 
+            sequelize.fn('lower', sequelize.col('name')),
             sequelize.fn('lower', name)
-          )
+        )
     })
     if (user != null) {
         bcrypt.compare(password, user.password, (error, result) => {
             if (result) {
-                const token = jwt.sign({ name: name }, "SECRETKEY")
+                models.Users.update(
+                    {
+                        bio: 'true',
+                    },
+                    { where: { id: user.id } }
+                )
+                const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 res.json({ success: true, token: token, user: user })
             } else {
                 res.json({ success: false, message: 'Not Authenticated' })
@@ -158,6 +164,46 @@ app.post('/api/login', async (req, res) => {
         res.json({ message: "Username Incorrect" })
     }
 })
+
+
+//*********************** LOGOUT **********************//
+app.put('/api/logout', (req, res) => {
+    // const id = parseInt(req.params.id)
+    let headers = req.headers['authorization']
+    if (headers) {
+        try {
+            const token = headers.split(' ')[1]
+            const decoded = jwt.verify(token, "SECRETKEY")
+            if (decoded) {
+                const id = decoded.id
+                const authUser = models.Users.findOne({
+                    where: {
+                        id: id,
+                    }
+                })
+                if (authUser) {
+                        models.Users.update(
+                            {
+                                bio: 'false',
+                            },
+                            { where: { id: id } }
+                        )    
+                } else {
+                    res.json({ error: 'Unable to authenticate' })
+                    res.redirect('/')
+                }
+            } else {
+                res.json({ error: 'Unable to authenticate' })
+                res.redirect('/')
+            }
+
+        } catch { res.json({ success: false, message: 'Not Authenticated' }) }
+    } else {
+        res.json({ error: 'Required headers are missing...' })
+        res.redirect('/')
+    }
+})
+
 
 //***************************ADD PROFILE PIC***************************//
 app.put('/api/add-image', async (req, res) => {
@@ -172,12 +218,12 @@ app.put('/api/add-image', async (req, res) => {
                 invalidate: true,
                 notification_url: "https://127.0.0.1:3000/upload-image"
             }
-        )      
+        )
         let secureURL = uploadResponse.secure_url
         res.json({ success: true, url: secureURL })
     } catch (error) {
         res.json({ message: error })
-    }   
+    }
 })
 
 //***************************GET PROFILE PIC***************************//
@@ -203,7 +249,7 @@ app.get('/api/users:id', (req, res) => {
 })
 
 //***************************GET ALL USERS***************************//
-app.get('/api/users', (req, res) => {
+app.get('/api/users', authenticate, (req, res) => {
     models.Users.findAll({})
         .then(users => {
             res.json(users)

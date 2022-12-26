@@ -1,3 +1,4 @@
+import Users from "../../components/Users"
 import history from "../History"
 
 export const fetchPublicPosts = () => {
@@ -42,7 +43,7 @@ export const fetchMyPosts = () => {
   }
 }
 
-export const fetchMyMail = () => {
+export const fetchMail = () => {
   return (dispatch) => {
     const name = localStorage.getItem('name')
     const token = localStorage.getItem('jsonwebtoken')
@@ -54,12 +55,23 @@ export const fetchMyMail = () => {
     })
       .then(response => response.json())
       .then(mail => {
-        console.log(mail,"mail")
-        if (mail.success === false) {
-          history.push('/')
-        } else {
           dispatch({ type: 'MAIL_LOADED', payload: mail })
-        }
+      })
+  }
+}
+
+export const fetchAllUsers = () => {
+  return (dispatch) => {
+    const token = localStorage.getItem('jsonwebtoken')
+    fetch('http://127.0.0.1:8080/api/users', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(users => {
+          dispatch({ type: 'USERS_LOADED', payload: users })
       })
   }
 }

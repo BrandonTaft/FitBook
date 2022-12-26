@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
+import * as actionCreators from '../store/creators/actionCreators';
 import Chat from './Chat/Chat';
 import SendMessage from './SendMessage';
 import { sendMailPopup } from '../utils/utils';
@@ -8,17 +10,21 @@ import "./App.css"
 
 
 function Messages(props) {
-  const [message, setMessage] = useState([])
-  useEffect(() => { getMessages() }, [])
+  // const [message, setMessage] = useState([])
+  // useEffect(() => { getMessages() }, [])
 
-  const getMessages = () => {
-    const name = localStorage.getItem('name')
-    fetch(`http://127.0.0.1:8080/api/getmail/${name}`)
-      .then(response => response.json())
-      .then(message => {
-        setMessage(message)
-      })
-  }
+  // const getMessages = () => {
+  //   const name = localStorage.getItem('name')
+  //   fetch(`http://127.0.0.1:8080/api/getmail/${name}`)
+  //     .then(response => response.json())
+  //     .then(message => {
+  //       setMessage(message)
+  //     })
+  // }
+
+  useEffect(() => {
+    props.onMailLoaded()
+  }, []);
 
   const handleMessageDelete = (mail) => {
     fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
@@ -30,7 +36,7 @@ function Messages(props) {
       })
   }
 
-  const messageItems = message.map(mail => {
+  const messageItems = props.mail.map(mail => {
     return <div key={mail.id} >
       <div className="yellow comment-image">
         <span className="spare">{mail.contact}</span>
@@ -55,6 +61,21 @@ function Messages(props) {
   )
 
 }
-export default Messages;
+// export default Messages;
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onMailLoaded: () => dispatch(actionCreators.fetchMail())
+  }
+}
+
+const mapStateToProps = (state) => {
+  return {
+    mail: state.mail
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages)
 
 

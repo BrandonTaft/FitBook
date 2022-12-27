@@ -4,22 +4,14 @@
 module.exports = {
   up(queryInterface, Sequelize) {
     return Promise.all([
-      queryInterface.addColumn(
-        'Comments', // table name
-        'pic', // new field name
-        {
-          type: Sequelize.STRING,
-          allowNull: true,
-        },
-        
-      )
+      queryInterface.renameColumn('Users', 'bio', 'isLoggedIn'  )
     ]);
   },
 
   down(queryInterface, Sequelize) {
     // logic for reverting the changes
     return Promise.all([
-      queryInterface.removeColumn('Comments', 'pic')
+      queryInterface.renameColumn('Users', 'isLoggedIn', 'bio')
     ]);
   },
 };

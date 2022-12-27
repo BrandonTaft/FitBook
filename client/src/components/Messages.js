@@ -1,27 +1,16 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
+import Users from './Users';
 import Chat from './Chat/Chat';
 import SendMessage from './SendMessage';
 import { sendMailPopup } from '../utils/utils';
 import { RiMailAddLine } from "react-icons/ri";
 import { MdClose } from "react-icons/md";
-import "./App.css"
+import "./App.css";
 
 
 function Messages(props) {
-  // const [message, setMessage] = useState([])
-  // useEffect(() => { getMessages() }, [])
-
-  // const getMessages = () => {
-  //   const name = localStorage.getItem('name')
-  //   fetch(`http://127.0.0.1:8080/api/getmail/${name}`)
-  //     .then(response => response.json())
-  //     .then(message => {
-  //       setMessage(message)
-  //     })
-  // }
-
   useEffect(() => {
     props.onMailLoaded()
   }, []);
@@ -48,6 +37,8 @@ function Messages(props) {
   })
 
   return (
+    <>
+    <Users />
     <div className='messages'>
       < RiMailAddLine className='mail-icon highlight' onClick={ sendMailPopup }/>
       <div id="mail-form" className='mail-form'>
@@ -57,7 +48,7 @@ function Messages(props) {
       {messageItems}
       <Chat />
     </div>
-
+    </>
   )
 
 }

@@ -4,7 +4,8 @@
     "password": "NUQM1ustGp01iey7aPzcvvAjDUF8Zd4Y",
     "database": "zhimrqrm",
     "host": "raja.db.elephantsql.com",
-    "dialect": "postgres"
+    "dialect": "postgres",
+    "logging": false
   },
   "test": {
     "username": "root",

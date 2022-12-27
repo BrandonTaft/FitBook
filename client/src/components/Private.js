@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useHistory } from "react-router-dom";
 import Avatar from 'react-avatar';
 import UploadImage from './UploadImage';
 import { MyCard } from './Cards';
@@ -7,12 +8,14 @@ import logo from "../assets/logo-aqua.png";
 import { addImagePopup } from '../utils/utils';
 
 function Private() {
+  const history = useHistory();
   const [myPosts, setMyPosts] = useState([]);
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
   const name = localStorage.getItem('name');
   const title = localStorage.getItem('title');
   const profilePic = localStorage.getItem('profile_pic');
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     getUser()
@@ -21,6 +24,22 @@ function Private() {
 
   const getUser = () => {
     profilePic !== 'invalid' ? setPic(true) : setPic(false)
+  }
+
+  const deleteProfile = () => {
+    fetch('http://127.0.0.1:8080/api/delete-profile', {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }) .then(response => response.json())
+    .then(result => {
+      if (result) {
+          history.push('/logout')
+      }else{
+        history.push('/feed')
+      }
+      })
   }
 
   function fetchMyPosts() {
@@ -49,6 +68,7 @@ function Private() {
         <UploadImage reset={reset} setReset={setReset} />
       </div>
       <div className='profile-container'>
+        <span className='highlight' onClick={deleteProfile}>DELETE PROFILE</span>
         <div>
           <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
         </div>

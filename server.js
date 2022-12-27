@@ -28,6 +28,373 @@ cloudinary.config({
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: true, limit: 52428800 }));
+
+//***************************REGISTRATION PAGE***************************//
+
+app.post('/api/register', async (req, res) => {
+    const name = req.body.name
+    const password = req.body.password
+    const title = req.body.title
+    const persistedUser = await models.Users.findOne({
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')),
+            sequelize.fn('lower', name)
+        )
+    })
+    console.log(persistedUser)
+    if (persistedUser == null) {
+        bcrypt.hash(password, salt, async (error, hash) => {
+            if (error) {
+                res.json({ message: "Something Went Wrong!!!" })
+            } else {
+                const user = models.Users.build({
+                    name: name,
+                    password: hash,
+                    title: title,
+                    isLoggedIn: false,
+                })
+
+                let savedUser = await user.save()
+                if (savedUser != null) {
+                    res.json({ success: true })
+                }
+            }
+        })
+    } else {
+        res.json({ message: " Sorry This UserName Already Exists" })
+    }
+})
+
+//***************************LOGIN PAGE***************************//
+
+app.post('/api/login', async (req, res) => {
+    const name = req.body.name
+    const password = req.body.password
+    let user = await models.Users.findOne({
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')),
+            sequelize.fn('lower', name)
+        )
+    })
+    if (user != null) {
+        bcrypt.compare(password, user.password, (error, result) => {
+            if (result) {
+                models.Users.update(
+                    { isLoggedIn: true },
+                    { where: { id: user.id } }
+                )
+                const token = jwt.sign({ id: user.id }, "SECRETKEY")
+                res.json({ success: true, token: token, user: user })
+            } else {
+                res.json({ success: false, message: 'Not Authenticated' })
+            }
+        })
+    } else {
+        res.json({ message: "Username Incorrect" })
+    }
+})
+
+//***************************GET CURRENT USERS***************************//
+app.get('/api/current-users', authenticate, (req, res) => {
+    models.Users.findAll({
+        where: {
+            isLoggedIn : "true"
+        }
+    })
+        .then(users => {
+            res.json(users)
+        })
+})
+
+
+//*********************** LOGOUT **********************//
+app.put('/api/logout', (req, res) => {
+    // const id = parseInt(req.params.id)
+    let headers = req.headers['authorization']
+    if (headers) {
+        try {
+            const token = headers.split(' ')[1]
+            const decoded = jwt.verify(token, "SECRETKEY")
+            if (decoded) {
+                const id = decoded.id
+                const authUser = models.Users.findOne({
+                    where: {
+                        id: id,
+                    }
+                })
+                if (authUser) {
+                    models.Users.update(
+                        { isLoggedIn: false },
+                        { where: { id: id } }
+                    )
+                } else {
+                    res.json({ error: 'Unable to authenticate' })
+                    res.redirect('/')
+                }
+            } else {
+                res.json({ error: 'Unable to authenticate' })
+                res.redirect('/')
+            }
+
+        } catch { res.json({ success: false, message: 'Not Authenticated' }) }
+    } else {
+        res.json({ error: 'Required headers are missing...' })
+        res.redirect('/')
+    }
+})
+
+//***************************DELETE USER***************************//
+app.delete('/api/delete-profile', (req, res) => {
+    let headers = req.headers['authorization']
+    if (headers) {
+            const token = headers.split(' ')[1]
+            const decoded = jwt.verify(token, "SECRETKEY")
+            if (decoded) {
+                const id = decoded.id
+                models.Users.destroy({
+                    where: {
+                        id: id
+                    }
+                }).then(_ => {
+                    res.json({ message: "THEY GONE" })
+                })
+                }
+            }else {
+                res.json({ error: 'Required headers are missing...' })
+                res.redirect('/')
+            }
+})
+
+
+//***************************ADD PROFILE PIC***************************//
+app.put('/api/add-image', async (req, res) => {
+    try {
+        const fileStr = req.body.data
+        const id = req.body.userId
+        const uploadResponse = await cloudinary.uploader.upload(fileStr,
+            {
+                resource_type: "image",
+                public_id: id,
+                overwrite: true,
+                invalidate: true,
+                notification_url: "https://127.0.0.1:3000/upload-image"
+            }
+        )
+        let secureURL = uploadResponse.secure_url
+        res.json({ success: true, url: secureURL })
+    } catch (error) {
+        res.json({ message: error })
+    }
+})
+
+//***************************GET PROFILE PIC***************************//
+app.get('/api/get-image/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    cloudinary.search
+        .expression(`public_id =${id}`)
+        .execute()
+        .then(result => res.json(result));
+})
+
+//***************************GET A USER***************************//
+app.get('/api/users:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    models.Users.findOne({
+        where: {
+            id: id
+        }
+    })
+        .then(users => {
+            res.json(users)
+        })
+})
+
+
+//***********************UPDATE USER IMAGE**********************//
+app.put('/api/update-user/:userId/:url', (req, res) => {
+    const id = parseInt(req.params.userId)
+    const url = req.params.url
+    models.Users.update(
+        {
+            isLoggedIn: 'true',
+            email: url
+        },
+        { where: { id: id } }
+    )
+})
+
+//***************************ADD COMMENTS TO DATABASE***************************//
+app.post('/api/addcomment:thingId', (req, res) => {
+    const thingId = parseInt(req.params.thingId)
+    const comment = req.body.comment
+    const userId = req.body.userId
+    const spare = req.body.spare
+    const pic = req.body.pic
+    const comments = models.Comments.build({
+        comment: comment,
+        userId: userId,
+        spare: spare,
+        postId: thingId,
+        pic: pic,
+    })
+    comments.save()
+        .then(savedComment => {
+            res.json({ success: true })
+        })
+})
+
+//***************************SHOW ALL COMMENTS***************************//
+//Retrieve All Comments From DataBase
+app.get('/api/comments', (req, res) => {
+    models.Comments.findAll({
+        order: [
+            ['createdAt', 'DESC']
+        ],
+    })
+        .then(comments => {
+            res.json(comments)
+        })
+})
+
+//**************************DELETE COMMENTS***************************//
+app.delete('/api/comments/:commentId', (req, res) => {
+    const commentId = parseInt(req.params.commentId)
+    models.Comments.destroy({
+        where: {
+            id: commentId
+        }
+    }).then(_ => {
+        res.json({ deleted: true })
+    })
+})
+
+//***********************UPDATE LIKES**********************//
+app.put('/api/update/:id', (req, res) => {
+    const id = parseInt(req.params.id)
+    models.Things.increment('score', { by: 1, where: { id: id } });
+})
+
+//**************************SHOW ALL POSTS**************************//
+//Retrieve All From DataBase
+app.get('/api/things', authenticate, (req, res) => {
+    models.Things.findAll({
+        order: [
+            ['id', 'DESC']
+        ],
+    })
+        .then(things => {
+            res.json(things)
+        })
+})
+
+//**********Retrieve All From DataBase With Specific user_Id***********//
+app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
+    const user_Id = parseInt(req.params.user_Id)
+    models.Things.findAll({
+        where: {
+            user_id: user_Id
+        },
+    })
+        .then(things => {
+            res.json(things)
+        })
+})
+
+//*****************ADD POSTS TO DATABASE********************//
+app.post('/api/addpost', (req, res) => {
+    const name = req.body.name
+    const description = req.body.description
+    const priority = req.body.priority
+    const link = req.body.link
+    const contact = req.body.contact
+    const user_id = req.body.userId
+    const title = req.body.title
+    const thing = models.Things.build({
+        name: name,
+        link: link,
+        contact: contact,
+        description: description,
+        priority: priority,
+        score: 0,
+        user_id: user_id,
+        contactNumber: title
+    })
+    thing.save()
+        .then(savedThing => {
+            res.json({ success: true, thingId: savedThing.id, user_ID: savedThing.user_id })
+        })
+})
+
+//***************************DELETE POST FROM DATABASE***************************//
+app.delete('/api/mythings/:thingId', (req, res) => {
+    const thingId = parseInt(req.params.thingId)
+    models.Things.destroy({
+        where: {
+            id: thingId
+        }
+    }).then(_ => {
+        res.json({ message: "IT GONE" })
+    })
+})
+
+//***************************GET MAIL***************************//
+app.get('/api/getmail/:name', authenticate, (req, res) => {
+    const userName = (req.params.name)
+    models.Mail.findAll({
+        where: {
+            priority: userName
+        }
+    })
+        .then(mail => {
+            res.json(mail)
+        })
+})
+//***************************ADD TO MAIL DATABASE***************************//
+
+app.post('/api/addmail', (req, res) => {
+    const name = req.body.name
+    const duedate = req.body.duedate
+    const description = req.body.description
+    const priority = req.body.priority
+    const link = req.body.link
+    const contact = req.body.contact
+    const contactNumber = req.body.contactNumber
+    const user_id = req.body.userId
+
+    const mail = models.Mail.build({
+        name: name,
+        duedate: duedate,
+        description: description,
+        priority: priority,
+        link: link,
+        contact: contact,
+        contactNumber: contactNumber,
+        user_id: user_id
+    })
+
+    mail.save()
+        .then(savedThing => {
+            res.json({ success: true })
+        })
+})
+
+//***************************DELETE Mail FROM DATABASE***************************//
+
+app.delete('/api/deletemail/:mailId', (req, res) => {
+
+    const mailId = parseInt(req.params.mailId)
+
+    models.Mail.destroy({
+        where: {
+            id: mailId
+        }
+
+    }).then(_ => {
+        res.json({ message: "IT GONE" })
+    })
+
+})
+
 /******************* CHAT *******************/
 const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
 io.on("connection", (socket) => {
@@ -97,361 +464,6 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
     })
 })
 
-//***************************REGISTRATION PAGE***************************//
-
-app.post('/api/register', async (req, res) => {
-    const name = req.body.name
-    const password = req.body.password
-    const title = req.body.title
-    const bio = req.body.bio
-    const persistedUser = await models.Users.findOne({
-        where: sequelize.where(
-            sequelize.fn('lower', sequelize.col('name')),
-            sequelize.fn('lower', name)
-        )
-    })
-    console.log(persistedUser)
-    if (persistedUser == null) {
-        bcrypt.hash(password, salt, async (error, hash) => {
-            if (error) {
-                res.json({ message: "Something Went Wrong!!!" })
-            } else {
-                const user = models.Users.build({
-                    name: name,
-                    password: hash,
-                    title: title,
-                    bio: bio,
-                })
-
-                let savedUser = await user.save()
-                if (savedUser != null) {
-                    res.json({ success: true })
-                }
-            }
-        })
-    } else {
-        res.json({ message: " Sorry This UserName Already Exists" })
-    }
-})
-
-//***************************LOGIN PAGE***************************//
-
-app.post('/api/login', async (req, res) => {
-    const name = req.body.name
-    const password = req.body.password
-    let user = await models.Users.findOne({
-        where: sequelize.where(
-            sequelize.fn('lower', sequelize.col('name')),
-            sequelize.fn('lower', name)
-        )
-    })
-    if (user != null) {
-        bcrypt.compare(password, user.password, (error, result) => {
-            if (result) {
-                models.Users.update(
-                    {
-                        bio: 'true',
-                    },
-                    { where: { id: user.id } }
-                )
-                const token = jwt.sign({ id: user.id }, "SECRETKEY")
-                res.json({ success: true, token: token, user: user })
-            } else {
-                res.json({ success: false, message: 'Not Authenticated' })
-            }
-        })
-    } else {
-        res.json({ message: "Username Incorrect" })
-    }
-})
-
-
-//*********************** LOGOUT **********************//
-app.put('/api/logout', (req, res) => {
-    // const id = parseInt(req.params.id)
-    let headers = req.headers['authorization']
-    if (headers) {
-        try {
-            const token = headers.split(' ')[1]
-            const decoded = jwt.verify(token, "SECRETKEY")
-            if (decoded) {
-                const id = decoded.id
-                const authUser = models.Users.findOne({
-                    where: {
-                        id: id,
-                    }
-                })
-                if (authUser) {
-                        models.Users.update(
-                            {
-                                bio: 'false',
-                            },
-                            { where: { id: id } }
-                        )    
-                } else {
-                    res.json({ error: 'Unable to authenticate' })
-                    res.redirect('/')
-                }
-            } else {
-                res.json({ error: 'Unable to authenticate' })
-                res.redirect('/')
-            }
-
-        } catch { res.json({ success: false, message: 'Not Authenticated' }) }
-    } else {
-        res.json({ error: 'Required headers are missing...' })
-        res.redirect('/')
-    }
-})
-
-
-//***************************ADD PROFILE PIC***************************//
-app.put('/api/add-image', async (req, res) => {
-    try {
-        const fileStr = req.body.data
-        const id = req.body.userId
-        const uploadResponse = await cloudinary.uploader.upload(fileStr,
-            {
-                resource_type: "image",
-                public_id: id,
-                overwrite: true,
-                invalidate: true,
-                notification_url: "https://127.0.0.1:3000/upload-image"
-            }
-        )
-        let secureURL = uploadResponse.secure_url
-        res.json({ success: true, url: secureURL })
-    } catch (error) {
-        res.json({ message: error })
-    }
-})
-
-//***************************GET PROFILE PIC***************************//
-app.get('/api/get-image/:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    cloudinary.search
-        .expression(`public_id =${id}`)
-        .execute()
-        .then(result => res.json(result));
-})
-
-//***************************GET A USER***************************//
-app.get('/api/users:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    models.Users.findOne({
-        where: {
-            id: id
-        }
-    })
-        .then(users => {
-            res.json(users)
-        })
-})
-
-//***************************GET ALL USERS***************************//
-app.get('/api/users', authenticate, (req, res) => {
-    models.Users.findAll({})
-        .then(users => {
-            res.json(users)
-        })
-})
-
-//***********************UPDATE USER IMAGE**********************//
-app.put('/api/update-user/:userId/:url', (req, res) => {
-    const id = parseInt(req.params.userId)
-    const url = req.params.url
-    models.Users.update(
-        {
-            bio: 'true',
-            email: url
-        },
-        { where: { id: id } }
-    )
-})
-
-//***************************ADD COMMENTS TO DATABASE***************************//
-app.post('/api/addcomment:thingId', (req, res) => {
-    const thingId = parseInt(req.params.thingId)
-    const comment = req.body.comment
-    const userId = req.body.userId
-    const spare = req.body.spare
-    const pic = req.body.pic
-    const comments = models.Comments.build({
-        comment: comment,
-        userId: userId,
-        spare: spare,
-        postId: thingId,
-        pic: pic,
-    })
-    comments.save()
-        .then(savedComment => {
-            res.json({ success: true })
-        })
-})
-
-//***************************SHOW ALL COMMENTS***************************//
-//Retrieve All Comments From DataBase
-app.get('/api/comments', (req, res) => {
-    models.Comments.findAll({
-        order: [
-            ['createdAt', 'DESC']
-        ],
-    })
-        .then(comments => {
-            res.json(comments)
-        })
-})
-
-//**************************DELETE COMMENTS***************************//
-app.delete('/api/comments/:commentId', (req, res) => {
-    const commentId = parseInt(req.params.commentId)
-    models.Comments.destroy({
-        where: {
-            id: commentId
-        }
-    }).then(_ => {
-        res.json({ deleted: true })
-    })
-})
-
-//***********************UPDATE LIKES**********************//
-app.put('/api/update/:id', (req, res) => {
-    const id = parseInt(req.params.id)
-    models.Things.increment('score', { by: 1, where: { id: id } });
-})
-
-//**************************SHOW ALL POSTS**************************//
-//Retrieve All From DataBase
-app.get('/api/things', async (req, res) => {
-    await models.Things.findAll({
-        order: [
-            ['id', 'DESC']
-        ],
-    })
-        .then(things => {
-            res.json(things)
-        })
-})
-
-//**********Retrieve All From DataBase With Specific user_Id***********//
-app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
-    const user_Id = parseInt(req.params.user_Id)
-    models.Things.findAll({
-        where: {
-            user_id: user_Id
-        },
-    })
-        .then(things => {
-            res.json(things)
-        })
-})
-
-//*****************ADD POSTS TO DATABASE********************//
-app.post('/api/addpost', (req, res) => {
-    const name = req.body.name
-    const description = req.body.description
-    const priority = req.body.priority
-    const link = req.body.link
-    const contact = req.body.contact
-    const user_id = req.body.userId
-    const title = req.body.title
-    const thing = models.Things.build({
-        name: name,
-        link: link,
-        contact: contact,
-        description: description,
-        priority: priority,
-        score: 0,
-        user_id: user_id,
-        contactNumber: title
-    })
-    thing.save()
-        .then(savedThing => {
-            res.json({ success: true, thingId: savedThing.id, user_ID: savedThing.user_id })
-        })
-})
-
-//***************************DELETE POST FROM DATABASE***************************//
-app.delete('/api/mythings/:thingId', (req, res) => {
-    const thingId = parseInt(req.params.thingId)
-    models.Things.destroy({
-        where: {
-            id: thingId
-        }
-    }).then(_ => {
-        res.json({ message: "IT GONE" })
-    })
-})
-
-//***************************GET MAIL***************************//
-app.get('/api/getmail/:name', (req, res) => {
-    const userName = (req.params.name)
-    models.Mail.findAll({
-        where: {
-            priority: userName
-        }
-    })
-        .then(mail => {
-            res.json(mail)
-        })
-})
-//***************************ADD TO MAIL DATABASE***************************//
-
-app.post('/api/addmail', (req, res) => {
-    const name = req.body.name
-    const duedate = req.body.duedate
-    const description = req.body.description
-    const priority = req.body.priority
-    const link = req.body.link
-    const contact = req.body.contact
-    const contactNumber = req.body.contactNumber
-    const user_id = req.body.userId
-
-    const mail = models.Mail.build({
-        name: name,
-        duedate: duedate,
-        description: description,
-        priority: priority,
-        link: link,
-        contact: contact,
-        contactNumber: contactNumber,
-        user_id: user_id
-    })
-
-    mail.save()
-        .then(savedThing => {
-            res.json({ success: true })
-        })
-})
-
-//***************************DELETE Mail FROM DATABASE***************************//
-
-app.delete('/api/deletemail/:mailId', (req, res) => {
-
-    const mailId = parseInt(req.params.mailId)
-
-    models.Mail.destroy({
-        where: {
-            id: mailId
-        }
-
-    }).then(_ => {
-        res.json({ message: "IT GONE" })
-    })
-
-})
-
-//***************************DELETE USER***************************//
-app.delete('/api/user/:userId', (req, res) => {
-    const userId = parseInt(req.params.userId)
-    models.Users.destroy({
-        where: {
-            id: userId
-        }
-    }).then(_ => {
-        res.json({ message: "THEY GONE" })
-    })
-})
 
 //***************************PUBLIC HOME PAGE (SHOW ALL PUBLIC THINGS)***************************//
 

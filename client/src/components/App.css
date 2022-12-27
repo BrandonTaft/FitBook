@@ -259,6 +259,24 @@ svg {
   min-height: 1.5em;
 }
 
+/*******************CURRENT USERS*******************/
+
+.current-users {
+  display: flex;
+  margin-top: 60px;
+  overflow-x: auto;
+  padding: 20px 0px;
+}
+
+.current-user {
+  text-align: center;
+}
+
+.current-user img {
+  height: 80px !important;
+  width: 80px !important;
+}
+
 /*******************PUBLIC FEED********************* */
 
 .feed-logo {

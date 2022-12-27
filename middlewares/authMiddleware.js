@@ -11,7 +11,6 @@ function authenticate(req, res, next) {
         try {
             const token = headers.split(' ')[1]
             const decoded = jwt.verify(token, "SECRETKEY")
-            console.log("HEADERS", headers, "decoded", decoded)
             if (decoded) {
                 const id = decoded.id
                 const authUser = models.Users.findOne({
@@ -20,9 +19,9 @@ function authenticate(req, res, next) {
                     }
                 })
                 if (authUser) {
-                    next() // continue with the original request 
+                    console.log("Authentication Ran")
+                    next() 
                 } else {
-
                     res.json({ error: 'Unable to authenticate' })
                     res.redirect('/')
                 }
@@ -30,13 +29,11 @@ function authenticate(req, res, next) {
                 res.json({ error: 'Unable to authenticate' })
                 res.redirect('/')
             }
-
         } catch { res.json({ success: false, message: 'Not Authenticated' }) }
     } else {
         res.json({ error: 'Required headers are missing...' })
         res.redirect('/')
     }
-
 }
 
 module.exports = authenticate

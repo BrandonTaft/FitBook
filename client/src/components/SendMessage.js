@@ -36,8 +36,7 @@ function SendMessage(props) {
     }
 
     return (
-        <div>
-            
+        <div id="user-card" className='dm-popup hide-dm-popup'>
             <h1>Send Message</h1>
             <input className="textbox" type="text" name="priority" onChange={handleSendMessage} placeholder="Send Mail To:" /><br></br>
             <input className="textbox" type="text" name="name" onChange={handleSendMessage} placeholder="Title" /><br></br>

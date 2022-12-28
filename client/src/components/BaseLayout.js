@@ -1,8 +1,8 @@
 import useLocalStorage from 'use-local-storage';
 import { useLocation } from "react-router-dom";
-import { BsFillMoonStarsFill, BsFillSunFill } from 'react-icons/bs';
 import Navbar from './Navbar';
 import Footer from './Footer';
+import Users from './Users';
 
 
 function BaseLayout(props) {
@@ -18,7 +18,10 @@ function BaseLayout(props) {
       {location.pathname === '/' || location.pathname === '/register' ?
         ""
         :
-        <Navbar theme={theme} switchTheme={switchTheme} />
+        <>
+          <Navbar theme={theme} switchTheme={switchTheme} />
+          <Users />
+        </>
       }
       {props.children}
       {location.pathname === '/' || location.pathname === '/register' ?

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
-import Users from './Users';
 import Chat from './Chat/Chat';
 import SendMessage from './SendMessage';
 import { sendMailPopup } from '../utils/utils';
@@ -37,8 +36,6 @@ function Messages(props) {
   })
 
   return (
-    <>
-    <Users />
     <div className='messages'>
       < RiMailAddLine className='mail-icon highlight' onClick={ sendMailPopup }/>
       <div id="mail-form" className='mail-form'>
@@ -48,7 +45,6 @@ function Messages(props) {
       {messageItems}
       <Chat />
     </div>
-    </>
   )
 
 }

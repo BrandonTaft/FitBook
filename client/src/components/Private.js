@@ -99,9 +99,12 @@ function Private() {
           <h1 className='highlight mb-0'>
             {name}
           </h1>
-          <h3 className='text-secondary mt-0'>
-            {title}
-          </h3>
+          { title === "null"
+            ?
+            <h3 className='text-secondary mt-0'></h3>
+            :
+             <h3 className='text-secondary mt-0'> {title} </h3>
+          }
           <label className='text-secondary'>
             POSTS
           </label>

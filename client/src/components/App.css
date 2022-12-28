@@ -269,12 +269,36 @@ svg {
 }
 
 .current-user {
+  width: 80px;
   text-align: center;
+  margin: 5px;
 }
 
 .current-user img {
   height: 80px !important;
   width: 80px !important;
+}
+
+.current-user-name {
+  width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.dm-popup {
+  position: fixed;
+    background-color: #000000c2;
+    z-index: 2;
+    top: 25%;
+    width: 100%;
+    padding: 30px 0px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.hide-dm-popup {
+  display: none;
 }
 
 /*******************PUBLIC FEED********************* */
@@ -288,7 +312,6 @@ svg {
 .grid-container {
   display: grid;
   grid-template-columns: auto;
-  margin-top: 60px;
 }
 
 .grid-item {

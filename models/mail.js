@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
   Mail.init({
     name: DataTypes.STRING,
     duedate: DataTypes.DATE,
-    description: DataTypes.TEXT,
+    message: DataTypes.TEXT,
     sendTo: DataTypes.STRING,
     link: DataTypes.STRING,
     sender: DataTypes.STRING,

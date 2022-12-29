@@ -292,18 +292,36 @@ svg {
 
 .dm-popup {
   position: fixed;
-    background-color: #000000c2;
-    z-index: 2;
-    top: 25%;
-    width: 100%;
-    padding: 30px 0px;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+  background-color: #27043c;
+  z-index: 2;
+  top: 25%;
+  border: var(--highlight-text) 1px solid;
+  border-radius: 10px;
+  width: 350px;
+  height: 250px;
+  top: 50%;
+  left: 50%;
+  margin-top: -125px; /* Negative half of height. */
+  margin-left: -175px; /* Negative half of width. */
+  padding: 30px 0px;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .hide-dm-popup {
   display: none;
+}
+
+@media only screen and (min-width: 768px) {
+.dm-popup {
+  width: 600px;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  margin-top: -150px; /* Negative half of height. */
+  margin-left: -300px; /* Negative half of width. */
+  }
 }
 
 /*******************PUBLIC FEED********************* */

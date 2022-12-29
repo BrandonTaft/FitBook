@@ -355,7 +355,7 @@ app.get('/api/getmail/:name', authenticate, (req, res) => {
 app.post('/api/addmail', (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
-    const description = req.body.description
+    const message = req.body.message
     const sendTo = req.body.sendTo
     const link = req.body.link
     const sender = req.body.sender
@@ -365,7 +365,7 @@ app.post('/api/addmail', (req, res) => {
     const mail = models.Mail.build({
         name: name,
         duedate: duedate,
-        description: description,
+        message: message,
         sendTo: sendTo,
         link: link,
         sender: sender,

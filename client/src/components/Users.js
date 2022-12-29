@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Avatar from 'react-avatar';
-import SendMessage from './SendMessage';
+import { SendAutoMessage } from './SendMessage';
 
 function Users(props) {
   const [showDmPopup, setShowDmPopup] = useState(false);
@@ -33,7 +33,7 @@ function Users(props) {
 
   return (
     <div className="current-users">
-       {showDmPopup ? <SendMessage sendTo={sendTo} setShowDmPopup={setShowDmPopup}/> : ""}
+       {showDmPopup ? <SendAutoMessage sendTo={sendTo} setShowDmPopup={setShowDmPopup}/> : ""}
       {allUsers}
     </div>
   )

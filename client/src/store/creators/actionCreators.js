@@ -1,4 +1,3 @@
-import Users from "../../components/Users"
 import history from "../History"
 
 export const fetchPublicPosts = () => {

@@ -208,6 +208,11 @@ svg {
   z-index: 2;
 }
 
+.ellipses {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 /******************* LOGIN / REGISTER *******************/
 
 .full-page {

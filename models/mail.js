@@ -17,9 +17,9 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     duedate: DataTypes.DATE,
     description: DataTypes.TEXT,
-    priority: DataTypes.STRING,
+    sendTo: DataTypes.STRING,
     link: DataTypes.STRING,
-    contact: DataTypes.STRING,
+    sender: DataTypes.STRING,
     contactNumber: DataTypes.BIGINT,
     publicUser_Id: DataTypes.INTEGER,
     

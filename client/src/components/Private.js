@@ -96,7 +96,7 @@ function Private() {
               Edit
             </span>
           </div>
-          <h1 className='highlight mb-0'>
+          <h1 className='highlight mb-0 ellipses'>
             {name}
           </h1>
           { title === "null"

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-
+import { MdClose } from "react-icons/md";
 import "./App.css"
 
 
 
-function SendMessage(props) {
+function SendMessage({sendTo, setShowDmPopup}) {
 
     const [message, setMessage] = useState({})
 
@@ -12,7 +12,8 @@ function SendMessage(props) {
         setMessage({
 
             ...message,
-            contact: (localStorage.getItem('name')),
+            sendTo: sendTo.name,
+            sender: (localStorage.getItem('name')),
             [e.target.name]: e.target.value
 
         })
@@ -30,15 +31,20 @@ function SendMessage(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    props.history.push('/Messages')
+                    setShowDmPopup(false)
                 }
             })
     }
 
     return (
-        <div id="user-card" className='dm-popup hide-dm-popup'>
-            <h1>Send Message</h1>
-            <input className="textbox" type="text" name="priority" onChange={handleSendMessage} placeholder="Send Mail To:" /><br></br>
+        <div className='dm-popup'>
+            <MdClose className='comment-close' onClick={() => {setShowDmPopup(false)}} />
+            {sendTo
+                ?
+            <h1>Send Message to {sendTo.name}</h1>
+                :
+                ""
+            }
             <input className="textbox" type="text" name="name" onChange={handleSendMessage} placeholder="Title" /><br></br>
             <input className="textbox" type="url" name="link" onChange={handleSendMessage} placeholder="Link" /><br></br>
             <input className="textbox" type="tel" name="contactNumber" onChange={handleSendMessage} placeholder="Contact Number" /><br></br>

@@ -14,6 +14,7 @@ function Messages(props) {
     props.onMailLoaded()
   }, []);
 
+  
   const handleMessageDelete = (mail) => {
     fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
       method: 'DELETE'
@@ -27,7 +28,7 @@ function Messages(props) {
   const messageItems = props.mail.map(mail => {
     return <div key={mail.id} >
       <div className="yellow comment-image">
-        <span className="spare">{mail.contact}</span>
+        <span className="highlight">{mail.name}</span>
       </div>
       <div className='comment message'>{mail.description}
         <button className="deleteButton" onClick={() => handleMessageDelete(mail)}>Delete</button>

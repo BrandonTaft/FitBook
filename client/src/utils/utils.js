@@ -50,8 +50,3 @@ export function sendMailPopup() {
 export function addImagePopup() {
   document.getElementById('upload-image-popup').classList.toggle('show-upload-image-popup')
 }
-
-export function sendDmPopup(e) {
-  document.getElementById('user-card').classList.toggle('hide-dm-popup')
-  console.log(e.target)
-}

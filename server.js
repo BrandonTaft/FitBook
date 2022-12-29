@@ -341,9 +341,10 @@ app.delete('/api/mythings/:thingId', (req, res) => {
 app.get('/api/getmail/:name', authenticate, (req, res) => {
     const userName = (req.params.name)
     models.Mail.findAll({
-        where: {
-            priority: userName
-        }
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('sendTo')),
+            sequelize.fn('lower', userName)
+        )
     })
         .then(mail => {
             res.json(mail)
@@ -355,9 +356,9 @@ app.post('/api/addmail', (req, res) => {
     const name = req.body.name
     const duedate = req.body.duedate
     const description = req.body.description
-    const priority = req.body.priority
+    const sendTo = req.body.sendTo
     const link = req.body.link
-    const contact = req.body.contact
+    const sender = req.body.sender
     const contactNumber = req.body.contactNumber
     const user_id = req.body.userId
 
@@ -365,9 +366,9 @@ app.post('/api/addmail', (req, res) => {
         name: name,
         duedate: duedate,
         description: description,
-        priority: priority,
+        sendTo: sendTo,
         link: link,
-        contact: contact,
+        sender: sender,
         contactNumber: contactNumber,
         user_id: user_id
     })

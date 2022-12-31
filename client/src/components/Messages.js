@@ -5,7 +5,6 @@ import Chat from './Chat/Chat';
 import { SendMessage } from './SendMessage';
 import { sendMailPopup } from '../utils/utils';
 import { RiMailAddLine } from "react-icons/ri";
-import { MdClose } from "react-icons/md";
 import "./App.css";
 
 
@@ -47,7 +46,6 @@ function Messages(props) {
   )
 
 }
-// export default Messages;
 
 const mapDispatchToProps = (dispatch) => {
   return {

@@ -94,8 +94,28 @@ app.post('/api/login', async (req, res) => {
     }
 })
 
-//***************************GET CURRENT USERS***************************//
-app.get('/api/current-users', authenticate, (req, res) => {
+//***************************GET ALL USERS***************************//
+app.get('/api/all-users', authenticate, (req, res) => {
+    models.Users.findAll({})
+        .then(users => {
+            res.json(users)
+        })
+})
+
+//***************************GET ALL USERNAMES***************************//
+app.get('/api/all-usernames', authenticate, (req, res) => {
+    models.Users.findAll({})
+        .then(users => {
+            let userNames = [];
+            users.map((user) => {
+                userNames.push(user.name)
+            })
+            res.json(userNames)
+        })
+})
+
+//***************************GET LOGGED USERS***************************//
+app.get('/api/logged-in-users', authenticate, (req, res) => {
     models.Users.findAll({
         where: {
             isLoggedIn : "true"
@@ -105,6 +125,7 @@ app.get('/api/current-users', authenticate, (req, res) => {
             res.json(users)
         })
 })
+
 
 
 //*********************** LOGOUT **********************//

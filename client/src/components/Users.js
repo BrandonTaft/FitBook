@@ -16,7 +16,7 @@ function Users(props) {
     { showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true) }
   }
 
-  const allUsers = props.users.map((user, index) => {
+  const allUsers = props.users.map((user) => {
     return (
         <div key={(user.id)} className="current-user" onClick={() => { toggleDmPopup(user.id, user.name) }}>
           {user.email === null
@@ -41,7 +41,7 @@ function Users(props) {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onUsersLoaded: () => dispatch(actionCreators.fetchCurrentUsers())
+    onUsersLoaded: () => dispatch(actionCreators.fetchLoggedInUsers())
   }
 }
 

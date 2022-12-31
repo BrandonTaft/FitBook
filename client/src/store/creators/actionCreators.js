@@ -39,10 +39,11 @@ export const fetchMail = () => {
   }
 }
 
-export const fetchCurrentUsers = () => {
+
+export const fetchLoggedInUsers = () => {
   return (dispatch) => {
     const token = localStorage.getItem('token')
-    fetch('http://127.0.0.1:8080/api/current-users', {
+    fetch('http://127.0.0.1:8080/api/logged-in-users', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

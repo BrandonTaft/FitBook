@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from '../store/creators/actionCreators';
 import Chat from './Chat/Chat';
-import { SendMessage } from './SendMessage';
+import AutoCompleteForm from './AutoCompleteForm';
 import { sendMailPopup } from '../utils/utils';
 import { RiMailAddLine } from "react-icons/ri";
 import "./App.css";
@@ -38,7 +38,7 @@ function Messages(props) {
     <div className='messages'>
       < RiMailAddLine className='mail-icon highlight' onClick={ sendMailPopup }/>
       <div id="mail-form" className='mail-form'>
-        <SendMessage />
+        <AutoCompleteForm />
       </div>
       {messageItems}
       <Chat />

@@ -936,12 +936,20 @@ svg {
 .user-search {
   display: flex;
   flex-direction: column;
-  width: 50%;
   background-color: #fff;
+  position: relative;
+  bottom: 10px;
+  color: blue;
 }
 
 .hide-user-list {
   display: none;
+}
+
+.search-name {
+  margin: 0;
+  padding: 5px;
+  width: 250px;
 }
 
 /*********** CHAT ************/

@@ -44,9 +44,17 @@ export function addPostPopup() {
 }
 
 export function sendMailPopup() {
+  clearBoxes()
   document.getElementById('mail-form').classList.toggle('show-mail-form')
 }
 
 export function addImagePopup() {
   document.getElementById('upload-image-popup').classList.toggle('show-upload-image-popup')
+}
+
+export function clearBoxes() {
+  const nameInput = document.getElementById("sendTo");
+  const messageInput = document.getElementById("message-input");
+  nameInput.value = ""
+  messageInput.value = ""
 }

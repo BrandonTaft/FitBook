@@ -30,7 +30,7 @@ export function SendAutoMessage({ sendTo, setShowDmPopup }) {
     }
 
     return (
-        <div className='dm-popup'>
+        <div className='user dm-popup'>
             <MdClose className='add-post-close' onClick={() => { setShowDmPopup(false) }} />
             <h2>Send Message to {sendTo.name}</h2>
             <textarea className="textbox" type="text" name="message" onChange={handleSendMessage} placeholder="Message" /><br></br>

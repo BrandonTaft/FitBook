@@ -61,8 +61,18 @@ function AutoCompleteForm() {
             sender: (localStorage.getItem('name')),
             [e.target.name]: e.target.value
         })
+        const userListItems = document.getElementsByClassName("user-list-item");
+        highLight(userListItems)
     }
 
+    const highLight = (userListItems) => {
+        for(let i = 0; i < userNames.length; i++){
+
+        }
+        console.log(userListItems)
+        userListItems[0].classList.add('auto-complete-active')
+    }
+    
     const handleMessage = (e) => {
         setMessage({
             ...message,
@@ -80,7 +90,7 @@ function AutoCompleteForm() {
         if (showList) {
             let nameMatch;
             if (username.substr(0, message.sendTo.length).toUpperCase() == message.sendTo.toUpperCase()) {
-                nameMatch = <div key={index} className="search-name ellipses m-5" onClick={setSearchValue}>{username}</div>
+                nameMatch = <div key={index} id={`item${index}`} className="user-list-item ellipses m-5" onClick={setSearchValue}>{username}</div>
             } else {
                 nameMatch = ""
             }
@@ -91,17 +101,19 @@ function AutoCompleteForm() {
     })
 
     return (
-        <div className='dm-popup'>
+        <div className='auto-complete dm-popup'>
             <MdClose className='add-post-close' onClick={clearAll} />
-            <input id="sendTo" className="textbox" type="text" name="sendTo" onChange={handleSendTo} placeholder="Send To" />
+            <div className='auto-complete-container'>
+            <input id="sendTo" className="" type="text" name="sendTo" onChange={handleSendTo} placeholder="Send To" />
             {showList
                 ?
-                <div id="user-list" className='user-search ellipses'>
+                <div id="user-list" className='user-list ellipses'>
                     {userSearch}
                 </div>
                 :
                 ""
             }
+            </div>
             <textarea id="message-input" className="textbox" type="text" name="message" onChange={handleMessage} onClick={removeList} placeholder="Message" /><br></br>
             <button className="billButton" onClick={postTODB}>Send Message</button>
         </div>

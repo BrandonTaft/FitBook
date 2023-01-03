@@ -1,17 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MdClose } from "react-icons/md";
 import { sendMailPopup } from '../utils/utils';
 import "./App.css"
 
-function AutoCompleteForm() {
+function AutoCompleteForm({ showList, setShowList }) {
     const [message, setMessage] = useState({});
     const [userNames, setUserNames] = useState([]);
-    const [showList, setShowList] = useState(false);
+    const count = useRef(0);
     const nameInput = document.getElementById("sendTo");
 
     useEffect(() => {
         getAllUsernames()
-    }, [])
+        { !showList ? count.current = 0 : count.current = count.current }
+        const temp = document.getElementById('auto-complete')
+        temp.classList.add('temp')
+    }, [showList])
 
     const getAllUsernames = () => {
         const token = localStorage.getItem('token')
@@ -37,60 +40,108 @@ function AutoCompleteForm() {
         }).then(response => response.json())
             .then(result => {
                 if (result.success) {
-                    setShowList(false)
-                    sendMailPopup()
+                    clearAll()
                 }
             })
     }
 
     //********  AUTOCOMPLETE  ********/
 
-    const removeList = () => {
-        setShowList(false)
-    }
-
+    // Reset Everything
     const clearAll = () => {
-        removeList()
+        setShowList(false)
         sendMailPopup()
+        count.current = 0;
     }
 
-    const handleSendTo = (e) => {
-        { e.target.value.length ? setShowList(true) : setShowList(false) }
+    //Opens dropdown when text is entered in the send to field
+    //Sets message data in to the message state
+    //If letter is deleted it moves the highlight back to top of list
+    function handleMessage(e) {
+        { e.target.name == 'sendTo' && e.target.value.length ? setShowList(true) : setShowList(false) }
         setMessage({
             ...message,
             sender: (localStorage.getItem('name')),
             [e.target.name]: e.target.value
         })
-        const userListItems = document.getElementsByClassName("user-list-item");
-        highLight(userListItems)
-    }
-
-    const highLight = (userListItems) => {
-        for(let i = 0; i < userNames.length; i++){
-
+        count.current = 0
+        const userList = document.getElementById('user-list');
+        if (userList) {
+            let x = userList.children[count.current]
+            if (x) {
+                x.classList.add('auto-complete-active')
+            }
         }
-        console.log(userListItems)
-        userListItems[0].classList.add('auto-complete-active')
-    }
-    
-    const handleMessage = (e) => {
-        setMessage({
-            ...message,
-            [e.target.name]: e.target.value
-        })
     }
 
+    //If name is clicked on it sets that name as send to in message state
+    //Closes the list once name is clicked on
     function setSearchValue(e) {
         setMessage({ ...message, sendTo: e.target.innerHTML })
         nameInput.value = e.target.innerHTML
         setShowList(false)
     }
 
+    //Key press Handler
+    const handleArrowKeys = (e) => {
+        const userList = document.getElementById('user-list');
+        const temp = document.getElementById('auto-complete')
+        if (userList) {
+            //When down arrow is pressed it moves highlight down 1 in the list
+            if (e.keyCode == 40 && count.current < userList.children.length - 1) {
+                temp.classList.remove('temp')
+                count.current = count.current + 1
+                const userList = document.getElementById('user-list');
+                let x = userList.children[count.current]
+                let y = userList.children[count.current - 1]
+                if (x) {
+                    x.classList.add('auto-complete-active')
+                }
+                if (y) {
+                    y.classList.remove('auto-complete-active')
+                }
+            }
+            //When up arrow is pressed it moves highlight up 1 in the list
+            if (e.keyCode == 38 && count.current > 0) {
+                count.current = count.current - 1
+                const userList = document.getElementById('user-list');
+                let x = userList.children[count.current]
+                let y = userList.children[count.current + 1]
+                if (x) {
+                    x.classList.add('auto-complete-active')
+                }
+                if (y) {
+                    y.classList.remove('auto-complete-active')
+                }
+            }
+            //When enter key is pressed on a name it sets that name in send to property of message state
+            //While making that name the value of the input box, closing the list, and resetting the key counter count
+            if (e.keyCode == 13 && count.current >= 0) {
+                const chosenName = document.getElementById('user-list').children[count.current];
+                setMessage({
+                    ...message,
+                    sendTo: chosenName.innerHTML
+                })
+                nameInput.value = chosenName.innerHTML
+                setShowList(false)
+                count.current = 0
+            }
+            //When delete is pressed it resets the count which brings the highlight back to the top
+            //While taking the highlight back to top by resetting count and clearing the active class
+            if (e.keyCode == 8) {
+                count.current = 0
+                for (let i = 0; i < userList.children.length; i++) {
+                    userList.children[i].classList.remove('auto-complete-active')
+                }
+            }
+        }
+    }
+
     const userSearch = userNames.map((username, index) => {
         if (showList) {
             let nameMatch;
             if (username.substr(0, message.sendTo.length).toUpperCase() == message.sendTo.toUpperCase()) {
-                nameMatch = <div key={index} id={`item${index}`} className="user-list-item ellipses m-5" onClick={setSearchValue}>{username}</div>
+                nameMatch = <div key={index} className="user-list-item ellipses m-5" onClick={setSearchValue}>{username}</div>
             } else {
                 nameMatch = ""
             }
@@ -101,20 +152,20 @@ function AutoCompleteForm() {
     })
 
     return (
-        <div className='auto-complete dm-popup'>
+        <div id="auto-complete" className='auto-complete dm-popup temp'>
             <MdClose className='add-post-close' onClick={clearAll} />
             <div className='auto-complete-container'>
-            <input id="sendTo" className="" type="text" name="sendTo" onChange={handleSendTo} placeholder="Send To" />
-            {showList
-                ?
-                <div id="user-list" className='user-list ellipses'>
-                    {userSearch}
-                </div>
-                :
-                ""
-            }
+                <input id="sendTo" className="" type="text" name="sendTo" onChange={handleMessage} onKeyDown={handleArrowKeys} placeholder="Send To" autoComplete='off' />
+                {showList
+                    ?
+                    <div id="user-list" className='user-list ellipses list'>
+                        {userSearch}
+                    </div>
+                    :
+                    ""
+                }
             </div>
-            <textarea id="message-input" className="textbox" type="text" name="message" onChange={handleMessage} onClick={removeList} placeholder="Message" /><br></br>
+            <textarea id="message-input" className="textbox" type="text" name="message" onChange={handleMessage} onClick={() => { setShowList(false) }} placeholder="Message" /><br></br>
             <button className="billButton" onClick={postTODB}>Send Message</button>
         </div>
     )

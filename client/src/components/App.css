@@ -166,7 +166,7 @@ body {
 
 h1,
 h2 {
-  color: #fff;
+  color: aliceblue;
   margin: 0.25em;
 }
 
@@ -485,7 +485,7 @@ svg {
 .post-description {
   font-family: 'Segoe UI';
   font-size: 1em;
-  color: var(--text-primary);
+  color: aliceblue;
 }
 
 .maximize {
@@ -562,6 +562,13 @@ svg {
 }
 
 .nav-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: 9px;
+  color: aliceblue;
+}
+
+.theme-icon {
   width: 40px;
   height: 40px;
   margin-top: 9px;
@@ -654,7 +661,7 @@ svg {
 
 .add-post-close {
   font-size: 1.5em;
-  background-color: var(--bs-red);
+  color: aliceblue;
   border: 1px solid #fff;
   border-radius: 50%;
   margin-right: auto;
@@ -873,10 +880,9 @@ svg {
 
 .user.dm-popup {
   position: fixed;
-  background-color: #27043c;
+  background-color: #171718;
   z-index: 2;
   top: 25%;
-  border: var(--highlight-text) 1px solid;
   border-radius: 10px;
   width: 350px;
   height: 250px;
@@ -947,10 +953,9 @@ svg {
 .auto-complete.dm-popup {
   position: relative;
   display: flex;
-  background-color: #27043c;
+  background-color: #171718;
   z-index: 2;
   top: 25%;
-  border: var(--highlight-text) 1px solid;
   border-radius: 10px;
   width: 350px;
   height: 250px;
@@ -998,11 +1003,10 @@ svg {
   background-color: #e9e9e9;
 }
 
-/* .search-name {
-  margin: 0;
-  padding: 5px;
-  width: 250px;
-} */
+.temp div:nth-child(1) {
+  background-color: DodgerBlue;
+  color: #ffffff;
+}
 
 @media only screen and (min-width: 768px) {
   .auto-complete.dm-popup {

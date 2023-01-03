@@ -12,9 +12,9 @@ function Navbar({ theme, switchTheme }) {
         <nav className="navBar">
             {theme === 'light'
                 ?
-                <RiMoonClearFill className='nav-icon highlight' onClick={switchTheme} />
+                <RiMoonClearFill className='theme-icon highlight' onClick={switchTheme} />
                 :
-                <RiSunFill className='nav-icon highlight' onClick={switchTheme} />
+                <RiSunFill className='theme-icon highlight' onClick={switchTheme} />
             }
             <NavLink to="/logout" >
                 <RiLogoutBoxFill className="nav-icon highlight" />

@@ -10,13 +10,18 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = useState(""); // Message to be sent
   const [savedChat, setSavedChat] = useState();
   const [oldChats, setOldChats] = useState([]); 
+  const token = localStorage.getItem('token');
   useEffect(() => {
     getSavedChats()
   }, [])
 
   const getSavedChats = () => {
-    fetch(`http://127.0.0.1:8080/api/getchats/${roomId}`)
-      .then(response => response.json())
+    fetch(`http://127.0.0.1:8080/api/getchats/${roomId}`,{
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then(response => response.json())
       .then(chats => {
         setOldChats(chats)
       })

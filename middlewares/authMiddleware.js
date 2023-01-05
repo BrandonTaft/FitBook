@@ -1,10 +1,7 @@
 const models = require('../models')
-
-
 const jwt = require('jsonwebtoken')
 
 function authenticate(req, res, next) {
-
     // validate the token 
     let headers = req.headers['authorization']
     if (headers) {
@@ -19,19 +16,20 @@ function authenticate(req, res, next) {
                     }
                 })
                 if (authUser) {
-                    console.log("Authentication Ran")
+                    req.authUser = id
+                    console.log("User Is Authenticated")
                     next() 
                 } else {
-                    res.json({ error: 'Unable to authenticate' })
+                    res.json({  success: false, error: 'Unable to authenticate' })
                     res.redirect('/')
                 }
             } else {
-                res.json({ error: 'Unable to authenticate' })
+                res.json({  success: false, error: 'Unable to authenticate' })
                 res.redirect('/')
             }
         } catch { res.json({ success: false, message: 'Not Authenticated' }) }
     } else {
-        res.json({ error: 'Required headers are missing...' })
+        res.json({  success: false, error: 'Required headers are missing...' })
         res.redirect('/')
     }
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Router, Route, Switch } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux'
 import reducer from './store/reducer';
 import { createStore, compose, applyMiddleware } from 'redux'
@@ -17,7 +17,6 @@ import history from './store/History';
 import Logout from './components/Logout';
 import PublicFeed from './components/PublicFeed';
 import ChatRoom from './components/Chat/ChatRoom';
-import UploadImage from './components/UploadImage';
 import Chat from './components/Chat/Chat';
 
 
@@ -40,7 +39,6 @@ ReactDOM.render(
             <Route exact path="/feed" component={PublicFeed} />
             <Route exact path="/profile" component={Private} />
             <Route exact path="/logout" component={Logout} />
-            <Route exact path="/upload-image" component={UploadImage} />
             <Route exact path="/messages" component={Messages} />
             <Route exact path="/chat" component={Chat} />
             <Route exact path="/chatroom/:roomId" component={ChatRoom} />
@@ -51,8 +49,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

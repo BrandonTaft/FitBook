@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import history from "../store/History";
 import { MdClose } from "react-icons/md";
 import { sendMailPopup } from '../utils/utils';
 import "./App.css"
@@ -26,7 +27,11 @@ function AutoCompleteForm({ showList, setShowList }) {
         })
             .then(response => response.json())
             .then(usernames => {
-                setUserNames(usernames)
+                if (usernames.success === false) {
+                    history.push('/')
+                } else {
+                    setUserNames(usernames)
+                }
             })
     }
 

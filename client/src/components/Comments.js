@@ -118,7 +118,7 @@ function Comments({ post }) {
       </div>
       <div className='swap hide'>
         <MdClose className='comment-close' onClick={closeMe} />
-        <input id={`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" />
+        <input id={`comment-input${post.id}`} className='textbox comment-textbox' type="text" name="comment" onChange={handleAddComment} placeholder="Enter Comment" autoComplete='off'/>
         <button type='submit' onClick={() => postComment(post)} className="btn comment-btn">Submit</button>
         <div className='comment-box'>
           {myComments}

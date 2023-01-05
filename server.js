@@ -114,7 +114,7 @@ app.get('/api/all-usernames', authenticate, (req, res) => {
         })
 })
 
-//***************************GET LOGGED USERS***************************//
+//***************************GET LOGGED IN USERS***************************//
 app.get('/api/logged-in-users', authenticate, (req, res) => {
     models.Users.findAll({
         where: {
@@ -309,7 +309,7 @@ app.get('/api/things', authenticate, (req, res) => {
 })
 
 //**********Retrieve All From DataBase With Specific user_Id***********//
-app.get('/api/mythings/:user_Id', authenticate, (req, res) => {
+app.get('/api/myposts/:user_Id', authenticate, (req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
         where: {
@@ -461,7 +461,7 @@ app.post('/api/savechat', (req, res) => {
 
 //***************************GET ALL CHATS***************************//
 
-app.get('/api/getchats/:roomId', (req, res) => {
+app.get('/api/getchats/:roomId', authenticate, (req, res) => {
     const roomId = req.params.roomId
     models.Chat.findAll({
         where: {

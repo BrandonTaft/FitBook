@@ -12,7 +12,7 @@ export const fetchPublicPosts = () => {
       .then(response => response.json())
       .then(posts => {
         if (posts.success === false) {
-          history.push('/feed')
+          history.push('/')
         } else {
           dispatch({ type:'POSTS_LOADED', payload: posts })
         }
@@ -34,7 +34,11 @@ export const fetchMail = () => {
     })
       .then(response => response.json())
       .then(mail => {
+        if (mail.success === false) {
+          history.push('/')
+        } else {
           dispatch({ type: 'MAIL_LOADED', payload: mail })
+        }
       })
   }
 }
@@ -51,7 +55,11 @@ export const fetchLoggedInUsers = () => {
     })
       .then(response => response.json())
       .then(users => {
+        if (users.success === false) {
+          history.push('/')
+        } else {
           dispatch({ type: 'USERS_LOADED', payload: users })
+        }
       })
   }
 }

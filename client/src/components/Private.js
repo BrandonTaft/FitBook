@@ -45,7 +45,7 @@ function Private() {
   function fetchMyPosts() {
     const user_Id = localStorage.getItem('user_Id')
     const token = localStorage.getItem('token')
-    fetch(`http://127.0.0.1:8080/api/mythings/${user_Id}`, {
+    fetch(`http://127.0.0.1:8080/api/myposts/${user_Id}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -54,7 +54,7 @@ function Private() {
       .then(response => response.json())
       .then(myPosts => {
         if (myPosts.success === false) {
-          setMyPosts("")
+          history.push('/')
         } else {
           setMyPosts(myPosts)
         }

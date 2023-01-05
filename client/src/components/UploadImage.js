@@ -19,6 +19,7 @@ class UploadImage extends React.Component {
         };
         this.handleSubmit = this.handleSubmit.bind(this);
     }
+
     handleNewImage = (e) => {
         this.setState({ image: e.target.files[0] });
     };
@@ -45,7 +46,6 @@ class UploadImage extends React.Component {
                 body: JSON.stringify({ data: img, userId: userId })
             }).then(response => response.json())
                 .then(result => {
-                    console.log(result)
                     if (result.success) {
                         let url = encodeURIComponent(result.url)
                         localStorage.setItem('profile_pic', result.url)

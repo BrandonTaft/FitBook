@@ -43,8 +43,8 @@ function Post(props) {
                 <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
             </div>
             <h1 className="postTitle">Make A Post</h1>
-            <input className="textbox" type="text" name="name" onChange={handleAddPost} placeholder="Title" />
-            <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link" />
+            <input className="textbox" type="text" name="name" onChange={handleAddPost} placeholder="Title" autoComplete='off' />
+            <input className="textbox" type="url" name="link" onChange={handleAddPost} placeholder="Link"autoComplete='off' />
             <div>Description</div>
             <textarea className="textbox text-area" type="text" name="description" maxLength={255} onChange={handleAddPost} />
             <button className="btn mt-2" onClick={postTODB}>Submit</button>

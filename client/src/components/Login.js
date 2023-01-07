@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo-aqua.png";
 import "./App.css";
@@ -41,6 +41,7 @@ function Login(props) {
                 }
             })
     }
+    
     return (
         <div className="full-page flex-column">
             <div className='login-container flex-column'>
@@ -53,6 +54,7 @@ function Login(props) {
                 <div className="warning auth-error">
                     {message && <span>{message}</span>}
                 </div>
+                <a href="http://127.0.0.1:8080/auth/google">google</a>
                 <button className="btn mb-1" onClick={handleLogin}>LOGIN</button>
                 <NavLink to="/register" className='mb-1'> <button className="btn">REGISTER</button></NavLink>
             </div>

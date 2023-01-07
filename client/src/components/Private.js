@@ -54,7 +54,7 @@ function Private() {
       .then(response => response.json())
       .then(myPosts => {
         if (myPosts.success === false) {
-          history.push('/')
+          setMyPosts("")
         } else {
           setMyPosts(myPosts)
         }

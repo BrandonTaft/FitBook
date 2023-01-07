@@ -2,12 +2,22 @@ const express = require('express');
 const models = require('./models');
 const cors = require('cors');
 const app = express();
+const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
+const { auth } = require('express-openid-connect');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const passport = require('passport')
+const JwtStrategy = require('passport-jwt').Strategy
+const ExtractJwt = require('passport-jwt').ExtractJwt
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
 app.use(express.json());
 app.use(cors());
+require('dotenv').config();
+app.use(express.json({ limit: 52428800 }));
+app.use(express.urlencoded({ extended: true, limit: 52428800 }));
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
@@ -23,11 +33,102 @@ cloudinary.config({
     cloud_name: 'dxbieon3u',
     api_key: '868885289639448',
     api_secret: "OV5DS6dPJBRw2Zmqbx6MwlYNEUA"
+});
+
+// const config = {
+//     authRequired: true,
+//     auth0Logout: true,
+//     baseURL: 'http://localhost:3000',
+//     clientID: process.env.AUTH_CLIENT_ID,
+//     issuerBaseURL: process.env.AUTH_DOMAIN,
+//     secret: process.env.AUTH_SECRET_KEY
+//   };
+//   app.use(auth(config));
+
+// //*************************** AUTH ***************************//
+// app.get('/api/auth-callback', (req, res) => {
+//     console.log("TEST",req)
+// })
+
+const config = {secretOrKey:"mysecret"}
+app.use(bodyParser.urlencoded({ extended: false })) 
+app.use(cookieParser())
+app.use(passport.initialize());
+var session = require('express-session')
+app.use(session({
+    secret: 'keyboard cat',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+  }))
+var opts = {}
+opts.jwtFromRequest = function(req) { // tell passport to read JWT from cookies
+    var token = null;
+    if (req && req.cookies){
+        token = req.cookies['jwt']
+    }
+    return token
+}
+opts.secretOrKey = config.secretOrKey
+
+// main authentication, our app will rely on it
+passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
+    console.log("JWT BASED AUTH GETTING CALLED") // called everytime a protected URL is being served
+    if (CheckUser(jwt_payload.data)) {
+        return done(null, jwt_payload.data)
+    } else {
+        // user account doesnt exists in the DATA
+        return done(null, false)
+    }
+}))
+
+passport.use(new GoogleStrategy({
+    clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
+    clientSecret: "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",
+    callbackURL: "http://localhost:8080/googleRedirect"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      //console.log(accessToken, refreshToken, profile)
+      console.log("GOOGLE BASED OAUTH VALIDATION GETTING CALLED")
+      return done(null, profile)
+  }
+))
+
+// These functions are required for getting data To/from JSON returned from Providers
+passport.serializeUser(function(user, done) {
+    console.log('I should have jack ')
+    done(null, user)
+})
+passport.deserializeUser(function(obj, done) {
+    console.log('I wont have jack shit')
+    done(null, obj)
 })
 
-require('dotenv').config();
-app.use(express.json({ limit: 52428800 }));
-app.use(express.urlencoded({ extended: true, limit: 52428800 }));
+// OAuth Authentication, Just going to this URL will open OAuth screens
+app.get('/auth/google',  passport.authenticate('google', { scope: ['profile','email'] }))
+
+// Oauth user data comes to these redirectURLs
+app.get('/googleRedirect', passport.authenticate('google'),(req, res)=>{
+    console.log('redirected', req.user)
+    let user = {
+        displayName: req.user.displayName,
+        name: req.user.name.givenName,
+        email: req.user._json.email,
+        provider: req.user.provider }
+    console.log(user)
+    const newUser = models.Users.build({
+        name: user.name,
+        
+        
+    })
+
+    // FindOrCreate(user)
+    let token = jwt.sign({
+        data: user
+        }, 'secret', { expiresIn: 60 }); // expiry in seconds
+    res.cookie('jwt', token)
+    res.redirect('http://127.0.0.1:3000/feed')
+})
 
 //***************************REGISTRATION PAGE***************************//
 

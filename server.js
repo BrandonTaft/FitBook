@@ -4,12 +4,10 @@ const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
-const { auth } = require('express-openid-connect');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport')
 const JwtStrategy = require('passport-jwt').Strategy
-const ExtractJwt = require('passport-jwt').ExtractJwt
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
@@ -35,52 +33,16 @@ cloudinary.config({
     api_secret: "OV5DS6dPJBRw2Zmqbx6MwlYNEUA"
 });
 
-// const config = {
-//     authRequired: true,
-//     auth0Logout: true,
-//     baseURL: 'http://localhost:3000',
-//     clientID: process.env.AUTH_CLIENT_ID,
-//     issuerBaseURL: process.env.AUTH_DOMAIN,
-//     secret: process.env.AUTH_SECRET_KEY
-//   };
-//   app.use(auth(config));
-
-// //*************************** AUTH ***************************//
-// app.get('/api/auth-callback', (req, res) => {
-//     console.log("TEST",req)
-// })
-
-const config = {secretOrKey:"mysecret"}
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(cookieParser())
 app.use(passport.initialize());
 var session = require('express-session')
 app.use(session({
-    secret: 'keyboard cat',
+    secret: 'SECRETKEY',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: { maxAge: 1000 * 60 * 60 }
   }))
-var opts = {}
-opts.jwtFromRequest = function(req) { // tell passport to read JWT from cookies
-    var token = null;
-    if (req && req.cookies){
-        token = req.cookies['jwt']
-    }
-    return token
-}
-opts.secretOrKey = config.secretOrKey
-
-// main authentication, our app will rely on it
-passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-    console.log("JWT BASED AUTH GETTING CALLED") // called everytime a protected URL is being served
-    if (CheckUser(jwt_payload.data)) {
-        return done(null, jwt_payload.data)
-    } else {
-        // user account doesnt exists in the DATA
-        return done(null, false)
-    }
-}))
 
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
@@ -108,26 +70,53 @@ passport.deserializeUser(function(obj, done) {
 app.get('/auth/google',  passport.authenticate('google', { scope: ['profile','email'] }))
 
 // Oauth user data comes to these redirectURLs
-app.get('/googleRedirect', passport.authenticate('google'),(req, res)=>{
+app.get('/googleRedirect', passport.authenticate('google'), async (req, res, next)=>{
     console.log('redirected', req.user)
     let user = {
         displayName: req.user.displayName,
         name: req.user.name.givenName,
         email: req.user._json.email,
+        id: req.user.id,
         provider: req.user.provider }
-    console.log(user)
-    const newUser = models.Users.build({
-        name: user.name,
-        
-        
+    console.log("USER",user)
+    const existingUser = await models.Users.findOne({
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')),
+            sequelize.fn('lower', user.name)
+        )
     })
-
-    // FindOrCreate(user)
-    let token = jwt.sign({
-        data: user
-        }, 'secret', { expiresIn: 60 }); // expiry in seconds
-    res.cookie('jwt', token)
-    res.redirect('http://127.0.0.1:3000/feed')
+    if (existingUser != null) {
+        bcrypt.hash(user.id, salt, async (error, hash) => {
+            if (error) {
+                res.json({ message: "Something Went Wrong!!!" })
+            } else {
+                user = await models.Users.build({
+                    name: user.name,
+                    password: hash,
+                    isLoggedIn: true,
+                })
+                let savedUser = await user.save()
+                if (savedUser != null) {
+                    const token = jwt.sign({ id: user.id }, "SECRETKEY", { expiresIn: 60 })
+                //res.json({ success: true, token: token, user: user })
+                res.cookie('name', user.name, {httpOnly: false});
+                res.cookie('token', token, {httpOnly: false});
+                res.cookie('user_id', user.id, {httpOnly: false});
+                res.writeHead(302, {
+                    'Location': 'http://localhost:3000/feed',
+                  });
+                res.end()
+                }
+            }
+        })
+    }
+console.log("EXISTING", existingUser)
+    // // FindOrCreate(user)
+    // let token = jwt.sign({
+    //     data: user
+    //     }, 'secret', { expiresIn: 60 }); // expiry in seconds
+    // res.cookie('jwt', token)
+    // res.redirect('http://127.0.0.1:3000/feed')
 })
 
 //***************************REGISTRATION PAGE***************************//

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from "react-router-dom";
+import Cookies from 'js-cookie';
 import Avatar from 'react-avatar';
 import UploadImage from './UploadImage';
 import { MyCard } from './Cards';
@@ -12,11 +13,13 @@ function Private() {
   const [myPosts, setMyPosts] = useState([]);
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
-  const name = localStorage.getItem('name');
+  //const name = localStorage.getItem('name');
   const title = localStorage.getItem('title');
   const profilePic = localStorage.getItem('profile_pic');
-  const token = localStorage.getItem('token');
-
+  //const token = localStorage.getItem('token');
+  const name = Cookies.get('name');
+  const token = Cookies.get('token');
+  const userId = Cookies.get('user_id');
   useEffect(() => {
     getUser()
     fetchMyPosts()
@@ -25,7 +28,7 @@ function Private() {
   const getUser = () => {
     profilePic !== 'invalid' ? setPic(true) : setPic(false)
   }
-
+console.log(userId)
   const deleteProfile = () => {
     fetch('http://127.0.0.1:8080/api/delete-profile', {
       method: 'DELETE',
@@ -43,9 +46,9 @@ function Private() {
   }
 
   function fetchMyPosts() {
-    const user_Id = localStorage.getItem('user_Id')
-    const token = localStorage.getItem('token')
-    fetch(`http://127.0.0.1:8080/api/myposts/${user_Id}`, {
+    const token = Cookies.get('token');
+    const userId = Cookies.get('user_id');
+    fetch(`http://127.0.0.1:8080/api/myposts/${userId}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -53,10 +56,11 @@ function Private() {
     })
       .then(response => response.json())
       .then(myPosts => {
-        if (myPosts.success === false) {
-          setMyPosts("")
-        } else {
+        console.log("MYPOST", myPosts)
+        if (myPosts) {
           setMyPosts(myPosts)
+        } else {
+          setMyPosts("")
         }
       })
   }

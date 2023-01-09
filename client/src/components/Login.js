@@ -13,6 +13,7 @@ function Login(props) {
             [e.target.name]: e.target.value
         })
     }
+
     const handleLogin = () => {
         fetch('http://127.0.0.1:8080/api/login', {
             method: 'POST',
@@ -41,7 +42,7 @@ function Login(props) {
                 }
             })
     }
-    
+
     return (
         <div className="full-page flex-column">
             <div className='login-container flex-column'>

@@ -20,7 +20,7 @@ function PostDisplay({ post, reset, setReset }) {
         fetch(`http://127.0.0.1:8080/api/users${post.user_id}`)
             .then(response => response.json())
             .then(user => {
-                setCurrentPic(user.email)
+                setCurrentPic(user.profile_pic)
             })
     }
 

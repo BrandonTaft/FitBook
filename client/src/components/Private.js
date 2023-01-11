@@ -28,7 +28,7 @@ function Private() {
   const getUser = () => {
     profilePic !== 'invalid' ? setPic(true) : setPic(false)
   }
-console.log(userId)
+console.log(pic)
   const deleteProfile = () => {
     fetch('http://127.0.0.1:8080/api/delete-profile', {
       method: 'DELETE',
@@ -88,7 +88,7 @@ console.log(userId)
               :
               <Avatar
                 color="blue"
-                name={name}
+                name={"b"}
                 round={true}
                 size={150}
                 textSizeRatio={2}

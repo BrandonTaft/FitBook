@@ -19,11 +19,11 @@ function Users(props) {
   const allUsers = props.users.map((user) => {
     return (
         <div key={(user.id)} className="current-user" onClick={() => { toggleDmPopup(user.id, user.name) }}>
-          {user.email === null
+          {user.profile_pic === null
             ?
             <Avatar name={user.name} round={true} size={80} />
             :
-            <Avatar id={user.id} src={user.email} className="rounded" size={80} />
+            <Avatar id={user.id} src={user.profile_pic} className="rounded" size={80} />
           }
           <div className='text-secondary current-user-name'>{user.name}</div>
         </div>

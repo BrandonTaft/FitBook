@@ -1,7 +1,8 @@
-import history from "../History"
+import history from "../History";
+import Cookies from 'js-cookie';
 
 export const fetchPublicPosts = () => {
-  const token = localStorage.getItem('token')
+  const token = Cookies.get('token');
   return (dispatch) => {
     fetch('http://127.0.0.1:8080/api/things', {
       method: 'GET',
@@ -25,7 +26,7 @@ export const fetchPublicPosts = () => {
 export const fetchMail = () => {
   return (dispatch) => {
     const name = localStorage.getItem('name')
-    const token = localStorage.getItem('token')
+    const token = Cookies.get('token');
     fetch(`http://127.0.0.1:8080/api/getmail/${name}`, {
       method: 'GET',
       headers: {
@@ -46,7 +47,7 @@ export const fetchMail = () => {
 
 export const fetchLoggedInUsers = () => {
   return (dispatch) => {
-    const token = localStorage.getItem('token')
+    const token = Cookies.get('token');
     fetch('http://127.0.0.1:8080/api/logged-in-users', {
       method: 'GET',
       headers: {

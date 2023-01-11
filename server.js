@@ -7,7 +7,6 @@ const cookieParser = require('cookie-parser')
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport')
-const JwtStrategy = require('passport-jwt').Strategy
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
@@ -72,51 +71,53 @@ app.get('/auth/google',  passport.authenticate('google', { scope: ['profile','em
 // Oauth user data comes to these redirectURLs
 app.get('/googleRedirect', passport.authenticate('google'), async (req, res, next)=>{
     console.log('redirected', req.user)
-    let user = {
+    let googleUser = {
         displayName: req.user.displayName,
         name: req.user.name.givenName,
         email: req.user._json.email,
-        id: req.user.id,
+        googleId: req.user.id,
         provider: req.user.provider }
-    console.log("USER",user)
     const existingUser = await models.Users.findOne({
         where: sequelize.where(
             sequelize.fn('lower', sequelize.col('name')),
-            sequelize.fn('lower', user.name)
+            sequelize.fn('lower', googleUser.name)
         )
     })
-    if (existingUser != null) {
-        bcrypt.hash(user.id, salt, async (error, hash) => {
+    if (existingUser == null) {
+        bcrypt.hash(googleUser.googleId, salt, async (error, hash) => {
             if (error) {
                 res.json({ message: "Something Went Wrong!!!" })
             } else {
                 user = await models.Users.build({
-                    name: user.name,
+                    name: googleUser.name,
                     password: hash,
                     isLoggedIn: true,
                 })
                 let savedUser = await user.save()
                 if (savedUser != null) {
-                    const token = jwt.sign({ id: user.id }, "SECRETKEY", { expiresIn: 60 })
+                    const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 //res.json({ success: true, token: token, user: user })
                 res.cookie('name', user.name, {httpOnly: false});
                 res.cookie('token', token, {httpOnly: false});
                 res.cookie('user_id', user.id, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'http://localhost:3000/feed',
+                    'Location': 'http://localhost:3000/feed'
                   });
                 res.end()
                 }
             }
         })
+    }else{
+        console.log("EXISTING", existingUser)
+    const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
+    res.cookie('name', existingUser.name, {httpOnly: false});
+    res.cookie('token', token, {httpOnly: false});
+    res.cookie('user_id', existingUser.id, {httpOnly: false});
+    res.writeHead(302, {
+        'Location': 'http://localhost:3000/feed'
+      });
+    res.end()
     }
-console.log("EXISTING", existingUser)
-    // // FindOrCreate(user)
-    // let token = jwt.sign({
-    //     data: user
-    //     }, 'secret', { expiresIn: 60 }); // expiry in seconds
-    // res.cookie('jwt', token)
-    // res.redirect('http://127.0.0.1:3000/feed')
 })
 
 //***************************REGISTRATION PAGE***************************//
@@ -220,7 +221,6 @@ app.get('/api/logged-in-users', authenticate, (req, res) => {
 
 //*********************** LOGOUT **********************//
 app.put('/api/logout', (req, res) => {
-    // const id = parseInt(req.params.id)
     let headers = req.headers['authorization']
     if (headers) {
         try {
@@ -238,6 +238,8 @@ app.put('/api/logout', (req, res) => {
                         { isLoggedIn: false },
                         { where: { id: id } }
                     )
+                    res.clearCookie()
+                    res.end()
                 } else {
                     res.json({ error: 'Unable to authenticate' })
                     res.redirect('/')
@@ -328,7 +330,7 @@ app.put('/api/update-user/:userId/:url', (req, res) => {
     models.Users.update(
         {
             isLoggedIn: 'true',
-            email: url
+            profile_pic: url
         },
         { where: { id: id } }
     )

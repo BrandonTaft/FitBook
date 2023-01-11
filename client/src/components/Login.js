@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
+import Cookies from 'js-cookie';
 import logo from "../assets/logo-aqua.png";
 import "./App.css";
 
 
 function Login(props) {
-    const [credentials, setCredentials] = useState({})
-    const [message, setMessage] = useState('')
+    const [credentials, setCredentials] = useState({});
+    const [message, setMessage] = useState('');
     const handleLoginChange = (e) => {
         setCredentials({
             ...credentials,
@@ -24,16 +25,16 @@ function Login(props) {
         }).then(response => response.json())
             .then(result => {
                 if (result.success == true) {
-                    localStorage.setItem('token', result.token)
+                    Cookies.set('token', result.token)
                     localStorage.setItem('user_Id', result.user.id)
                     localStorage.setItem('name', result.user.name)
                     localStorage.setItem('title', result.user.title)
                     {
-                        result.user.email === null
+                        result.user.profile_pic === null
                             ?
                             localStorage.setItem('profile_pic', "invalid")
                             :
-                            localStorage.setItem('profile_pic', result.user.email)
+                            localStorage.setItem('profile_pic', result.user.profile_pic)
                     }
                     props.history.push('/feed')
                 }

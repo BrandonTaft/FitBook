@@ -1,5 +1,6 @@
 import React from "react";
 import ReactAvatarEditor from "react-avatar-editor";
+import Cookies from 'js-cookie';
 import { addImagePopup } from '../utils/utils';
 import { MdClose } from "react-icons/md";
 import History from "../store/History";
@@ -37,7 +38,7 @@ class UploadImage extends React.Component {
             // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
-            const userId = parseInt(localStorage.getItem('user_Id'));
+            const userId = Cookies.get('user_Id');
             fetch("http://127.0.0.1:8080/api/add-image", {
                 method: 'PUT',
                 headers: {

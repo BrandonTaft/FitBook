@@ -4,13 +4,13 @@ import Comments from './Comments';
 import PostDisplay from "./PostDisplay";
 import "./App.css";
 
-export function Card({publicPosts, reset, setReset}) {
+export function Card({publicPosts, allUsers }) {
     
     const [profileImage, setProfileImage] = useState()
     const publicPostItems = publicPosts.map(publicPost => {
         return (
             <div key={publicPost.id} className="grid-item">
-                <PostDisplay post={publicPost} profileImage={profileImage} reset={reset} setReset={setReset}/>
+                <PostDisplay post={publicPost} profileImage={profileImage} allUsers= {allUsers}/>
                 <div className='feedback'>
                     <FeedBack post={publicPost} />
                     <Comments post={publicPost} />

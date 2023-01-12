@@ -15,20 +15,21 @@ function Private() {
   const [reset, setReset] = useState(false);
   //const name = localStorage.getItem('name');
   const title = localStorage.getItem('title');
-  const profilePic = localStorage.getItem('profile_pic');
+  //const profilePic = localStorage.getItem('profile_pic');
   //const token = localStorage.getItem('token');
   const name = Cookies.get('name');
   const token = Cookies.get('token');
-  const userId = Cookies.get('user_id');
+  const userId = Cookies.get('user_Id');
+  const profilePic = Cookies.get('profile_pic')
   useEffect(() => {
-    getUser()
+    getPic()
     fetchMyPosts()
   }, [reset]);
 
-  const getUser = () => {
-    profilePic !== 'invalid' ? setPic(true) : setPic(false)
+  const getPic = () => {
+   `${profilePic}` == "null" ? setPic(false) : setPic(true)
   }
-console.log(pic)
+
   const deleteProfile = () => {
     fetch('http://127.0.0.1:8080/api/delete-profile', {
       method: 'DELETE',
@@ -46,8 +47,6 @@ console.log(pic)
   }
 
   function fetchMyPosts() {
-    const token = Cookies.get('token');
-    const userId = Cookies.get('user_id');
     fetch(`http://127.0.0.1:8080/api/myposts/${userId}`, {
       method: 'GET',
       headers: {
@@ -56,7 +55,6 @@ console.log(pic)
     })
       .then(response => response.json())
       .then(myPosts => {
-        console.log("MYPOST", myPosts)
         if (myPosts) {
           setMyPosts(myPosts)
         } else {
@@ -88,7 +86,7 @@ console.log(pic)
               :
               <Avatar
                 color="blue"
-                name={"b"}
+                name={name}
                 round={true}
                 size={150}
                 textSizeRatio={2}

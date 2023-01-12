@@ -26,16 +26,9 @@ function Login(props) {
             .then(result => {
                 if (result.success == true) {
                     Cookies.set('token', result.token)
-                    localStorage.setItem('user_Id', result.user.id)
-                    localStorage.setItem('name', result.user.name)
-                    localStorage.setItem('title', result.user.title)
-                    {
-                        result.user.profile_pic === null
-                            ?
-                            localStorage.setItem('profile_pic', "invalid")
-                            :
-                            localStorage.setItem('profile_pic', result.user.profile_pic)
-                    }
+                    Cookies.set('name', result.user.name)
+                    Cookies.set('user_Id', result.user.id)
+                    Cookies.set('profile_pic', result.user.profile_pic)
                     props.history.push('/feed')
                 }
                 else {

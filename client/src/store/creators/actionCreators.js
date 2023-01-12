@@ -44,6 +44,26 @@ export const fetchMail = () => {
   }
 }
 
+export const fetchAllUsers = () => {
+  return (dispatch) => {
+    const token = Cookies.get('token');
+    fetch('http://127.0.0.1:8080/api/all-users', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => response.json())
+      .then(allUsers => {
+        if (allUsers.success === false) {
+          history.push('/')
+        } else {
+          dispatch({ type: 'ALLUSERS_LOADED', payload: allUsers })
+        }
+      })
+  }
+}
+
 
 export const fetchLoggedInUsers = () => {
   return (dispatch) => {

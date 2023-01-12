@@ -1,6 +1,7 @@
 const initialState = {
     posts: [],
     mail: [],
+    allUsers: [],
     users: []
 }
 
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 posts: action.payload
+            }
+        case 'ALLUSERS_LOADED':
+            return {
+                ...state,
+                allUsers: action.payload
             }
         case 'USERS_LOADED':
             return {

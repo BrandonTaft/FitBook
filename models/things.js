@@ -15,12 +15,9 @@ module.exports = (sequelize, DataTypes) => {
   };
   Things.init({
     name: DataTypes.STRING,
-    duedate: DataTypes.DATE,
     description: DataTypes.TEXT,
-    priority: DataTypes.STRING,
+    poster: DataTypes.STRING,
     link: DataTypes.STRING,
-    contact: DataTypes.STRING,
-    contactNumber: DataTypes.BIGINT,
     score: DataTypes.BIGINT,
     user_id: {
       type: DataTypes.INTEGER, 

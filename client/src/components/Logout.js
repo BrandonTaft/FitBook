@@ -6,7 +6,8 @@ function Logout(props) {
     const token = Cookies.get('token');
     Cookies.remove('token')
     Cookies.remove('name')
-    Cookies.remove('user_id')
+    Cookies.remove('user_Id')
+    Cookies.remove('profile_pic')
         fetch('http://127.0.0.1:8080/api/logout', {
                 method: 'PUT',
                 headers: {

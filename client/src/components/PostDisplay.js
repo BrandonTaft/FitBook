@@ -1,30 +1,31 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useLocation } from "react-router-dom";
 import { SendAutoMessage } from './SendMessage.js';
 import { TbArrowsMaximize } from "react-icons/tb";
 import { timeSince, toggleBody } from '../utils/utils.js';
 import Avatar from 'react-avatar';
 
-function PostDisplay({ post, reset, setReset }) {
-    const [currentPic, setCurrentPic] = useState()
+function PostDisplay({ post, reset, setReset, allUsers }) {
     const location = useLocation();
     const [showDmPopup, setShowDmPopup] = useState(false);
     const [sendTo, setSendTo] = useState({});
 
-    useEffect(() => { getUser() }, []);
     function toggleDmPopup(id, name) {
         setSendTo({id: id, name: name})
         { showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true) }
       }
-    const getUser = () => {
-        fetch(`http://127.0.0.1:8080/api/users${post.user_id}`)
-            .then(response => response.json())
-            .then(user => {
-                setCurrentPic(user.profile_pic)
-            })
+
+    let profileImage;
+    for(let i = 0; i < allUsers.length; i++){
+        if(allUsers[i].id == post.user_id){
+           if(allUsers[i].profile_pic == null){
+            profileImage = <Avatar color="blue" name={post.poster} round={true} size={150} textSizeRatio={2} maxInitials={2} />
+           }else{
+           profileImage = <Avatar src={allUsers[i].profile_pic} className="rounded" size={150} />
+           }
+        }
     }
-
-
+    
     const handlePostDelete = (post) => {
         fetch(`http://127.0.0.1:8080/api/mythings/${post.id}`, {
             method: 'DELETE'
@@ -35,24 +36,18 @@ function PostDisplay({ post, reset, setReset }) {
     };
 
 
-    let profileImage;
+    
     const dateCreated = new Date(post.createdAt);
-    currentPic === null
-        ?
-        profileImage = <Avatar color="blue" name={post.priority} round={true} size={150} textSizeRatio={2} maxInitials={2} />
-        :
-        profileImage = <Avatar src={currentPic} className="rounded" size={150} />
     return (
         <>
              {showDmPopup ? <SendAutoMessage sendTo={sendTo} setShowDmPopup={setShowDmPopup}/> : ""}
             <TbArrowsMaximize className="white maximize" onClick={(e) => toggleBody(e, post)} />
             <div className="avatar-container">
-                <div onClick={() => { toggleDmPopup(post.user_id, post.priority) }}>
+                <div onClick={() => { toggleDmPopup(post.user_id, post.poster) }}>
                     {profileImage}
                 </div>
                 <div className="bold white">
-                    <span className='user-name'>{post.priority}</span><br />
-                    <span className="title yellow">{post.contactNumber}</span>
+                    <span className='user-name'>{post.poster}</span><br />
                 </div>
             </div>
             <div className='post-body' id='post-body' >

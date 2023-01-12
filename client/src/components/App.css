@@ -214,6 +214,11 @@ svg {
   text-overflow: ellipsis;
 }
 
+.turn-off-button {
+  pointer-events: none;
+  color: grey !important;
+}
+
 /******************* LOGIN / REGISTER *******************/
 
 .full-page {
@@ -265,6 +270,10 @@ svg {
   min-height: 1.5em;
 }
 
+
+.password-message {
+  min-height: 24px;
+}
 
 /*******************PUBLIC FEED********************* */
 

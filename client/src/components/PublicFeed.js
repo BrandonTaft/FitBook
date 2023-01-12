@@ -8,23 +8,26 @@ import * as actionCreators from '../store/creators/actionCreators';
 function PublicFeed(props) {
   useEffect(() => {
     props.onPublicPostsLoaded()
+    props.onAllUsersLoaded()
   }, []);
   return (
     <>
-      <Card publicPosts={props.posts} />
+      <Card publicPosts={props.posts} allUsers={props.allUsers} />
     </>
   )
 }
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onPublicPostsLoaded: () => dispatch(actionCreators.fetchPublicPosts())
+    onPublicPostsLoaded: () => dispatch(actionCreators.fetchPublicPosts()),
+    onAllUsersLoaded: () => dispatch(actionCreators.fetchAllUsers())
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    posts: state.posts
+    posts: state.posts,
+    allUsers: state.allUsers
   }
 }
 

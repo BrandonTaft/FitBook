@@ -72,8 +72,7 @@ app.get('/auth/google',  passport.authenticate('google', { scope: ['profile','em
 app.get('/googleRedirect', passport.authenticate('google'), async (req, res, next)=>{
     console.log('redirected', req.user)
     let googleUser = {
-        displayName: req.user.displayName,
-        name: req.user.name.givenName,
+        name: req.user.displayName,
         email: req.user._json.email,
         googleId: req.user.id,
         provider: req.user.provider }
@@ -99,7 +98,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 //res.json({ success: true, token: token, user: user })
                 res.cookie('name', user.name, {httpOnly: false});
                 res.cookie('token', token, {httpOnly: false});
-                res.cookie('user_id', user.id, {httpOnly: false});
+                res.cookie('user_Id', user.id, {httpOnly: false});
                 res.writeHead(302, {
                     'Location': 'http://localhost:3000/feed'
                   });
@@ -108,11 +107,16 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
             }
         })
     }else{
+        models.Users.update(
+            { isLoggedIn: true },
+            { where: { id: existingUser.id } }
+        )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
     res.cookie('name', existingUser.name, {httpOnly: false});
     res.cookie('token', token, {httpOnly: false});
-    res.cookie('user_id', existingUser.id, {httpOnly: false});
+    res.cookie('user_Id', existingUser.id, {httpOnly: false});
+    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
         'Location': 'http://localhost:3000/feed'
       });
@@ -141,7 +145,6 @@ app.post('/api/register', async (req, res) => {
                 const user = models.Users.build({
                     name: name,
                     password: hash,
-                    title: title,
                     isLoggedIn: false,
                 })
 
@@ -186,7 +189,8 @@ app.post('/api/login', async (req, res) => {
 })
 
 //***************************GET ALL USERS***************************//
-app.get('/api/all-users', authenticate, (req, res) => {
+app.get('/api/all-users', (req, res) => {
+    console.log("iran")
     models.Users.findAll({})
         .then(users => {
             res.json(users)
@@ -417,20 +421,17 @@ app.get('/api/myposts/:user_Id', authenticate, (req, res) => {
 app.post('/api/addpost', (req, res) => {
     const name = req.body.name
     const description = req.body.description
-    const priority = req.body.priority
+    const poster = req.body.poster
     const link = req.body.link
-    const contact = req.body.contact
     const user_id = req.body.userId
     const title = req.body.title
     const thing = models.Things.build({
         name: name,
         link: link,
-        contact: contact,
         description: description,
-        priority: priority,
+        poster: poster,
         score: 0,
         user_id: user_id,
-        contactNumber: title
     })
     thing.save()
         .then(savedThing => {
@@ -596,7 +597,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //     const name = req.body.name
 //     const duedate = req.body.duedate
 //     const description = req.body.description
-//     const priority = req.body.priority
+//     const poster = req.body.poster
 //     const link = req.body.link
 //     const contact = req.body.contact
 //     const contactNumber = req.body.contactNumber
@@ -606,7 +607,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //         name: name,
 //         duedate: duedate,
 //         description: description,
-//         priority: priority,
+//         poster: poster,
 //         link: link,
 //         contact: contact,
 //         contactNumber: contactNumber,

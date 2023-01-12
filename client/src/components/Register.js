@@ -14,6 +14,14 @@ function Register(props) {
             [e.target.name]: e.target.value
         })
     }
+    let showButton;
+    let passwordMessage;
+    if(user.password != user.passwordCopy){
+        passwordMessage = "Passwords Must Match"
+        showButton = "turn-off-button"
+    }else{
+        showButton = ""
+    }
     const handleRegisterButton = () => {
         fetch('http://127.0.0.1:8080/api/register', {
             method: 'POST',
@@ -43,11 +51,9 @@ function Register(props) {
                 </div>
                 <input className="textbox" type="text" name="name" onChange={handleRegisterChange} placeholder="*Enter Desired User name" />
                 <input className="textbox" type="password" name="password" onChange={handleRegisterChange} placeholder="*Enter Desired Password" />
-                <div className='tooltip'>
-                    <input className="textbox mb-2" title="hey" type="text" name="title" onChange={handleRegisterChange} placeholder=" Enter A Title" />
-                    <span className='highlight'>i.e. Newbie, Trainer, Gym Rat, Foodie</span>
-                </div>
-                <button className="btn mb-1" onClick={handleRegisterButton}>SUBMIT</button>
+                <input className="textbox" type="password" name="passwordCopy" onChange={handleRegisterChange} placeholder="*Re-Enter Desired Password" />
+                <span className='highlight password-message'>{passwordMessage}</span>
+                <button id="register-button" className={`btn mb-1 ${showButton}`} onClick={handleRegisterButton}>SUBMIT</button>
                 <NavLink to="/" className='highlight'>Back To Login</NavLink>
             </div>
         </div>

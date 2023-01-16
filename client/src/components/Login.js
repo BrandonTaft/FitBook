@@ -52,6 +52,14 @@ function Login(props) {
                 <a href="http://127.0.0.1:8080/auth/google">google</a>
                 <button className="btn mb-1" onClick={handleLogin}>LOGIN</button>
                 <NavLink to="/register" className='mb-1'> <button className="btn">REGISTER</button></NavLink>
+                <div id="gSignInWrapper">
+                    <span class="label">Sign in with:</span>
+                    <div id="customBtn" class="customGPlusSignIn">
+                        <span class="icon"></span>
+                        <span class="buttonText">Google</span>
+                    </div>
+                </div>
+                <div id="name"></div>
             </div>
         </div>
     )

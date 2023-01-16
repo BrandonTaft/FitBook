@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import Cookies from 'js-cookie';
 import Post from "./Post";
 import { addPostPopup } from "../utils/utils";
 import { RiLogoutBoxFill, RiMoonClearFill, RiSunFill, RiDraftFill, RiDiscussFill, RiHomeSmileFill } from "react-icons/ri";
@@ -6,8 +7,8 @@ import Avatar from 'react-avatar';
 import "./App.css"
 
 function Navbar({ theme, switchTheme }) {
-    const profilePic = localStorage.getItem('profile_pic')
-    const name = localStorage.getItem('name')
+    const profilePic = Cookies.get('profile_pic')
+    const name = Cookies.get('name');
     return (
         <nav className="navBar">
             {theme === 'light'
@@ -26,7 +27,7 @@ function Navbar({ theme, switchTheme }) {
                 <RiDiscussFill className='nav-icon message-icon icon highlight' />
             </NavLink>
             <RiDraftFill className='nav-icon icon highlight' onClick={addPostPopup} />
-            {profilePic === 'invalid'
+            {`${profilePic}` == "null"
                 ?
                 <NavLink to="/profile">
                     <Avatar

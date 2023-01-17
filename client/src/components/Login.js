@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from "react-router-dom";
 import Cookies from 'js-cookie';
 import logo from "../assets/logo-aqua.png";
+import google from "../assets/google.png";
+import facebook from "../assets/fb.png"
 import "./App.css";
 
 
@@ -40,26 +42,37 @@ function Login(props) {
     return (
         <div className="full-page flex-column">
             <div className='login-container flex-column'>
-                <div className="mb-2">
-                    <img src={logo} alt="logo" height={150} width={250} />
+                <div className="mb-1">
+                    <img src={logo} alt="logo" height={135} width={180} />
                 </div>
-                <h2>LOGIN</h2>
+                <h3 className='text m-0'>LOGIN</h3>
                 <input className="textbox" type="text" name="name" onChange={handleLoginChange} placeholder="User name" />
                 <input className="textbox" type="password" name="password" onChange={handleLoginChange} placeholder="Password" />
                 <div className="warning auth-error">
                     {message && <span>{message}</span>}
                 </div>
-                <a href="http://127.0.0.1:8080/auth/google">google</a>
                 <button className="btn mb-1" onClick={handleLogin}>LOGIN</button>
-                <NavLink to="/register" className='mb-1'> <button className="btn">REGISTER</button></NavLink>
-                <div id="gSignInWrapper">
-                    <span class="label">Sign in with:</span>
-                    <div id="customBtn" class="customGPlusSignIn">
-                        <span class="icon"></span>
-                        <span class="buttonText">Google</span>
-                    </div>
+                <NavLink to="/register" className='mb-0'> <button className="btn">REGISTER</button></NavLink>
+                <div className='or-container'>
+                    <span className='sm-divider text'></span>
+                    <span className='text or'>or</span>
+                    <span className='sm-divider text'></span>
                 </div>
-                <div id="name"></div>
+                <a className='sm-button-container mb-1' href="http://127.0.0.1:8080/auth/google">
+                    <div class="sm-button">
+                        <img className="sm-icon" src={google} />
+                        <span className="sm-button-text">Sign in with Google</span>
+                    </div>
+                </a>
+                <a className='sm-button-container' href="http://127.0.0.1:8080/auth/google">
+                    <div class="sm-button facebook">
+                        <img className="sm-icon facebook" src={facebook} />
+                        <span className="sm-button-text">Sign in with FaceBook</span>
+                    </div>
+                </a>
+                <p className="login-copyright copyright">
+                    Copyright &copy; {new Date().getFullYear()} Brandon Taft &nbsp;
+                </p>
             </div>
         </div>
     )

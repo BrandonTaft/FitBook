@@ -52,10 +52,14 @@
   --fill: white;
 }
 
-#root {
+/* #root {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+} */
+
+.text {
+  color: var(--text-primary);
 }
 
 .background {
@@ -67,6 +71,7 @@
 
 body {
   background-color: var(--background);
+  font-family: 'Roboto', sans-serif;
 }
 
 .theme-toggle {
@@ -110,6 +115,10 @@ body {
 
 .ma {
   margin: auto;
+}
+
+.m-0 {
+  margin: 0;
 }
 
 .m-1 {
@@ -170,6 +179,10 @@ h2 {
   margin: 0.25em;
 }
 
+h3 {
+  font-family: 'Roboto', sans-serif;
+}
+
 a {
   text-decoration: none;
 }
@@ -222,14 +235,15 @@ svg {
 /******************* LOGIN / REGISTER *******************/
 
 .full-page {
-  height: 100vh;
+ min-height: 100vh;
   justify-content: center;
 }
 
 .login-container {
   border: 1px solid var(--text-primary);
   border-radius: 10px;
-  padding: 40px;
+  padding: 30px;
+  padding-bottom: 5px;
 }
 
 .flex-column {
@@ -241,73 +255,98 @@ svg {
 .textbox {
   border-radius: 10px;
   width: 250px;
-  margin: 7px;
-  padding: .5em;
-  font-size: 1em;
+  margin: 5px;
+  padding: 5px;
+  font-size: 16px;
 }
 
 .btn {
   background-color: #fff;
   border: none;
-  box-shadow: 0px 8px 15px black inset;
+  box-shadow: 2px 2px 1px grey;
   border-radius: 10px;
   color: #07246a;
   text-align: center;
-  font-size: 1em;
+  font-size: 12px;
   text-align: center;
-  font-weight: 500;
-  font-family: fantasy;
+  font-weight: 900;
+  font-family: 'Roboto', sans-serif;
   text-decoration: none;
-  letter-spacing: 1px;
   text-decoration: none;
   cursor: pointer;
   padding: .3em 0em;
-  margin: 5px;
+  margin: 3px;
   min-width: 100px;
+}
+
+.btn:active {
+  box-shadow: 1px 1px 0px grey;
 }
 
 .auth-error {
   min-height: 1.5em;
 }
 
-
 .password-message {
   min-height: 24px;
 }
 
-#customBtn {
+.sm-button {
+  cursor: pointer;
   display: inline-block;
   background: white;
   color: #444;
   width: 190px;
-  border-radius: 5px;
+  padding: 3px;
+  border-radius: 10px;
   border: thin solid #888;
-  box-shadow: 1px 1px 1px grey;
+  box-shadow: 2px 1px 1px grey;
   white-space: nowrap;
 }
-#customBtn:hover {
-  cursor: pointer;
+
+.sm-button.facebook {
+  background-color: #2374f2;
+  color: #fff;
 }
-span.label {
-  font-family: serif;
-  font-weight: normal;
-}
-span.icon {
-  background: url('../assets/g.png') transparent 5px 50% no-repeat;
+
+.sm-icon {
   display: inline-block;
   vertical-align: middle;
-  width: 42px;
-  height: 42px;
+  width: 33px;
 }
-span.buttonText {
+
+.sm-icon.facebook {
+  width: 25px;
+  padding: 0px 3px 0px 4px;
+}
+
+.sm-button-text {
   display: inline-block;
   vertical-align: middle;
-  padding-left: 42px;
-  padding-right: 42px;
   font-size: 14px;
   font-weight: bold;
-  /* Use the Roboto font that is loaded in the <head> */
   font-family: 'Roboto', sans-serif;
+}
+
+.sm-divider {
+  background-color: aliceblue;
+  width: 60px;
+  height: 3px;
+  border-radius: 5px;
+}
+
+.or-container {
+  margin: 12px 0;
+}
+
+.or {
+  margin: 0 1em;
+}
+
+.login-copyright {
+  font-size: 12px;
+  margin-top: 30px !important;
+  color: aliceblue;
 }
 
 /*******************PUBLIC FEED********************* */

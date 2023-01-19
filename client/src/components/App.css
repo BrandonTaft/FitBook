@@ -227,6 +227,10 @@ svg {
   text-overflow: ellipsis;
 }
 
+.underline {
+  text-decoration: underline;
+}
+
 .turn-off-button {
   pointer-events: none;
   color: grey !important;
@@ -299,9 +303,12 @@ svg {
   width: 190px;
   padding: 3px;
   border-radius: 10px;
-  border: thin solid #888;
-  box-shadow: 2px 1px 1px grey;
+  box-shadow: 2px 2px 1px grey;
   white-space: nowrap;
+}
+
+.sm-button:active {
+  box-shadow: 1px 1px 0px grey;
 }
 
 .sm-button.facebook {
@@ -747,6 +754,7 @@ svg {
   color: aliceblue;
   border: 1px solid #fff;
   border-radius: 50%;
+  margin-bottom: 10px;
   margin-right: auto;
 }
 
@@ -779,14 +787,18 @@ svg {
 }
 
 .upload-image-popup {
-  position: absolute;
-  top: 80px;
+  position: fixed;
+  top: 70px;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 99;
 }
 
-.image.form {}
+.image.form {
+  background-color: hsl(0, 2%, 9%, 0.99);
+  color: var(--text-primary);
+}
 
 .profile-bottom {
   display: flex;
@@ -832,6 +844,15 @@ svg {
   color: var(--text-primary);
   padding: 3px;
   cursor: pointer;
+}
+
+.upload-img-input {
+  width: 185px;
+  margin: 20px 0px;
+}
+
+.submit.btn{ 
+  min-width: 75px;
 }
 
 /* ****************** FOOTER ********************* */

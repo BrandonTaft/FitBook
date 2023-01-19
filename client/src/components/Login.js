@@ -58,17 +58,13 @@ function Login(props) {
                     <span className='text or'>or</span>
                     <span className='sm-divider text'></span>
                 </div>
-                <a className='sm-button-container mb-1' href="http://127.0.0.1:8080/auth/google">
-                    <div class="sm-button">
-                        <img className="sm-icon" src={google} />
-                        <span className="sm-button-text">Sign in with Google</span>
-                    </div>
+                <a className="sm-button mb-1" href="http://127.0.0.1:8080/auth/google">
+                    <img className="sm-icon" src={google} />
+                    <span className="sm-button-text">Sign in with Google</span>
                 </a>
-                <a className='sm-button-container' href="http://127.0.0.1:8080/auth/google">
-                    <div class="sm-button facebook">
-                        <img className="sm-icon facebook" src={facebook} />
-                        <span className="sm-button-text">Sign in with FaceBook</span>
-                    </div>
+                <a className="sm-button facebook" href="http://127.0.0.1:8080/auth/facebook">
+                    <img className="sm-icon facebook" src={facebook} />
+                    <span className="sm-button-text">Sign in with FaceBook</span>
                 </a>
                 <p className="login-copyright copyright">
                     Copyright &copy; {new Date().getFullYear()} Brandon Taft &nbsp;

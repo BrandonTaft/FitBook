@@ -25,7 +25,7 @@ export const fetchPublicPosts = () => {
 
 export const fetchMail = () => {
   return (dispatch) => {
-    const name = localStorage.getItem('name')
+    const name = Cookies.get('name')
     const token = Cookies.get('token');
     fetch(`http://127.0.0.1:8080/api/getmail/${name}`, {
       method: 'GET',

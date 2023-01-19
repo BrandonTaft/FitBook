@@ -3,6 +3,7 @@ import { timeSince } from '../utils/utils.js';
 import Avatar from 'react-avatar';
 import { FaRegComment } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
+import Cookies from 'js-cookie';
 
 function Comments({ post }) {
   const [comments, setComments] = useState([])
@@ -36,7 +37,7 @@ function Comments({ post }) {
     setNewComment({
       userId: currentUserId,
       spare: currentUser,
-      pic: localStorage.getItem('profile_pic'),
+      pic: Cookies.get('profile_pic'),
       [event.target.name]: event.target.value
     })
   }

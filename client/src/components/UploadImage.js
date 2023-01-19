@@ -31,10 +31,10 @@ class UploadImage extends React.Component {
     handlePositionChange = (position) => {
         this.setState({ position });
     };
-
+    
     setEditorRef = (editor) => (this.editor = editor);
     async handleSubmit(e) {
-        if (this.editor) {
+        if (this.editor.state.image.resource) {
             // This returns a HTMLCanvasElement, it can be made into a data URL or a blob,
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
@@ -49,7 +49,7 @@ class UploadImage extends React.Component {
                 .then(result => {
                     if (result.success) {
                         let url = encodeURIComponent(result.url)
-                        localStorage.setItem('profile_pic', result.url)
+                        Cookies.set('profile_pic', result.url)
                         fetch(`http://127.0.0.1:8080/api/update-user/${userId}/${url}`, {
                             method: 'PUT'
                         })
@@ -59,6 +59,8 @@ class UploadImage extends React.Component {
                     this.props.reset ? this.props.setReset(false) : this.props.setReset(true)
                     History.push('/profile')
                 })
+        }else{
+            window.alert("Please choose a valid image")
         }
     }
     render() {
@@ -80,17 +82,17 @@ class UploadImage extends React.Component {
                         className="editor-canvas"
                     />
                 </div>
-                <br />
-                <label>
+                <span className="underline" >Upload Photo</span>
+                
                     <input
                         name="upload-img-input"
+                        className="upload-img-input"
                         type="file"
                         onChange={this.handleNewImage}
                     />
-                    <h3 className="yellow" >Upload Photo</h3>
-                </label>
-                <br />
-                <h3 className="yellow">Zoom</h3>
+            
+               
+                <span className="yellow">Zoom</span>
                 <input
                     name="scale"
                     type="range"
@@ -101,7 +103,7 @@ class UploadImage extends React.Component {
                     defaultValue="1"
                 />
                 <div>
-                    <button onClick={this.handleSubmit}>
+                    <button className="submit btn" onClick={this.handleSubmit}>
                         SUBMIT
                     </button>
                 </div>

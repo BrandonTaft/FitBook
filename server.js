@@ -8,6 +8,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport')
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const FaceBookStrategy = require('passport-facebook').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
 app.use(express.json());
@@ -57,7 +58,7 @@ passport.use(new GoogleStrategy({
 
 // These functions are required for getting data To/from JSON returned from Providers
 passport.serializeUser(function(user, done) {
-    console.log('I should have jack ')
+    console.log('done', )
     done(null, user)
 })
 passport.deserializeUser(function(obj, done) {
@@ -74,6 +75,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
     let googleUser = {
         name: req.user.displayName,
         email: req.user._json.email,
+        profile_pic: req.user.photos[0].value,
         googleId: req.user.id,
         provider: req.user.provider }
     const existingUser = await models.Users.findOne({
@@ -89,6 +91,89 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
             } else {
                 user = await models.Users.build({
                     name: googleUser.name,
+                    password: hash,
+                    profile_pic: googleUser.profile_pic,
+                    isLoggedIn: true,
+                })
+                let savedUser = await user.save()
+                if (savedUser != null) {
+                    const token = jwt.sign({ id: user.id }, "SECRETKEY")
+                //res.json({ success: true, token: token, user: user })
+                res.cookie('name', user.name, {httpOnly: false});
+                res.cookie('token', token, {httpOnly: false});
+                res.cookie('user_Id', user.id, {httpOnly: false});
+                res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
+                res.writeHead(302, {
+                    'Location': 'http://localhost:3000/feed'
+                  });
+                res.end()
+                }
+            }
+        })
+    }else{
+        models.Users.update(
+            { isLoggedIn: true },
+            { where: { id: existingUser.id } }
+        )
+        console.log("EXISTING", existingUser)
+    const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
+    res.cookie('name', existingUser.name, {httpOnly: false});
+    res.cookie('token', token, {httpOnly: false});
+    res.cookie('user_Id', existingUser.id, {httpOnly: false});
+    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
+    res.writeHead(302, {
+        'Location': 'http://localhost:3000/feed'
+      });
+    res.end()
+    }
+})
+
+passport.use(new FaceBookStrategy({
+    clientID: "707560370871888",
+    clientSecret: "b4d29f94371876c8c1360d14bb813944",
+    callbackURL: "https://localhost:8080/facebookRedirect"
+  },
+  function(accessToken, refreshToken, profile, done) {
+      //console.log(accessToken, refreshToken, profile)
+      console.log("Facebook BASED OAUTH VALIDATION GETTING CALLED")
+      return done(null, profile)
+  }
+))
+
+// These functions are required for getting data To/from JSON returned from Providers
+passport.serializeUser(function(user, done) {
+    console.log('I should have jack ')
+    done(null, user)
+})
+passport.deserializeUser(function(obj, done) {
+    console.log('I wont have jack shit')
+    done(null, obj)
+})
+
+// OAuth Authentication, Just going to this URL will open OAuth screens
+app.get('/auth/facebook',  passport.authenticate('facebook', { scope: ['profile','email'] }))
+
+// Oauth user data comes to these redirectURLs
+app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res, next)=>{
+    console.log('redirected', req.user)
+    let facebookUser = {
+        name: req.user.displayName,
+        email: req.user._json.email,
+        facebookId: req.user.id,
+        provider: req.user.provider }
+    const existingUser = await models.Users.findOne({
+        where: sequelize.where(
+            sequelize.fn('lower', sequelize.col('name')),
+            sequelize.fn('lower', facebookUser.name)
+        )
+    })
+    if (existingUser == null) {
+        bcrypt.hash(facebookUser.facebookId, salt, async (error, hash) => {
+            if (error) {
+                res.json({ message: "Something Went Wrong!!!" })
+            } else {
+                user = await models.Users.build({
+                    name: facebookeUser.name,
                     password: hash,
                     isLoggedIn: true,
                 })
@@ -123,6 +208,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
     res.end()
     }
 })
+
 
 //***************************REGISTRATION PAGE***************************//
 

@@ -25,7 +25,7 @@ function Private() {
     getPic()
     fetchMyPosts()
   }, [reset]);
-
+console.log(profilePic)
   const getPic = () => {
    `${profilePic}` == "null" ? setPic(false) : setPic(true)
   }

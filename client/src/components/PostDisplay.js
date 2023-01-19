@@ -16,6 +16,7 @@ function PostDisplay({ post, reset, setReset, allUsers }) {
       }
 
     let profileImage;
+    if(allUsers){
     for(let i = 0; i < allUsers.length; i++){
         if(allUsers[i].id == post.user_id){
            if(allUsers[i].profile_pic == null){
@@ -25,6 +26,7 @@ function PostDisplay({ post, reset, setReset, allUsers }) {
            }
         }
     }
+}
     
     const handlePostDelete = (post) => {
         fetch(`http://127.0.0.1:8080/api/mythings/${post.id}`, {

@@ -7,6 +7,7 @@ function Logout(props) {
     Cookies.remove('token')
     Cookies.remove('name')
     Cookies.remove('user_Id')
+    Cookies.remove('user') //cloudinary
     Cookies.remove('profile_pic')
         fetch('http://127.0.0.1:8080/api/logout', {
                 method: 'PUT',

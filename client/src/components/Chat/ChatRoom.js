@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Cookies from 'js-cookie';
 import "../App.css";
 import useChat from "./useChat";
 import { MdOutlineSend } from "react-icons/md";
@@ -10,7 +11,7 @@ const ChatRoom = (props) => {
   const [newMessage, setNewMessage] = useState(""); // Message to be sent
   const [savedChat, setSavedChat] = useState();
   const [oldChats, setOldChats] = useState([]); 
-  const token = localStorage.getItem('token');
+  const token = Cookies.get('token');
   useEffect(() => {
     getSavedChats()
   }, [])
@@ -33,8 +34,8 @@ const ChatRoom = (props) => {
     setSavedChat({
       roomId: roomId,
       body: event.target.value,
-      pic: localStorage.getItem('profile_pic'),
-      name: localStorage.getItem('name'),
+      pic: Cookies.get('profile_pic'),
+      name: Cookies.get('name'),
     })
   };
 

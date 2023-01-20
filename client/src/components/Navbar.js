@@ -42,6 +42,7 @@ function Navbar({ theme, switchTheme }) {
                 <NavLink to="/profile">
                     <Avatar
                         src={profilePic}
+                        referrerPolicy="no-referrer"
                         className="rounded mt-3"
                         size={50}
                     />

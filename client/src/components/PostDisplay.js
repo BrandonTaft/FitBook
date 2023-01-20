@@ -22,7 +22,7 @@ function PostDisplay({ post, reset, setReset, allUsers }) {
            if(allUsers[i].profile_pic == null){
             profileImage = <Avatar color="blue" name={post.poster} round={true} size={150} textSizeRatio={2} maxInitials={2} />
            }else{
-           profileImage = <Avatar src={allUsers[i].profile_pic} className="rounded" size={150} />
+           profileImage = <Avatar src={allUsers[i].profile_pic} referrerPolicy="no-referrer" className="rounded" size={150} />
            }
         }
     }

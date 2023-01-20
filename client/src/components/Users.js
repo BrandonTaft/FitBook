@@ -23,7 +23,7 @@ function Users(props) {
             ?
             <Avatar name={user.name} round={true} size={80} />
             :
-            <Avatar id={user.id} src={user.profile_pic} className="rounded" size={80} />
+            <Avatar id={user.id} src={user.profile_pic} referrerPolicy="no-referrer" className="rounded" size={80} />
           }
           <div className='text-secondary current-user-name'>{user.name}</div>
         </div>

@@ -41,6 +41,10 @@ export function toggleBody(event) {
 
 export function addPostPopup() {
   document.getElementById('add-post').classList.toggle('add-post-popup')
+  let close = document.getElementsByClassName('swap');
+    for (let i = 0; i < close.length; i++) {
+      close[i].classList.remove('show-comments');
+    }
 }
 
 export function sendMailPopup() {

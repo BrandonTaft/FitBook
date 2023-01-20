@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Cookies from 'js-cookie';
 import history from "../store/History";
 import { MdClose } from "react-icons/md";
 import { sendMailPopup } from '../utils/utils';
@@ -18,7 +19,7 @@ function AutoCompleteForm({ showList, setShowList }) {
     }, [showList])
 
     const getAllUsernames = () => {
-        const token = localStorage.getItem('token')
+        const token = Cookies.get('token')
         fetch('http://127.0.0.1:8080/api/all-usernames', {
             method: 'GET',
             headers: {

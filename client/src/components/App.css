@@ -420,7 +420,6 @@ svg {
   font-size: 1.15em;
   color: #fff;
   top: 10%;
-  overflow: auto;
   margin: 5px;
   z-index: 99;
 }
@@ -435,7 +434,7 @@ svg {
   min-height: 60%;
   max-height: 200%;
   padding: 10px;
-  top: 35%;
+  top: 100%;
   left: 0;
   right: 0;
   z-index: 99;
@@ -579,10 +578,7 @@ svg {
 }
 
 .maximize {
-  position: absolute;
-  left: 20px;
-  top: 10px;
-  font-size: 30px;
+ display: none;
 }
 
 .see-more {
@@ -619,6 +615,14 @@ svg {
 @media(min-width: 600px) {
   .grid-container {
     grid-template-columns: auto auto;
+  }
+
+  .maximize {
+    display: block;
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    font-size: 30px;
   }
 }
 
@@ -759,7 +763,7 @@ svg {
 }
 
 .form {
-  background-color: hsl(0, 2%, 9%, 0.95);
+  background-color: hsl(0, 2%, 9%, 1);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -832,6 +836,7 @@ svg {
 
 .message {
   display: flex;
+  color: var(--text-primary);
 }
 
 .edit-image-icon {
@@ -983,17 +988,15 @@ svg {
 }
 
 .user.dm-popup {
-  position: fixed;
+  position: absolute;
   background-color: #171718;
   z-index: 2;
   top: 25%;
   border-radius: 10px;
-  width: 350px;
-  height: 250px;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  padding: 30px 0px;
+  padding: 30px 20px;
   align-items: center;
   display: flex;
   flex-direction: column;
@@ -1005,8 +1008,6 @@ svg {
 
 @media only screen and (min-width: 768px) {
   .user.dm-popup {
-    width: 600px;
-    height: 300px;
     top: 50%;
     left: 50%;
      /* Negative half of height. */

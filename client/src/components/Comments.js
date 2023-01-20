@@ -8,19 +8,17 @@ import Cookies from 'js-cookie';
 function Comments({ post }) {
   const [comments, setComments] = useState([])
   const [newComment, setNewComment] = useState()
-  const currentUser = localStorage.getItem('name')
-  const currentUserId = localStorage.getItem('user_Id')
+  const currentUser = Cookies.get('name')
+  const currentUserId = Cookies.get('user_Id')
   const [count, setCount] = useState(0)
   let total = 0;
 
   useEffect(() => {
     getComments()
-    return () => {
-      setComments([]); //clean up
-    };
   }, [count]);
 
   const openComments = (event) => {
+    document.getElementById('add-post').classList.remove('add-post-popup')
     let close = document.getElementsByClassName('swap');
     for (let i = 0; i < close.length; i++) {
       close[i].classList.remove('show-comments');
@@ -53,7 +51,6 @@ function Comments({ post }) {
     }).then(response => response.json())
       .then(result => {
         if (result.success) {
-          getComments()
           setCount(count + 1)
         }
       })
@@ -79,7 +76,7 @@ function Comments({ post }) {
     }).then(response => response.json())
       .then(result => {
         getComments()
-        setCount(count + 1)
+        document.getElementById(`comment${comment.id}`).classList.add('hide-comment-delete-btn')
       })
   }
 
@@ -99,7 +96,7 @@ function Comments({ post }) {
       :
       commentImage = <Avatar src={comment.pic} className="rounded" />
     return (
-      <div key={comment.id} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
+      <div key={comment.id} id={`comment${comment.id}`} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
         <div className="yellow comment-image">
           {commentImage}
           <span className="spare">{comment.spare}</span>

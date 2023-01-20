@@ -82,6 +82,7 @@ console.log(profilePic)
                 src={profilePic}
                 className="rounded"
                 size={150}
+                referrerPolicy="no-referrer"
               />
               :
               <Avatar

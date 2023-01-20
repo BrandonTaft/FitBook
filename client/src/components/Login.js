@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from "react-router-dom";
 import Cookies from 'js-cookie';
 import logo from "../assets/logo-aqua.png";
@@ -26,7 +26,7 @@ function Login(props) {
             body: JSON.stringify(credentials)
         }).then(response => response.json())
             .then(result => {
-                if (result.success == true) {
+                if (result.success === true) {
                     Cookies.set('token', result.token)
                     Cookies.set('name', result.user.name)
                     Cookies.set('user_Id', result.user.id)
@@ -59,11 +59,11 @@ function Login(props) {
                     <span className='sm-divider text'></span>
                 </div>
                 <a className="sm-button mb-1" href="http://127.0.0.1:8080/auth/google">
-                    <img className="sm-icon" src={google} />
+                    <img className="sm-icon" alt='google-logo' src={google} />
                     <span className="sm-button-text">Sign in with Google</span>
                 </a>
                 <a className="sm-button facebook" href="http://127.0.0.1:8080/auth/facebook">
-                    <img className="sm-icon facebook" src={facebook} />
+                    <img className="sm-icon facebook" alt='facebook-logo' src={facebook} />
                     <span className="sm-button-text">Sign in with FaceBook</span>
                 </a>
                 <p className="login-copyright copyright">

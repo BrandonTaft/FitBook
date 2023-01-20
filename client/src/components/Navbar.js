@@ -27,7 +27,7 @@ function Navbar({ theme, switchTheme }) {
                 <RiDiscussFill className='nav-icon message-icon icon highlight' />
             </NavLink>
             <RiDraftFill className='nav-icon icon highlight' onClick={addPostPopup} />
-            {`${profilePic}` == "null"
+            {`${profilePic}` === "null"
                 ?
                 <NavLink to="/profile">
                     <Avatar

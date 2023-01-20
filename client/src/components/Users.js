@@ -4,19 +4,19 @@ import * as actionCreators from '../store/creators/actionCreators';
 import Avatar from 'react-avatar';
 import { SendAutoMessage } from './SendMessage';
 
-function Users(props) {
+function Users({onUsersLoaded, users}) {
   const [showDmPopup, setShowDmPopup] = useState(false);
   const [sendTo, setSendTo] = useState({});
   useEffect(() => {
-    props.onUsersLoaded()
-  }, []);
+    onUsersLoaded()
+  }, [onUsersLoaded]);
 
   function toggleDmPopup(id, name) {
     setSendTo({id: id, name: name})
-    { showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true) }
+    showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true)
   }
 
-  const allUsers = props.users.map((user) => {
+  const allUsers = users.map((user) => {
     return (
         <div key={(user.id)} className="current-user" onClick={() => { toggleDmPopup(user.id, user.name) }}>
           {user.profile_pic === null

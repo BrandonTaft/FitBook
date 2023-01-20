@@ -13,7 +13,7 @@ function AutoCompleteForm({ showList, setShowList }) {
 
     useEffect(() => {
         getAllUsernames()
-        { !showList ? count.current = 0 : count.current = count.current }
+        !showList ? count.current = 0 : count.current = count.current
         const temp = document.getElementById('auto-complete')
         temp.classList.add('temp')
     }, [showList])
@@ -64,7 +64,7 @@ function AutoCompleteForm({ showList, setShowList }) {
     //Sets message data in to the message state
     //If letter is deleted it moves the highlight back to top of list
     function handleMessage(e) {
-        { e.target.name == 'sendTo' && e.target.value.length ? setShowList(true) : setShowList(false) }
+        e.target.name === 'sendTo' && e.target.value.length ? setShowList(true) : setShowList(false)
         setMessage({
             ...message,
             sender: (localStorage.getItem('name')),
@@ -94,7 +94,7 @@ function AutoCompleteForm({ showList, setShowList }) {
         const temp = document.getElementById('auto-complete')
         if (userList) {
             //When down arrow is pressed it moves highlight down 1 in the list
-            if (e.keyCode == 40 && count.current < userList.children.length - 1) {
+            if (e.keyCode === 40 && count.current < userList.children.length - 1) {
                 temp.classList.remove('temp')
                 count.current = count.current + 1
                 const userList = document.getElementById('user-list');
@@ -108,7 +108,7 @@ function AutoCompleteForm({ showList, setShowList }) {
                 }
             }
             //When up arrow is pressed it moves highlight up 1 in the list
-            if (e.keyCode == 38 && count.current > 0) {
+            if (e.keyCode === 38 && count.current > 0) {
                 count.current = count.current - 1
                 const userList = document.getElementById('user-list');
                 let x = userList.children[count.current]
@@ -122,7 +122,7 @@ function AutoCompleteForm({ showList, setShowList }) {
             }
             //When enter key is pressed on a name it sets that name in send to property of message state
             //While making that name the value of the input box, closing the list, and resetting the key counter count
-            if (e.keyCode == 13 && count.current >= 0) {
+            if (e.keyCode === 13 && count.current >= 0) {
                 const chosenName = document.getElementById('user-list').children[count.current];
                 setMessage({
                     ...message,
@@ -134,7 +134,7 @@ function AutoCompleteForm({ showList, setShowList }) {
             }
             //When delete is pressed it resets the count which brings the highlight back to the top
             //While taking the highlight back to top by resetting count and clearing the active class
-            if (e.keyCode == 8) {
+            if (e.keyCode === 8) {
                 count.current = 0
                 for (let i = 0; i < userList.children.length; i++) {
                     userList.children[i].classList.remove('auto-complete-active')
@@ -146,7 +146,7 @@ function AutoCompleteForm({ showList, setShowList }) {
     const userSearch = userNames.map((username, index) => {
         if (showList) {
             let nameMatch;
-            if (username.substr(0, message.sendTo.length).toUpperCase() == message.sendTo.toUpperCase()) {
+            if (username.substr(0, message.sendTo.length).toUpperCase() === message.sendTo.toUpperCase()) {
                 nameMatch = <div key={index} className="user-list-item ellipses m-5" onClick={setSearchValue}>{username}</div>
             } else {
                 nameMatch = ""

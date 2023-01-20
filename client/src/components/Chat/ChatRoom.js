@@ -28,7 +28,6 @@ const ChatRoom = (props) => {
       })
   }
 
-
   const handleNewMessageChange = (event) => {
     setNewMessage(event.target.value);
     setSavedChat({
@@ -44,11 +43,6 @@ const ChatRoom = (props) => {
     sendMessage(newMessage);
     setNewMessage("");
   };
-
-  const handleSaveChats = () => {
-    
-    console.log(savedChat)
-  }
 
   const postChat = () => {
     fetch('http://127.0.0.1:8080/api/savechat', {

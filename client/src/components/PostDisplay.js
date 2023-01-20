@@ -12,13 +12,13 @@ function PostDisplay({ post, reset, setReset, allUsers }) {
 
     function toggleDmPopup(id, name) {
         setSendTo({id: id, name: name})
-        { showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true) }
+        showDmPopup ? setShowDmPopup(false) : setShowDmPopup(true)
       }
 
     let profileImage;
     if(allUsers){
     for(let i = 0; i < allUsers.length; i++){
-        if(allUsers[i].id == post.user_id){
+        if(allUsers[i].id === post.user_id){
            if(allUsers[i].profile_pic == null){
             profileImage = <Avatar color="blue" name={post.poster} round={true} size={150} textSizeRatio={2} maxInitials={2} />
            }else{

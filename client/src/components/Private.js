@@ -13,22 +13,36 @@ function Private() {
   const [myPosts, setMyPosts] = useState([]);
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
-  //const name = localStorage.getItem('name');
   const title = localStorage.getItem('title');
-  //const profilePic = localStorage.getItem('profile_pic');
-  //const token = localStorage.getItem('token');
   const name = Cookies.get('name');
   const token = Cookies.get('token');
   const userId = Cookies.get('user_Id');
   const profilePic = Cookies.get('profile_pic')
   useEffect(() => {
+    const getPic = () => {
+      `${profilePic}` === "null" ? setPic(false) : setPic(true)
+    }
+    function fetchMyPosts() {
+      fetch(`http://127.0.0.1:8080/api/myposts/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+        .then(response => response.json())
+        .then(myPosts => {
+          if (myPosts) {
+            setMyPosts(myPosts)
+          } else {
+            setMyPosts("")
+          }
+        })
+    }
     getPic()
     fetchMyPosts()
   }, [reset]);
-console.log(profilePic)
-  const getPic = () => {
-   `${profilePic}` == "null" ? setPic(false) : setPic(true)
-  }
+
+
 
   const deleteProfile = () => {
     fetch('http://127.0.0.1:8080/api/delete-profile', {
@@ -36,32 +50,17 @@ console.log(profilePic)
       headers: {
         'Authorization': `Bearer ${token}`
       }
-    }) .then(response => response.json())
-    .then(result => {
-      if (result) {
+    }).then(response => response.json())
+      .then(result => {
+        if (result) {
           history.push('/logout')
-      }else{
-        history.push('/feed')
-      }
-      })
-  }
-
-  function fetchMyPosts() {
-    fetch(`http://127.0.0.1:8080/api/myposts/${userId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
-      .then(response => response.json())
-      .then(myPosts => {
-        if (myPosts) {
-          setMyPosts(myPosts)
         } else {
-          setMyPosts("")
+          history.push('/feed')
         }
       })
   }
+
+
 
   return (
     <>
@@ -70,10 +69,6 @@ console.log(profilePic)
         <UploadImage reset={reset} setReset={setReset} />
       </div>
       <div className='profile-container'>
-        <span className='highlight' onClick={deleteProfile}>DELETE PROFILE</span>
-        <div>
-          <img id="full-logo" src={logo} alt="logo" height={150} width={250} />
-        </div>
         <div>
           <div className="avatar-container">
             {pic
@@ -81,7 +76,7 @@ console.log(profilePic)
               <Avatar
                 src={profilePic}
                 className="rounded"
-                size={150}
+                size={120}
                 referrerPolicy="no-referrer"
               />
               :
@@ -89,7 +84,7 @@ console.log(profilePic)
                 color="blue"
                 name={name}
                 round={true}
-                size={150}
+                size={120}
                 textSizeRatio={2}
                 maxInitials={2}
               />
@@ -102,12 +97,7 @@ console.log(profilePic)
           <h1 className='highlight mb-0 ellipses'>
             {name}
           </h1>
-          { title === "null"
-            ?
-            <h3 className='text-secondary mt-0'></h3>
-            :
-             <h3 className='text-secondary mt-0'> {title} </h3>
-          }
+           <span className='highlight' onClick={deleteProfile}>DELETE PROFILE</span>
           <label className='text-secondary'>
             POSTS
           </label>

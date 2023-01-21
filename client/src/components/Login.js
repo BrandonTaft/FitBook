@@ -18,7 +18,7 @@ function Login(props) {
     }
 
     const handleLogin = () => {
-        fetch('https://fitbook-self.vercel.app', {
+        fetch('https://fitbook-self.vercel.app/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

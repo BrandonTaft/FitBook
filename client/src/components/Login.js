@@ -18,7 +18,7 @@ function Login(props) {
     }
 
     const handleLogin = () => {
-        fetch('http://127.0.0.1:8080/api/login', {
+        fetch('https://fitbook-self.vercel.app', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

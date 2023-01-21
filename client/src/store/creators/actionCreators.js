@@ -47,7 +47,7 @@ export const fetchMail = () => {
 export const fetchAllUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
-    fetch('http://127.0.0.1:8080/api/all-users', {
+    fetch('https://fitbook-self.vercel.app', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

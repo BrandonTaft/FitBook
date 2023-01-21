@@ -47,7 +47,7 @@ app.use(session({
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://localhost:8080/googleRedirect"
+    callbackURL: "https://fitbook-self.vercel.app/googleRedirect"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log(accessToken, refreshToken, profile)

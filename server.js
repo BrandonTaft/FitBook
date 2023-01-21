@@ -104,7 +104,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'http://localhost:3000/feed'
+                    'Location': 'https://fitbook.surge.sh'
                   });
                 res.end()
                 }
@@ -122,7 +122,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'http://localhost:3000/feed'
+        'Location': 'https://fitbook.surge.sh'
       });
     res.end()
     }
@@ -185,7 +185,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
                 res.cookie('token', token, {httpOnly: false});
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'http://localhost:3000/feed'
+                    'Location': 'https://fitbook.surge.sh'
                   });
                 res.end()
                 }
@@ -203,7 +203,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'http://localhost:3000/feed'
+        'Location': 'https://fitbook.surge.sh'
       });
     res.end()
     }

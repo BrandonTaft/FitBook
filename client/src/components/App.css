@@ -448,6 +448,29 @@ svg {
   font-size: .75em;
 }
 
+.comment-burger {
+  position: relative;
+  top: 5px;
+}
+
+.comment-text {
+  width: 90%;
+  display: inline-flex;
+  word-break: break-word;
+  margin-right: 5px;
+}
+
+.delete-comment {
+  display: none;
+  color: #07246a;
+  font-size: 14px;
+  margin-left: auto;
+}
+
+.show-delete-comment {
+  display: block;
+}
+
 .comment-textbox {
   margin: 1px auto;
   padding: .3em;
@@ -475,6 +498,7 @@ svg {
 }
 
 .comment {
+  min-height: 40px;
   background-color: #ffffff;
   box-shadow: 0px 3px 15px black inset;
   color: black;
@@ -498,8 +522,15 @@ svg {
   width: 40px !important;
 }
 
-.spare {
+.commenter {
   margin-left: 6px;
+}
+
+.time-since {
+  display: block;
+  font-size: 12px;
+  margin-left: auto;
+  width: fit-content;
 }
 
 .show-comment-delete-btn {
@@ -510,19 +541,8 @@ svg {
   display: none;
 }
 
-
-/* @keyframes showMe {
-  0% {height: 0px;}
-  50% {height: 50px;}
-  100% {height: fit-content;}
-} */
-
 .feedback {
   display: flex;
-  /* position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0; */
   align-items: center;
   justify-content: center;
   font-size: 1.25em;
@@ -668,31 +688,6 @@ svg {
   margin-top: 9px;
 }
 
-/* .icon {
-  position: fixed;
-  top: 0;
-  right: 0;
-  z-index: 99;
-}
-
-.profile-icon {
-  position: fixed;
-  right: 50px;
-  top: 3px;
-  width: 40px;
-  height: 35px;
-}
-
-.message-icon {
-  position: fixed;
-  right: 100px;
-}
-
-.home-icon {
-  position: fixed;
-  right: 150px;
-} */
-
 .hamburger {
   cursor: pointer;
   background: transparent;
@@ -786,7 +781,6 @@ svg {
   justify-content: center;
   color: #fff;
   text-align: center;
-  margin-top: 60px;
   padding-top: 20px;
 }
 

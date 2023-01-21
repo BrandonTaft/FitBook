@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { timeSince } from '../utils/utils.js';
 import Avatar from 'react-avatar';
-import { FaRegComment } from 'react-icons/fa';
+import { FaRegComment, FaBars } from 'react-icons/fa';
 import { MdClose } from "react-icons/md";
 import Cookies from 'js-cookie';
 
@@ -16,6 +16,10 @@ function Comments({ post }) {
   useEffect(() => {
     getComments()
   }, [count]);
+
+  const handlePopUp = (id) => {
+    document.getElementById(`delete-comment${id}`).classList.toggle('show-delete-comment')
+  }
 
   const openComments = (event) => {
     document.getElementById('add-post').classList.remove('add-post-popup')
@@ -97,14 +101,20 @@ function Comments({ post }) {
       commentImage = <Avatar src={comment.pic} className="rounded" />
     return (
       <div key={comment.id} id={`comment${comment.id}`} className={comment.postId} style={comment.postId !== post.id ? { display: 'none' } : { display: 'block' }} >
-        <div className="yellow comment-image">
+        <div className="comment-image">
           {commentImage}
-          <span className="spare">{comment.spare}</span>
+          <span className="commenter">{comment.spare}</span>
+          <span className="time-since">{timeSince(dateCreated)}</span>
         </div>
-        <span className="off-white">{timeSince(dateCreated)}</span>
-        <div className='comment'>{comment.comment}</div>
-        <button className={`btn ${deleteCommentBtn}`} type='submit' onClick={() => handleCommentDelete(comment)}>Delete</button>
-      </div>
+        
+        <div className='comment'>
+          <span className='comment-text'>
+            {comment.comment}
+          </span>
+          <FaBars className={`comment-burger ${deleteCommentBtn}`} onClick={ () => handlePopUp(comment.id)} />
+        </div> 
+        <div id={`delete-comment${comment.id}`} className={`delete-comment ${deleteCommentBtn}`} type='submit' onClick={() => handleCommentDelete(comment)}>Delete</div>
+        </div>
     )
   })
 

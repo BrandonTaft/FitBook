@@ -67,7 +67,7 @@ function Login(props) {
                     <span className="sm-button-text">Sign in with FaceBook</span>
                 </a>
                 <p className="login-copyright copyright">
-                    Copyright &copy; {new Date().getFullYear()} Brandon Taft &nbsp;
+                    Copyright &copy; {new Date().getFullYear()} Brandon Taft
                 </p>
             </div>
         </div>

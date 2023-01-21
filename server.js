@@ -12,6 +12,7 @@ const FaceBookStrategy = require('passport-facebook').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
 app.use(express.json());
+app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: true, limit: 52428800 }));
@@ -42,7 +43,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   }))
-  app.use(cors());
+
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
@@ -800,4 +801,4 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')
 // })
-httpServer.listen(8080);
+httpServer.listen(8080).use(cors());

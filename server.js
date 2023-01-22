@@ -20,11 +20,7 @@ const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
 const sequelize = require('sequelize');
-const io = new Server(httpServer, {
-    cors: {
-        origin: "*",
-    },
-});
+const io = new Server(httpServer);
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -104,7 +100,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'https://fitbook.surge.sh'
+                    'Location': 'https://fitbook.surge.sh/feed'
                   });
                 res.end()
                 }
@@ -122,7 +118,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'https://fitbook.surge.sh'
+        'Location': 'https://fitbook.surge.sh/feed'
       });
     res.end()
     }
@@ -185,7 +181,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
                 res.cookie('token', token, {httpOnly: false});
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'https://fitbook.surge.sh'
+                    'Location': 'https://fitbook.surge.sh/feed'
                   });
                 res.end()
                 }
@@ -203,7 +199,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'https://fitbook.surge.sh'
+        'Location': 'https://fitbook.surge.sh/feed'
       });
     res.end()
     }
@@ -801,4 +797,4 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')
 // })
-httpServer.listen(8080).use(cors());
+httpServer.listen(8080);

@@ -36,7 +36,7 @@ cloudinary.config({
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(cookieParser())
 app.use(passport.initialize());
-var session = require('express-session')
+var session = require('cookie-session')
 app.use(session({
     secret: 'SECRETKEY',
     resave: false,

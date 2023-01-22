@@ -98,7 +98,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 let savedUser = await user.save()
                 if (savedUser != null) {
                     const token = jwt.sign({ id: user.id }, "SECRETKEY")
-                //res.json({ success: true, token: token, user: user })
+                console.log("TESTING")
                 res.cookie('name', user.name, {httpOnly: false});
                 res.cookie('token', token, {httpOnly: false});
                 res.cookie('user_Id', user.id, {httpOnly: false});

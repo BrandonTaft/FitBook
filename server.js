@@ -597,23 +597,23 @@ app.delete('/api/deletemail/:mailId', (req, res) => {
 })
 
 /******************* CHAT *******************/
-const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
-io.on("connection", (socket) => {
+// const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+// io.on("connection", (socket) => {
 
-    // Join a conversation
-    const { roomId } = socket.handshake.query;
-    socket.join(roomId);
+//     // Join a conversation
+//     const { roomId } = socket.handshake.query;
+//     socket.join(roomId);
 
-    // Listen for new messages
-    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-    });
+//     // Listen for new messages
+//     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+//         io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+//     });
 
-    // Leave the room if the user closes the socket
-    socket.on("disconnect", () => {
-        socket.leave(roomId);
-    });
-});
+//     // Leave the room if the user closes the socket
+//     socket.on("disconnect", () => {
+//         socket.leave(roomId);
+//     });
+// });
 
 //***************************ADD CHAT TO DATABASE***************************//
 app.post('/api/savechat', (req, res) => {

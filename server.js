@@ -36,13 +36,13 @@ cloudinary.config({
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(cookieParser())
 app.use(passport.initialize());
-// var session = require('express-session')
-// app.use(session({
-//     secret: 'SECRETKEY',
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { maxAge: 1000 * 60 * 60 }
-//   }))
+var session = require('express-session')
+app.use(session({
+    secret: 'SECRETKEY',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 1000 * 60 * 60 }
+  }))
 
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",

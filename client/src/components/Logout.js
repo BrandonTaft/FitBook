@@ -9,7 +9,7 @@ function Logout(props) {
     Cookies.remove('user_Id')
     Cookies.remove('user') //cloudinary
     Cookies.remove('profile_pic')
-        fetch('http://127.0.0.1:8080/api/logout', {
+        fetch('https://smapp.herokuapp.com/api/logout', {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`

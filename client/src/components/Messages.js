@@ -22,7 +22,7 @@ function Messages(props) {
   }
   
   const handleMessageDelete = (mail) => {
-    fetch(`http://127.0.0.1:8080/api/deletemail/${mail.id}`, {
+    fetch(`https://smapp.herokuapp.com/api/deletemail/${mail.id}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {

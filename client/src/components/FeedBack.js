@@ -6,7 +6,7 @@ function FeedBack({post}) {
         let score;
         score = event.currentTarget.nextSibling.innerHTML
         event.currentTarget.nextSibling.innerHTML = parseInt(score) + 1
-        fetch(`http://127.0.0.1:8080/api/update/${id}`, {
+        fetch(`https://smapp.herokuapp.com/api/update/${id}`, {
             method: 'PUT'
         }).then(response => response.json())
     }

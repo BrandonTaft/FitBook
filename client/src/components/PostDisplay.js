@@ -29,7 +29,7 @@ function PostDisplay({ post, reset, setReset, allUsers }) {
 }
     
     const handlePostDelete = (post) => {
-        fetch(`http://127.0.0.1:8080/api/mythings/${post.id}`, {
+        fetch(`https://smapp.herokuapp.com/api/mythings/${post.id}`, {
             method: 'DELETE'
         }).then(response => response.json())
             .then(result => {

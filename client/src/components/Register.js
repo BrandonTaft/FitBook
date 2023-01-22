@@ -23,7 +23,7 @@ function Register(props) {
         showButton = ""
     }
     const handleRegisterButton = () => {
-        fetch('https://fitbook-self.vercel.app/api/register', {
+        fetch('https://smapp.herokuapp.com/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

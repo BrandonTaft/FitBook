@@ -45,7 +45,7 @@ function Comments({ post }) {
   }
 
   const postComment = (post) => {
-    fetch(`http://127.0.0.1:8080/api/addcomment${post.id}`, {
+    fetch(`https://smapp.herokuapp.com/api/addcomment${post.id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ function Comments({ post }) {
   }
 
   const getComments = () => {
-    fetch(`http://127.0.0.1:8080/api/comments`, {
+    fetch(`https://smapp.herokuapp.com/api/comments`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json'
@@ -75,7 +75,7 @@ function Comments({ post }) {
   }
 
   const handleCommentDelete = (comment) => {
-    fetch(`http://127.0.0.1:8080/api/comments/${comment.id}`, {
+    fetch(`https://smapp.herokuapp.com/api/comments/${comment.id}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {

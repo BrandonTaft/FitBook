@@ -20,7 +20,7 @@ function AutoCompleteForm({ showList, setShowList }) {
 
     const getAllUsernames = () => {
         const token = Cookies.get('token')
-        fetch('http://127.0.0.1:8080/api/all-usernames', {
+        fetch('https://smapp.herokuapp.com/api/all-usernames', {
             method: 'GET',
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -37,7 +37,7 @@ function AutoCompleteForm({ showList, setShowList }) {
     }
 
     const postTODB = () => {
-        fetch("http://127.0.0.1:8080/api/addmail", {
+        fetch("https://smapp.herokuapp.com/api/addmail", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

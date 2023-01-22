@@ -16,11 +16,15 @@ app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: true, limit: 52428800 }));
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const httpServer = createServer(app);
-const sequelize = require('sequelize');
-const io = new Server(httpServer);
+// const { createServer } = require("http");
+// const { Server } = require("socket.io");
+// const httpServer = createServer(app);
+// const sequelize = require('sequelize');
+// const io = new Server(httpServer, {
+//     cors: {
+//         origin: "*",
+//     },
+// });
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -794,7 +798,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //***************************SET PORT***************************//
 
 
-// app.listen(8080, (req, res) => {
-//     console.log('Server Is Running....')
-// })
-httpServer.listen(8080);
+app.listen(8080, (req, res) => {
+    console.log('Server Is Running....')
+})
+// httpServer.listen(8080);

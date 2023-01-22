@@ -16,15 +16,15 @@ app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: true, limit: 52428800 }));
-// const { createServer } = require("http");
-// const { Server } = require("socket.io");
-// const httpServer = createServer(app);
-// const sequelize = require('sequelize');
-// const io = new Server(httpServer, {
-//     cors: {
-//         origin: "*",
-//     },
-// });
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const httpServer = createServer(app);
+const sequelize = require('sequelize');
+const io = new Server(httpServer, {
+    cors: {
+        origin: "*",
+    },
+});
 
 const cloudinary = require('cloudinary').v2;
 cloudinary.config({
@@ -597,23 +597,23 @@ app.delete('/api/deletemail/:mailId', (req, res) => {
 })
 
 /******************* CHAT *******************/
-// const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
-// io.on("connection", (socket) => {
+const NEW_CHAT_MESSAGE_EVENT = "newChatMessage";
+io.on("connection", (socket) => {
 
-//     // Join a conversation
-//     const { roomId } = socket.handshake.query;
-//     socket.join(roomId);
+    // Join a conversation
+    const { roomId } = socket.handshake.query;
+    socket.join(roomId);
 
-//     // Listen for new messages
-//     socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
-//         io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
-//     });
+    // Listen for new messages
+    socket.on(NEW_CHAT_MESSAGE_EVENT, (data) => {
+        io.in(roomId).emit(NEW_CHAT_MESSAGE_EVENT, data);
+    });
 
-//     // Leave the room if the user closes the socket
-//     socket.on("disconnect", () => {
-//         socket.leave(roomId);
-//     });
-// });
+    // Leave the room if the user closes the socket
+    socket.on("disconnect", () => {
+        socket.leave(roomId);
+    });
+});
 
 //***************************ADD CHAT TO DATABASE***************************//
 app.post('/api/savechat', (req, res) => {
@@ -798,7 +798,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //***************************SET PORT***************************//
 
 
-app.listen(8080, (req, res) => {
-    console.log('Server Is Running....')
-})
-// httpServer.listen(8080);
+// app.listen(8080, (req, res) => {
+//     console.log('Server Is Running....')
+// })
+httpServer.listen(8080);

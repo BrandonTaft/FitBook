@@ -54,6 +54,19 @@ app.use(session({
     // Cookie Options
     //maxAge: 24 * 60 * 60 * 1000 // 24 hours
   }))
+  app.use(function(request, response, next) {
+    if (request.session && !request.session.regenerate) {
+        request.session.regenerate = (cb) => {
+            cb()
+        }
+    }
+    if (request.session && !request.session.save) {
+        request.session.save = (cb) => {
+            cb()
+        }
+    }
+    next()
+})
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",

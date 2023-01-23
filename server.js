@@ -109,10 +109,10 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 if (savedUser != null) {
                     const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 console.log("TESTING")
-                res.cookie('name', user.name);
-                res.cookie('token', token);
-                res.cookie('user_Id', user.id);
-                res.cookie('profile_pic', user.profile_pic);
+                res.cookie('name', user.name, {httpOnly: false});
+                res.cookie('token', token, {httpOnly: false});
+                res.cookie('user_Id', user.id, {httpOnly: false});
+                res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
                 res.writeHead(302, {
                     'Location': 'https://fitbook.surge.sh/feed'
                   });
@@ -127,10 +127,10 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
-    res.cookie('name', existingUser.name);
-    res.cookie('token', token);
-    res.cookie('user_Id', existingUser.id);
-    res.cookie('profile_pic', existingUser.profile_pic);
+    res.cookie('name', existingUser.name, {httpOnly: false});
+    res.cookie('token', token, {httpOnly: false});
+    res.cookie('user_Id', existingUser.id, {httpOnly: false});
+    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
         'Location': 'https://fitbook.surge.sh/feed'
       });
@@ -191,9 +191,9 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
                 if (savedUser != null) {
                     const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 //res.json({ success: true, token: token, user: user })
-                res.cookie('name', user.name);
-                res.cookie('token', token);
-                res.cookie('user_Id', user.id);
+                res.cookie('name', user.name, {httpOnly: false});
+                res.cookie('token', token, {httpOnly: false});
+                res.cookie('user_Id', user.id, {httpOnly: false});
                 res.writeHead(302, {
                     'Location': 'https://fitbook.surge.sh/feed'
                   });
@@ -208,10 +208,10 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
-    res.cookie('name', existingUser.name);
-    res.cookie('token', token);
-    res.cookie('user_Id', existingUser.id);
-    res.cookie('profile_pic', existingUser.profile_pic);
+    res.cookie('name', existingUser.name, {httpOnly: false});
+    res.cookie('token', token, {httpOnly: false});
+    res.cookie('user_Id', existingUser.id, {httpOnly: false});
+    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
         'Location': 'https://fitbook.surge.sh/feed'
       });
@@ -294,7 +294,7 @@ app.get('/api/all-users', (req, res) => {
 })
 
 //***************************GET ALL USERNAMES***************************//
-app.get('/api/all-usernames', (req, res) => {
+app.get('/api/all-usernames', authenticate, (req, res) => {
     models.Users.findAll({})
         .then(users => {
             let userNames = [];
@@ -306,7 +306,7 @@ app.get('/api/all-usernames', (req, res) => {
 })
 
 //***************************GET LOGGED IN USERS***************************//
-app.get('/api/logged-in-users', (req, res) => {
+app.get('/api/logged-in-users', authenticate, (req, res) => {
     models.Users.findAll({
         where: {
             isLoggedIn : "true"
@@ -489,7 +489,7 @@ app.put('/api/update/:id', (req, res) => {
 
 //**************************SHOW ALL POSTS**************************//
 //Retrieve All From DataBase
-app.get('/api/things', (req, res) => {
+app.get('/api/things', authenticate, (req, res) => {
     models.Things.findAll({
         order: [
             ['id', 'DESC']
@@ -501,7 +501,7 @@ app.get('/api/things', (req, res) => {
 })
 
 //**********Retrieve All From DataBase With Specific user_Id***********//
-app.get('/api/myposts/:user_Id', (req, res) => {
+app.get('/api/myposts/:user_Id', authenticate, (req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
         where: {
@@ -548,7 +548,7 @@ app.delete('/api/mythings/:thingId', (req, res) => {
 })
 
 //***************************GET MAIL***************************//
-app.get('/api/getmail/:name', (req, res) => {
+app.get('/api/getmail/:name', authenticate, (req, res) => {
     const userName = (req.params.name)
     models.Mail.findAll({
         where: sequelize.where(
@@ -650,7 +650,7 @@ app.post('/api/savechat', (req, res) => {
 
 //***************************GET ALL CHATS***************************//
 
-app.get('/api/getchats/:roomId', (req, res) => {
+app.get('/api/getchats/:roomId', authenticate, (req, res) => {
     const roomId = req.params.roomId
     models.Chat.findAll({
         where: {
@@ -680,7 +680,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 
 //Retrieve All things From DataBase
 
-// app.get('/api/publicthings', async(req, res) => {
+// app.get('/api/publicthings', authenticate, async(req, res) => {
 //     await models.PubliThings.findAll({})
 //         .then(things => {
 //             res.json(things)
@@ -740,7 +740,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //     { accountType: 'savings', name: 'mary' }
 // ]
 
-// app.get('/api/profile',(req, res) => {
+// app.get('/api/profile', authenticate,(req, res) => {
 
 //     const authHeader = req.headers['authorization']
 //     if (authHeader) {
@@ -789,7 +789,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 
 // //***************************GET USER INFO***************************//
 
-// app.get('/api/user/:userId'(req, res) => {
+// app.get('/api/user/:userId',authenticate,(req, res) => {
 
 //     const userId = parseInt(req.params.userId)
 

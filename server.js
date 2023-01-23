@@ -306,7 +306,7 @@ app.get('/api/all-users', (req, res) => {
 })
 
 //***************************GET ALL USERNAMES***************************//
-app.get('/api/all-usernames', authenticate, (req, res) => {
+app.get('/api/all-usernames', (req, res) => {
     models.Users.findAll({})
         .then(users => {
             let userNames = [];
@@ -318,7 +318,7 @@ app.get('/api/all-usernames', authenticate, (req, res) => {
 })
 
 //***************************GET LOGGED IN USERS***************************//
-app.get('/api/logged-in-users', authenticate, (req, res) => {
+app.get('/api/logged-in-users', (req, res) => {
     models.Users.findAll({
         where: {
             isLoggedIn : "true"
@@ -501,7 +501,7 @@ app.put('/api/update/:id', (req, res) => {
 
 //**************************SHOW ALL POSTS**************************//
 //Retrieve All From DataBase
-app.get('/api/things', authenticate, (req, res) => {
+app.get('/api/things', (req, res) => {
     models.Things.findAll({
         order: [
             ['id', 'DESC']
@@ -513,7 +513,7 @@ app.get('/api/things', authenticate, (req, res) => {
 })
 
 //**********Retrieve All From DataBase With Specific user_Id***********//
-app.get('/api/myposts/:user_Id', authenticate, (req, res) => {
+app.get('/api/myposts/:user_Id', (req, res) => {
     const user_Id = parseInt(req.params.user_Id)
     models.Things.findAll({
         where: {
@@ -560,7 +560,7 @@ app.delete('/api/mythings/:thingId', (req, res) => {
 })
 
 //***************************GET MAIL***************************//
-app.get('/api/getmail/:name', authenticate, (req, res) => {
+app.get('/api/getmail/:name', (req, res) => {
     const userName = (req.params.name)
     models.Mail.findAll({
         where: sequelize.where(
@@ -662,7 +662,7 @@ app.post('/api/savechat', (req, res) => {
 
 //***************************GET ALL CHATS***************************//
 
-app.get('/api/getchats/:roomId', authenticate, (req, res) => {
+app.get('/api/getchats/:roomId', (req, res) => {
     const roomId = req.params.roomId
     models.Chat.findAll({
         where: {
@@ -692,7 +692,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 
 //Retrieve All things From DataBase
 
-// app.get('/api/publicthings', authenticate, async(req, res) => {
+// app.get('/api/publicthings', async(req, res) => {
 //     await models.PubliThings.findAll({})
 //         .then(things => {
 //             res.json(things)
@@ -752,7 +752,7 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 //     { accountType: 'savings', name: 'mary' }
 // ]
 
-// app.get('/api/profile', authenticate,(req, res) => {
+// app.get('/api/profile',(req, res) => {
 
 //     const authHeader = req.headers['authorization']
 //     if (authHeader) {

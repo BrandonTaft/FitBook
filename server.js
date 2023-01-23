@@ -109,10 +109,10 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 if (savedUser != null) {
                     const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 console.log("TESTING")
-                res.cookie('name', user.name, {httpOnly: false});
-                res.cookie('token', token, {httpOnly: false});
-                res.cookie('user_Id', user.id, {httpOnly: false});
-                res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
+                res.cookie('name', user.name);
+                res.cookie('token', token);
+                res.cookie('user_Id', user.id);
+                res.cookie('profile_pic', user.profile_pic);
                 res.writeHead(302, {
                     'Location': 'https://fitbook.surge.sh/feed'
                   });
@@ -127,10 +127,10 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
-    res.cookie('name', existingUser.name, {httpOnly: false});
-    res.cookie('token', token, {httpOnly: false});
-    res.cookie('user_Id', existingUser.id, {httpOnly: false});
-    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
+    res.cookie('name', existingUser.name);
+    res.cookie('token', token);
+    res.cookie('user_Id', existingUser.id);
+    res.cookie('profile_pic', existingUser.profile_pic);
     res.writeHead(302, {
         'Location': 'https://fitbook.surge.sh/feed'
       });
@@ -191,9 +191,9 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
                 if (savedUser != null) {
                     const token = jwt.sign({ id: user.id }, "SECRETKEY")
                 //res.json({ success: true, token: token, user: user })
-                res.cookie('name', user.name, {httpOnly: false});
-                res.cookie('token', token, {httpOnly: false});
-                res.cookie('user_Id', user.id, {httpOnly: false});
+                res.cookie('name', user.name);
+                res.cookie('token', token);
+                res.cookie('user_Id', user.id);
                 res.writeHead(302, {
                     'Location': 'https://fitbook.surge.sh/feed'
                   });
@@ -208,10 +208,10 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
-    res.cookie('name', existingUser.name, {httpOnly: false});
-    res.cookie('token', token, {httpOnly: false});
-    res.cookie('user_Id', existingUser.id, {httpOnly: false});
-    res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
+    res.cookie('name', existingUser.name);
+    res.cookie('token', token);
+    res.cookie('user_Id', existingUser.id);
+    res.cookie('profile_pic', existingUser.profile_pic);
     res.writeHead(302, {
         'Location': 'https://fitbook.surge.sh/feed'
       });

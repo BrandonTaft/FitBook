@@ -143,11 +143,12 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
     res.cookie('token', token, {httpOnly: false});
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
-    res.writeHead(302, {
-        'Location': 'https://fitbook.surge.sh/feed'
-      });
-    res.end()
-    }
+    // res.writeHead(302, {
+    //     'Location': 'https://fitbook.surge.sh/feed'
+    //   });
+    // res.end()
+    res.redirect('https://fitbook.surge.sh/feed')
+     }
 })
 
 passport.use(new FaceBookStrategy({

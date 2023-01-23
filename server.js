@@ -51,7 +51,6 @@ app.use(session({
 //     cookie: { maxAge: 1000 * 60 * 60 }
 //    // keys: ['SECRETKEY'],
   
-//     // Cookie Options
 //     //maxAge: 24 * 60 * 60 * 1000 // 24 hours
 //   }))
 //   app.use(function(request, response, next) {

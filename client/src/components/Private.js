@@ -5,7 +5,6 @@ import Avatar from 'react-avatar';
 import UploadImage from './UploadImage';
 import { MyCard } from './Cards';
 import { BsFillPencilFill } from "react-icons/bs";
-import logo from "../assets/logo-aqua.png";
 import { addImagePopup } from '../utils/utils';
 
 function Private() {
@@ -13,7 +12,6 @@ function Private() {
   const [myPosts, setMyPosts] = useState([]);
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
-  const title = localStorage.getItem('title');
   const name = Cookies.get('name');
   const token = Cookies.get('token');
   const userId = Cookies.get('user_Id');

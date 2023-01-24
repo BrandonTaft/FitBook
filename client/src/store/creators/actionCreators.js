@@ -3,6 +3,7 @@ import Cookies from 'js-cookie';
 
 export const fetchPublicPosts = () => {
   const token = Cookies.get('token');
+  console.log("TOKEN", token)
   return (dispatch) => {
     fetch('https://smapp.herokuapp.com/api/things', {
       method: 'GET',
@@ -47,6 +48,7 @@ export const fetchMail = () => {
 export const fetchAllUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
+    console.log("TOKEN", token)
     fetch('https://smapp.herokuapp.com/api/all-users', {
       method: 'GET',
       headers: {

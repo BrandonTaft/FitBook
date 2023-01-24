@@ -117,6 +117,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
+    res.cookie('test', "TEST", {httpOnly: false});
     res.cookie('name', existingUser.name, {httpOnly: false});
     res.cookie('token', token, {httpOnly: false});
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
@@ -276,7 +277,6 @@ app.post('/api/login', async (req, res) => {
 
 //***************************GET ALL USERS***************************//
 app.get('/api/all-users', (req, res) => {
-    console.log("iran")
     models.Users.findAll({})
         .then(users => {
             res.json(users)

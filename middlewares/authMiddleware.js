@@ -32,6 +32,7 @@ function authenticate(req, res, next) {
     //     res.json({  success: false, error: 'Required headers are missing...' })
     //     res.redirect('/')
     // }
+    next()
 }
 
 module.exports = authenticate

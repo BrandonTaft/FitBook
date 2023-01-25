@@ -18,7 +18,7 @@ function Login(props) {
     }
 
     const handleLogin = () => {
-        fetch('http://fitbook-brandontaft.vercel.app/api/login', {
+        fetch('https://fitbook-brandontaft.vercel.app/api/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -58,11 +58,11 @@ function Login(props) {
                     <span className='text or'>or</span>
                     <span className='sm-divider text'></span>
                 </div>
-                <a className="sm-button mb-1" href="https://fitbook-self.vercel.app/auth/google">
+                <a className="sm-button mb-1" href="httpss://fitbook-self.vercel.app/auth/google">
                     <img className="sm-icon" alt='google-logo' src={google} />
                     <span className="sm-button-text">Sign in with Google</span>
                 </a>
-                <a className="sm-button facebook" href="https://fitbook-self.vercel.app/auth/facebook">
+                <a className="sm-button facebook" href="httpss://fitbook-self.vercel.app/auth/facebook">
                     <img className="sm-icon facebook" alt='facebook-logo' src={facebook} />
                     <span className="sm-button-text">Sign in with FaceBook</span>
                 </a>

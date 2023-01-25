@@ -21,8 +21,9 @@ function Private() {
     const getPic = () => {
       `${profilePic}` === "null" ? setPic(false) : setPic(true)
     }
+    
     function fetchMyPosts() {
-      fetch(`http://fitbook-brandontaft.vercel.app/api/myposts/${userId}`, {
+      fetch(`https://fitbook-brandontaft.vercel.app/api/myposts/${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -44,7 +45,7 @@ function Private() {
 
 
   const deleteProfile = () => {
-    fetch('http://fitbook-brandontaft.vercel.app/api/delete-profile', {
+    fetch('https://fitbook-brandontaft.vercel.app/api/delete-profile', {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`

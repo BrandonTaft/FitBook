@@ -47,7 +47,7 @@ app.use(session({
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "https://fitbook-self.vercel.app/googleRedirect"
+    callbackURL: "http://fitbook-brandontaft.vercel.app/googleRedirect"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log(accessToken, refreshToken, profile)
@@ -132,7 +132,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
 passport.use(new FaceBookStrategy({
     clientID: "707560370871888",
     clientSecret: "b4d29f94371876c8c1360d14bb813944",
-    callbackURL: "https://fitbook-self.vercel.app/facebookRedirect"
+    callbackURL: "http://fitbook-brandontaft.vercel.app/facebookRedirect"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log(accessToken, refreshToken, profile)

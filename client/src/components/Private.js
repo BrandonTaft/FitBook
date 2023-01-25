@@ -22,7 +22,7 @@ function Private() {
       `${profilePic}` === "null" ? setPic(false) : setPic(true)
     }
     function fetchMyPosts() {
-      fetch(`https://smapp.herokuapp.com/api/myposts/${userId}`, {
+      fetch(`http://fitbook-brandontaft.vercel.app/api/myposts/${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -44,7 +44,7 @@ function Private() {
 
 
   const deleteProfile = () => {
-    fetch('https://smapp.herokuapp.com/api/delete-profile', {
+    fetch('http://fitbook-brandontaft.vercel.app/api/delete-profile', {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`

@@ -7,7 +7,7 @@ export const fetchPublicPosts = () => {
   const test = Cookies.get('session');
   console.log("SESSION",test)
   return (dispatch) => {
-    fetch('https://smapp.herokuapp.com/api/things', {
+    fetch('http://fitbook-brandontaft.vercel.app/api/things', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -30,7 +30,7 @@ export const fetchMail = () => {
   return (dispatch) => {
     const name = Cookies.get('name')
     const token = Cookies.get('token');
-    fetch(`https://smapp.herokuapp.com/api/getmail/${name}`, {
+    fetch(`http://fitbook-brandontaft.vercel.app/api/getmail/${name}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -51,7 +51,7 @@ export const fetchAllUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
     console.log("TOKEN", token)
-    fetch('https://smapp.herokuapp.com/api/all-users', {
+    fetch('http://fitbook-brandontaft.vercel.app/api/all-users', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -72,7 +72,7 @@ export const fetchAllUsers = () => {
 export const fetchLoggedInUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
-    fetch('https://smapp.herokuapp.com/api/logged-in-users', {
+    fetch('http://fitbook-brandontaft.vercel.app/api/logged-in-users', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

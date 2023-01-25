@@ -16,6 +16,7 @@ function Private() {
   const token = Cookies.get('token');
   const userId = Cookies.get('user_Id');
   const profilePic = Cookies.get('profile_pic')
+  
   useEffect(() => {
     const getPic = () => {
       `${profilePic}` === "null" ? setPic(false) : setPic(true)

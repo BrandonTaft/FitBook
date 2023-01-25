@@ -4,6 +4,8 @@ import Cookies from 'js-cookie';
 export const fetchPublicPosts = () => {
   const token = Cookies.get('token');
   console.log("TOKEN", token)
+  const test = Cookies.get('session');
+  console.log("SESSION",test)
   return (dispatch) => {
     fetch('https://smapp.herokuapp.com/api/things', {
       method: 'GET',

@@ -806,4 +806,4 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')
 // })
-httpServer.listen(8080);
+httpServer.listen(process.env.PORT || 8080);

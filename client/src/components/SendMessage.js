@@ -15,7 +15,7 @@ export function SendAutoMessage({ sendTo, setShowDmPopup }) {
     }
 
     const postTODB = () => {
-        fetch("https://smapp.herokuapp.com/api/addmail", {
+        fetch("http://127.0.0.1:8080/api/addmail", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

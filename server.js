@@ -1,7 +1,10 @@
 const express = require('express');
+const app = express();
+const path = require('path')
+const sequelize = require('sequelize');
 const models = require('./models');
 const cors = require('cors');
-const app = express();
+
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const bcrypt = require('bcryptjs');
@@ -11,17 +14,15 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FaceBookStrategy = require('passport-facebook').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
-app.use(express.json());
-app.use(cors({
-    origin: 'https://fitbook.surge.sh'
-}));
+app.use(express.static(path.join(__dirname, 'build')))
+app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
 app.use(express.urlencoded({ extended: true, limit: 52428800 }));
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
-const sequelize = require('sequelize');
+
 const io = new Server(httpServer, {
     cors: {
         origin: "*",
@@ -38,19 +39,18 @@ cloudinary.config({
 app.use(bodyParser.urlencoded({ extended: false })) 
 app.use(cookieParser())
 app.use(passport.initialize());
-var session = require('cookie-session')
+var session = require('express-session')
 app.use(session({
     secret: 'SECRETKEY',
     resave: false,
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   }))
-  app.options('*', cors())
 
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
-    callbackURL: "http://fitbook-brandontaft.vercel.app/googleRedirect"
+    callbackURL: "http://localhost:8080/googleRedirect"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log(accessToken, refreshToken, profile)
@@ -107,7 +107,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.cookie('profile_pic', user.profile_pic, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'https://fitbook.surge.sh/feed'
+                    'Location': 'http://localhost:3000/feed'
                   });
                 res.end()
                 }
@@ -120,13 +120,12 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
         )
         console.log("EXISTING", existingUser)
     const token = jwt.sign({ id: existingUser.id }, "SECRETKEY")
-    res.cookie('test', "TEST", {httpOnly: false});
     res.cookie('name', existingUser.name, {httpOnly: false});
     res.cookie('token', token, {httpOnly: false});
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'https://fitbook.surge.sh/feed'
+        'Location': 'http://localhost:3000/feed'
       });
     res.end()
     }
@@ -135,7 +134,7 @@ app.get('/googleRedirect', passport.authenticate('google'), async (req, res, nex
 passport.use(new FaceBookStrategy({
     clientID: "707560370871888",
     clientSecret: "b4d29f94371876c8c1360d14bb813944",
-    callbackURL: "http://fitbook-brandontaft.vercel.app/facebookRedirect"
+    callbackURL: "https://localhost:8080/facebookRedirect"
   },
   function(accessToken, refreshToken, profile, done) {
       //console.log(accessToken, refreshToken, profile)
@@ -189,7 +188,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
                 res.cookie('token', token, {httpOnly: false});
                 res.cookie('user_Id', user.id, {httpOnly: false});
                 res.writeHead(302, {
-                    'Location': 'https://fitbook.surge.sh/feed'
+                    'Location': 'http://localhost:3000/feed'
                   });
                 res.end()
                 }
@@ -207,7 +206,7 @@ app.get('/facebookRedirect', passport.authenticate('facebook'), async (req, res,
     res.cookie('user_Id', existingUser.id, {httpOnly: false});
     res.cookie('profile_pic', existingUser.profile_pic, {httpOnly: false});
     res.writeHead(302, {
-        'Location': 'https://fitbook.surge.sh/feed'
+        'Location': 'http://localhost:3000/feed'
       });
     res.end()
     }
@@ -280,6 +279,7 @@ app.post('/api/login', async (req, res) => {
 
 //***************************GET ALL USERS***************************//
 app.get('/api/all-users', (req, res) => {
+    console.log("iran")
     models.Users.findAll({})
         .then(users => {
             res.json(users)
@@ -804,4 +804,4 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')
 // })
-httpServer.listen(process.env.PORT || 8080);
+httpServer.listen(8080);

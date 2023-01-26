@@ -5,6 +5,7 @@ import Avatar from 'react-avatar';
 import UploadImage from './UploadImage';
 import { MyCard } from './Cards';
 import { BsFillPencilFill } from "react-icons/bs";
+import logo from "../assets/logo-aqua.png";
 import { addImagePopup } from '../utils/utils';
 
 function Private() {
@@ -12,18 +13,17 @@ function Private() {
   const [myPosts, setMyPosts] = useState([]);
   const [pic, setPic] = useState(false);
   const [reset, setReset] = useState(false);
+  const title = localStorage.getItem('title');
   const name = Cookies.get('name');
   const token = Cookies.get('token');
   const userId = Cookies.get('user_Id');
   const profilePic = Cookies.get('profile_pic')
-  
   useEffect(() => {
     const getPic = () => {
       `${profilePic}` === "null" ? setPic(false) : setPic(true)
     }
-    
     function fetchMyPosts() {
-      fetch(`https://fitbook-brandontaft.vercel.app/api/myposts/${userId}`, {
+      fetch(`http://127.0.0.1:8080/api/myposts/${userId}`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -45,7 +45,7 @@ function Private() {
 
 
   const deleteProfile = () => {
-    fetch('https://fitbook-brandontaft.vercel.app/api/delete-profile', {
+    fetch('http://127.0.0.1:8080/api/delete-profile', {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`

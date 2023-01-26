@@ -2,6 +2,7 @@
   "name": "ifttt-todo",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@cloudinary/react": "^1.6.0",
     "@cloudinary/url-gen": "^1.8.6",

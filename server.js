@@ -1,6 +1,6 @@
 const express = require('express');
 const models = require('./models');
-// const cors = require('cors');
+const cors = require('cors');
 const app = express();
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
@@ -43,11 +43,7 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   }))
-  app.all('/', function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "X-Requested-With");
-    next()
-  });
+  app.options('*', cors())
 
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",

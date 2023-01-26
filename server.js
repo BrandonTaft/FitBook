@@ -14,7 +14,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FaceBookStrategy = require('passport-facebook').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.join(__dirname, 'client', 'build')))
 app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));

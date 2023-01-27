@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 export const fetchPublicPosts = () => {
   const token = Cookies.get('token');
   return (dispatch) => {
-    fetch('/api/things', {
+    fetch('http://127.0.0.1:8080/api/things', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -27,7 +27,7 @@ export const fetchMail = () => {
   return (dispatch) => {
     const name = Cookies.get('name')
     const token = Cookies.get('token');
-    fetch(`/api/getmail/${name}`, {
+    fetch(`http://127.0.0.1:8080/api/getmail/${name}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -47,7 +47,7 @@ export const fetchMail = () => {
 export const fetchAllUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
-    fetch('/api/all-users', {
+    fetch('http://127.0.0.1:8080/api/all-users', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -68,7 +68,7 @@ export const fetchAllUsers = () => {
 export const fetchLoggedInUsers = () => {
   return (dispatch) => {
     const token = Cookies.get('token');
-    fetch('/api/logged-in-users', {
+    fetch('http://127.0.0.1:8080/api/logged-in-users', {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`

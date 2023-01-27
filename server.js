@@ -14,7 +14,7 @@ const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FaceBookStrategy = require('passport-facebook').Strategy;
 const authenticate = require('./middlewares/authMiddleware');
 const salt = 10;
-app.use(express.static(path.join(__dirname, 'client', 'build')))
+app.use(express.static(path.resolve(__dirname, './client/build')));
 app.use(cors());
 require('dotenv').config();
 app.use(express.json({ limit: 52428800 }));
@@ -46,9 +46,9 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   }))
-  app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'))
-  })
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  });
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
@@ -60,7 +60,7 @@ passport.use(new GoogleStrategy({
       return done(null, profile)
   }
 ))
-
+console.log(path.join(__dirname, './client/build', 'index.html'))
 // These functions are required for getting data To/from JSON returned from Providers
 passport.serializeUser(function(user, done) {
     console.log('done', )

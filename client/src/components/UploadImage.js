@@ -39,7 +39,7 @@ class UploadImage extends React.Component {
             // drawn on another canvas, or added to the DOM.
             const img = this.editor.getImageScaledToCanvas().toDataURL();
             const userId = Cookies.get('user_Id');
-            fetch("http://127.0.0.1:8080/api/add-image", {
+            fetch("/api/add-image", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ class UploadImage extends React.Component {
                     if (result.success) {
                         let url = encodeURIComponent(result.url)
                         Cookies.set('profile_pic', result.url)
-                        fetch(`http://127.0.0.1:8080/api/update-user/${userId}/${url}`, {
+                        fetch(`/api/update-user/${userId}/${url}`, {
                             method: 'PUT'
                         })
                     }

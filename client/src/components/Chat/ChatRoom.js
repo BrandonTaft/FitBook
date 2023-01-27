@@ -17,7 +17,7 @@ const ChatRoom = (props) => {
   }, [])
 
   const getSavedChats = () => {
-    fetch(`http://127.0.0.1:8080/api/getchats/${roomId}`,{
+    fetch(`/api/getchats/${roomId}`,{
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`
@@ -45,7 +45,7 @@ const ChatRoom = (props) => {
   };
 
   const postChat = () => {
-    fetch('http://127.0.0.1:8080/api/savechat', {
+    fetch('/api/savechat', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -62,7 +62,7 @@ const ChatRoom = (props) => {
   }
 
   const deleteChats = () => {
-    fetch(`http://127.0.0.1:8080/api/delete-chats/${roomId}`, {
+    fetch(`/api/delete-chats/${roomId}`, {
       method: 'DELETE'
     }).then(response => response.json())
       .then(result => {

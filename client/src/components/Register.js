@@ -23,7 +23,7 @@ function Register(props) {
         showButton = ""
     }
     const handleRegisterButton = () => {
-        fetch('http://127.0.0.1:8080/api/register', {
+        fetch('/api/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

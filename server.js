@@ -46,9 +46,9 @@ app.use(session({
     saveUninitialized: true,
     cookie: { maxAge: 1000 * 60 * 60 }
   }))
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
-  });
+  
+  
+  
 passport.use(new GoogleStrategy({
     clientID: "167353375078-4l7svg4p1lb8gtoafo0nq874a6ca221o.apps.googleusercontent.com",
     clientSecret: "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",
@@ -801,7 +801,9 @@ app.delete('/api/delete-chats/:roomId', (req, res) => {
 
 //
 //***************************SET PORT***************************//
-
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, './client/build', 'index.html'));
+  });
 
 // app.listen(8080, (req, res) => {
 //     console.log('Server Is Running....')
